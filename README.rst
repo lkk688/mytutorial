@@ -6,4 +6,4 @@ with some basic Sphinx docs.
 
 Read the tutorial here:
 
-https://docs.readthedocs.io/en/stable/
+https://mytutorial-lkk.readthedocs.io/en/latest/
