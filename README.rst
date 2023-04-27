@@ -1,7 +1,7 @@
-Template for the Read the Docs tutorial
+Collection of My tutorials from Kaikai Liu
 =======================================
 
-This GitHub template includes fictional Python library
+This GitHub repository includes multiple tutorials
 with some basic Sphinx docs.
 
 Read the tutorial here:
