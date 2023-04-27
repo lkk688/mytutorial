@@ -14,6 +14,7 @@ Contents
 --------
 
 .. toctree::
+   HPC2
    CondaEnv
    usage
    api
