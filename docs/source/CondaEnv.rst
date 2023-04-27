@@ -60,6 +60,20 @@ Install the latest Tensorflow via pip, and verify the GPU setup
    $ pip install tensorflow==2.12.*
    $ python3 -c "import tensorflow as tf; print(tf.config.list_physical_devices('GPU'))" #show [PhysicalDevice(name='/physical_device:GPU:0', device_type='GPU')]
 
+Waymo OpenDataset Installation
+----------------
+
+First install [openexr](https://www.excamera.com/sphinx/articles-openexr.html) for HDR images required by Waymo opendataset, then install waymo-open-dataset package
+
+.. code-block:: console
+
+   $ sudo apt-get install libopenexr-dev
+   $ conda install -c conda-forge openexr
+   $ conda install -c conda-forge openexr-python
+   $ python3 -m pip install waymo-open-dataset-tf-2-11-0==1.5.1 #it will force install tensorflow2.11
+
 TensorRT Installation
 ----------------
+
+Use the tar installation options for [TensorRT](https://docs.nvidia.com/deeplearning/tensorrt/install-guide/index.html#installing-tar)
 
