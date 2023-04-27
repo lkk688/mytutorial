@@ -12,6 +12,6 @@ Contents
 --------
 
 .. toctree::
-
+   CondaEnv
    usage
    api
