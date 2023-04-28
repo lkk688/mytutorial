@@ -56,9 +56,9 @@ Install Pytorch2.0 cuda11.8 version (no problem if you loaded cuda12 in GPU node
 
 .. code-block:: console
 
-   (mycondapy39) [sjsuid@coe-hpc2 ~]$ conda install pytorch torchvision torchaudio pytorch-cuda=11.8 -c pytorch -c nvidia
+   (mycondapy39) [sjsuid@coe-hpc2 ~]$ conda install pytorch torchvision torchaudio pytorch-cuda=11.8 -c pytorch -c nvidia #if pytorch2.0 is not found, you can use the pip option
    (mycondapy39) [sjsuid@coe-hpc2 ~]$ pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118 -U #another option of using pip install
-   (mycondapy39) [sjsuid@coe-hpc2 ~] python -m torch.utils.collect_env #check pytorch environment
+   (mycondapy39) [sjsuid@coe-hpc2 ~]$ python -m torch.utils.collect_env #check pytorch environment
 
 Install cudnn (required by Tensorflow) and Tensorflow
 
