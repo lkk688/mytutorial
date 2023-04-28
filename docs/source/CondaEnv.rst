@@ -60,6 +60,12 @@ Install the latest Tensorflow via pip, and verify the GPU setup
    $ pip install tensorflow==2.12.*
    $ python3 -c "import tensorflow as tf; print(tf.config.list_physical_devices('GPU'))" #show [PhysicalDevice(name='/physical_device:GPU:0', device_type='GPU')]
 
+The tensorflow may show warning of "Could not load dynamic library 'libnvinfer.so.7'; dlerror: libnvinfer.so.7" and "Could not load dynamic library 'libnvinfer_plugin.so.7'; dlerror: libnvinfer_plugin.so.7" because of missing TensorRT library. You can refer the TensorRT section to install TensorRT8 and copy the libxx.so.8 to libxxx.so.7 to remove the warning.
+
+.. code-block:: console
+   $ cp /home/lkk/Developer/TensorRT-8.5.3.1/lib/libnvinfer_plugin.so.8 /home/lkk/Developer/TensorRT-8.5.3.1/lib/libnvinfer_plugin.so.7
+   $ cp /home/lkk/Developer/TensorRT-8.5.3.1/lib/libnvinfer_plugin.so.8 /home/lkk/Developer/TensorRT-8.5.3.1/lib/libnvinfer_plugin.so.7
+
 Waymo OpenDataset Installation
 ----------------
 
@@ -76,6 +82,15 @@ TensorRT Installation
 ----------------
 
 Use the tar installation options for [TensorRT](https://docs.nvidia.com/deeplearning/tensorrt/install-guide/index.html#installing-tar)
+After the tar file is downloaded, untar the file, setup the TensorRT path, and install the tensorrt python package:
 
+.. code-block:: console
+
+   $ tar -xzvf TensorRT-8.5.3.1.Linux.x86_64-gnu.cuda-11.8.cudnn8.6.tar.gz
+   $ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/lkk/Developer/TensorRT-8.5.3.1/lib
+   (mycondapy310) lkk@lkk-intel13:~/Developer/TensorRT-8.5.3.1/python$ python -m pip install tensorrt-8.5.3.1-cp310-none-linux_x86_64.whl #install the tensorrt python package
+   (mycondapy310) lkk@lkk-intel13:~/Developer/TensorRT-8.5.3.1/graphsurgeon$ python -m pip install graphsurgeon-0.4.6-py2.py3-none-any.whl
+   (mycondapy310) lkk@lkk-intel13:~/Developer/TensorRT-8.5.3.1/onnx_graphsurgeon$ python -m pip install onnx_graphsurgeon-0.3.12-py2.py3-none-any.whl
+   
 Check the TensorRT sample code from [TensorRTSample](https://docs.nvidia.com/deeplearning/tensorrt/sample-support-guide/index.html#samples)
 
