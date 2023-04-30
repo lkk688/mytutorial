@@ -77,10 +77,6 @@ Request one GPU node, and check tensorflow GPU access
 
 If you see error like "RuntimeError: module compiled against API version 0xf but this version of numpy is 0xe", you can upgrade numpy version
 
-.. code-block:: console
-
-   (mycondapy39) [sjsuid@coe-hpc2 ~]$ python3 -m pip install numpy -U
-
 Install other libraries
 
 .. code-block:: console
@@ -106,4 +102,11 @@ If you want to install Numba, it conflicts with latest version of numpy (https:/
 
    $ pip uninstall numpy
    $ pip install numpy==1.23.5
+   $ pip install numba -U # numpy<1.24,>=1.18 is required by {'numba'}
    
+You can git clone our 3D detection framework and instal the development environment
+
+.. code-block:: console
+
+   (mycondapy39) [sjsuid@coe-hpc2 ]$ git clone https://github.com/lkk688/3DDepth.git
+   (mycondapy39) [sjsuid@coe-hpc2 3DDepth]$ python3 setup.py develop
