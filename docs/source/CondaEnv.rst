@@ -77,6 +77,40 @@ First install [openexr](https://www.excamera.com/sphinx/articles-openexr.html) f
    $ conda install -c conda-forge openexr
    $ conda install -c conda-forge openexr-python
    $ python3 -m pip install waymo-open-dataset-tf-2-11-0==1.5.1 #it will force install tensorflow2.11
+   >>> from waymo_open_dataset.utils import frame_utils, transform_utils, range_image_utils # test import waymo_open_dataset in python, should show no errors
+
+3D Object Detection
+----------------
+
+Install the required libraries (mayavi and open3d) for 3D object visualization
+
+.. code-block:: console
+
+   (mycondapy310) lkk@lkk-intel13:~/Developer$ git clone https://github.com/lkk688/3DDepth.git
+   (mycondapy310) $ pip install mayavi # 3D Lidar visualization: https://docs.enthought.com/mayavi/mayavi/installation.html
+   (mycondapy310) $ pip install PyQt5
+   (mycondapy310) $ pip install opencv-python-headless #opencv-python may conflict with mayavi
+   (mycondapy310) lkk@lkk-intel13:~/Developer/3DDepth$ python ./VisUtils/testmayavi.py #test mayavi, you should see a GUI window with mayavi scene
+   (mycondapy310) $ pip install open3d #install open3d: http://www.open3d.org/docs/release/getting_started.html 
+   #OPEN3D upgraded the pillow, but waymo-open-dataset-tf-2-11-0 1.5.1 requires pillow==9.2.0, this warning can be ignored.
+   (mycondapy310) lkk@lkk-intel13:~/Developer/3DDepth$ python ./VisUtils/testopen3d.py #test open3d
+   
+Install other required libraries
+
+.. code-block:: console
+
+   pip install configargparse
+   pip install -U albumentations
+   pip install spconv-cu118
+   pip install SharedArray
+   pip install tensorboardX
+   pip install easydict
+   pip install gpustat
+   pip install --upgrade autopep8
+   pip install pyyaml scikit-image onnx onnx-simplifier
+   pip install onnxruntime
+   pip install onnx_graphsurgeon --index-url https://pypi.ngc.nvidia.com
+   pip install --upgrade protobuf==3.20.0 #waymo-open-dataset does not support higher version of protobuf
 
 TensorRT Installation
 ----------------
@@ -88,6 +122,7 @@ After the tar file is downloaded, untar the file, setup the TensorRT path, and i
 
    $ tar -xzvf TensorRT-8.5.3.1.Linux.x86_64-gnu.cuda-11.8.cudnn8.6.tar.gz
    $ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/lkk/Developer/TensorRT-8.5.3.1/lib
+   (mycondapy310) lkk@lkk-intel13:~$ echo 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/lkk/Developer/TensorRT-8.5.3.1/lib' >> $CONDA_PREFIX/etc/conda/activate.d/env_vars.sh #optional step, make it automatic when conda environment starts
    (mycondapy310) lkk@lkk-intel13:~/Developer/TensorRT-8.5.3.1/python$ python -m pip install tensorrt-8.5.3.1-cp310-none-linux_x86_64.whl #install the tensorrt python package
    (mycondapy310) lkk@lkk-intel13:~/Developer/TensorRT-8.5.3.1/graphsurgeon$ python -m pip install graphsurgeon-0.4.6-py2.py3-none-any.whl
    (mycondapy310) lkk@lkk-intel13:~/Developer/TensorRT-8.5.3.1/onnx_graphsurgeon$ python -m pip install onnx_graphsurgeon-0.3.12-py2.py3-none-any.whl
