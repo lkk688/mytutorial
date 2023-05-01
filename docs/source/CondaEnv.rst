@@ -156,6 +156,7 @@ You can git clone our 3D detection framework and instal the development environm
    nvcc fatal   : Unsupported gpu architecture 'compute_89'
    conda uninstall cudatoolkit-dev
    $ conda uninstall cudatoolkit=11.8.0
+   $ conda install -c conda-forge cudatoolkit=11.8.0
    $ conda install -c "nvidia/label/cuda-11.8.0" cuda-toolkit #https://anaconda.org/nvidia/cuda-toolkit
    $ nvcc -V #show 11.8
    $ pip uninstall nvidia-cudnn-cu11 #remove cudnn8.6.0.163
