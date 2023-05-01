@@ -154,6 +154,12 @@ You can git clone our 3D detection framework and instal the development environm
    $ git clone https://github.com/lkk688/3DDepth.git
    (mycondapy310) lkk@lkk-intel13:~/Developer/3DDepth$ python3 setup.py develop
    nvcc fatal   : Unsupported gpu architecture 'compute_89'
+   conda uninstall cudatoolkit-dev
+   $ conda uninstall cudatoolkit=11.8.0
+   $ conda install -c "nvidia/label/cuda-11.8.0" cuda-toolkit #https://anaconda.org/nvidia/cuda-toolkit
+   $ nvcc -V #show 11.8
+   $ pip uninstall nvidia-cudnn-cu11 #remove cudnn8.6.0.163
+   $ pip install nvidia-cudnn-cu11 #install cudnn8.9.0.131
 
    
 
