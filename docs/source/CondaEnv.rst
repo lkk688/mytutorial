@@ -47,7 +47,7 @@ Install cuda development kit, otherwise 'nvcc' is not available
 
 .. code-block:: console
 
-   $ conda install -c conda-forge cudatoolkit-dev
+   (mycondapy310) $ conda install -c conda-forge cudatoolkit-dev
    $ nvcc -V #show Cuda compilation tools, release 11.7, V11.7.64
    
 Tensorflow Installation
@@ -57,14 +57,24 @@ Install the latest Tensorflow via pip, and verify the GPU setup
 
 .. code-block:: console
 
-   $ pip install tensorflow==2.12.*
-   $ python3 -c "import tensorflow as tf; print(tf.config.list_physical_devices('GPU'))" #show [PhysicalDevice(name='/physical_device:GPU:0', device_type='GPU')]
+   (mycondapy310) $ pip install tensorflow==2.12.*
+   (mycondapy310) $ python3 -c "import tensorflow as tf; print(tf.config.list_physical_devices('GPU'))" #show [PhysicalDevice(name='/physical_device:GPU:0', device_type='GPU')]
 
 The tensorflow may show warning of "Could not load dynamic library 'libnvinfer.so.7'; dlerror: libnvinfer.so.7" and "Could not load dynamic library 'libnvinfer_plugin.so.7'; dlerror: libnvinfer_plugin.so.7" because of missing TensorRT library. You can refer the TensorRT section to install TensorRT8 and copy the libxx.so.8 to libxxx.so.7 to remove the warning.
 
 .. code-block:: console
+
    $ cp /home/lkk/Developer/TensorRT-8.5.3.1/lib/libnvinfer_plugin.so.8 /home/lkk/Developer/TensorRT-8.5.3.1/lib/libnvinfer_plugin.so.7
    $ cp /home/lkk/Developer/TensorRT-8.5.3.1/lib/libnvinfer_plugin.so.8 /home/lkk/Developer/TensorRT-8.5.3.1/lib/libnvinfer_plugin.so.7
+
+Pytorch2.0 Installation
+----------------
+
+.. code-block:: console
+
+   (mycondapy310) $ conda install pytorch torchvision torchaudio pytorch-cuda=11.8 -c pytorch -c nvidia #numpy-1.24.3 is also installed
+   #torch installation may impact waymo-open-dataset, and show ModuleNotFoundError: No module named 'chardet'
+   $ pip install chardet #solve the problem
 
 Waymo OpenDataset Installation
 ----------------
@@ -99,10 +109,33 @@ Install other required libraries
 
 .. code-block:: console
 
-   pip install configargparse
+   conda install -c conda-forge configargparse
    pip install -U albumentations
-   pip install spconv-cu118
+   pip install spconv-cu118 #check installation via import spconv
    pip install SharedArray
+
+After SharedArray, test import SharedArray in python may show error of "RuntimeError: module compiled against API version 0x10 but this version of numpy is 0xe", check the current version of numpy is 1.21.5. The solution is to upgrade the numpy version, but the highest numpy version supported by numba is 1.23.5, thus we upgrade numpy
+
+.. code-block:: console
+
+   pip uninstall numpy
+   pip install numpy==1.23.5 #no problem for import SharedArray 
+
+After install the numpy 1.23.5, there are some errors from waymo-open-dataset, but these errors can be ignored and check the waymo-open-dataset does not show error.
+
+.. code-block:: console
+
+   tensorflow 2.11.0 requires protobuf<3.20,>=3.9.2, but you have protobuf 3.20.3 which is incompatible.
+   waymo-open-dataset-tf-2-11-0 1.5.1 requires numpy==1.21.5, but you have numpy 1.23.5 which is incompatible.
+   waymo-open-dataset-tf-2-11-0 1.5.1 requires pillow==9.2.0, but you have pillow 9.5.0 which is incompatible.
+
+You can git clone our 3D detection framework and instal the development environment
+
+.. code-block:: console
+
+   $ git clone https://github.com/lkk688/3DDepth.git
+   (mycondapy310) lkk@lkk-intel13:~/Developer/3DDepth$ python3 setup.py develop
+
    pip install tensorboardX
    pip install easydict
    pip install gpustat
