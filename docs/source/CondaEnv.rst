@@ -129,21 +129,33 @@ After install the numpy 1.23.5, there are some errors from waymo-open-dataset, b
    waymo-open-dataset-tf-2-11-0 1.5.1 requires numpy==1.21.5, but you have numpy 1.23.5 which is incompatible.
    waymo-open-dataset-tf-2-11-0 1.5.1 requires pillow==9.2.0, but you have pillow 9.5.0 which is incompatible.
 
+Install numba and other libraries
+
+.. code-block:: console
+
+   $ pip install numba
+   $ pip install requests
+   $ pip install --upgrade protobuf==3.19.6 #tensorflow 2.11.0 requires protobuf<3.20,>=3.9.2
+   $ pip install six # required by tensorflow
+   $ pip uninstall pillow
+   $ pip install pillow==9.2.0 # required by waymo-open-dataset, but open3d 0.17.0 requires pillow>=9.3.0
+   $ pip install tensorboardX
+   $ pip install easydict
+   $ pip install gpustat
+   $ pip install --upgrade autopep8
+   $ pip install pyyaml scikit-image onnx onnx-simplifier
+   $ pip install onnxruntime
+   $ pip install onnx_graphsurgeon --index-url https://pypi.ngc.nvidia.com
+
 You can git clone our 3D detection framework and instal the development environment
 
 .. code-block:: console
 
    $ git clone https://github.com/lkk688/3DDepth.git
    (mycondapy310) lkk@lkk-intel13:~/Developer/3DDepth$ python3 setup.py develop
+   nvcc fatal   : Unsupported gpu architecture 'compute_89'
 
-   pip install tensorboardX
-   pip install easydict
-   pip install gpustat
-   pip install --upgrade autopep8
-   pip install pyyaml scikit-image onnx onnx-simplifier
-   pip install onnxruntime
-   pip install onnx_graphsurgeon --index-url https://pypi.ngc.nvidia.com
-   pip install --upgrade protobuf==3.20.0 #waymo-open-dataset does not support higher version of protobuf
+   
 
 TensorRT Installation
 ----------------
