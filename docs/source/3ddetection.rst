@@ -18,7 +18,7 @@ Use `OpenCOOD <https://github.com/DerrickXuNu/OpenCOOD>`_ and ref `installation 
   opencood 0.1.0 requires scipy~=1.5.4, but you have scipy 1.10.1 which is incompatible.
   Successfully installed scipy-1.10.1
 
-
+opv2v dataset is downloaded in '/data/cmpe249-fa22/OpenCOOD/opv2v_data_dumping', but there are errors in the dataset: "unzip:  cannot find zipfile directory in one of train.zip"
   
 
 
