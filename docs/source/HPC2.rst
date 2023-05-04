@@ -1,7 +1,7 @@
 HPC2
 =====
 
-.. _setup:
+.. _hpc2:
 
 Load software module and request GPU node
 ------------
@@ -110,3 +110,12 @@ You can git clone our 3D detection framework and instal the development environm
 
    (mycondapy39) [sjsuid@coe-hpc2 ]$ git clone https://github.com/lkk688/3DDepth.git
    (mycondapy39) [sjsuid@coe-hpc2 3DDepth]$ python3 setup.py develop
+
+Share Conda Environment
+------------
+
+You can share your environment with someone else and allow them to quickly reproduce your environment via a copy of your environment.yml file. To export environment file, ref: https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html:
+
+.. code-block:: console
+
+   (mycondapy39) [010796032@cs004 ~]$ conda env export > mycondapy39_hpc2_environment.yml
