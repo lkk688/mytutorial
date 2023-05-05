@@ -111,6 +111,13 @@ You can git clone our 3D detection framework and instal the development environm
    (mycondapy39) [sjsuid@coe-hpc2 ]$ git clone https://github.com/lkk688/3DDepth.git
    (mycondapy39) [sjsuid@coe-hpc2 3DDepth]$ python3 setup.py develop
 
+Install pypcd
+
+.. code-block:: console
+
+   (mycondapy39) [010796032@coe-hpc2 3DObject]$ cd pypcd/
+   (mycondapy39) [010796032@coe-hpc2 pypcd]$ python setup.py install
+
 Share Conda Environment
 ------------
 
