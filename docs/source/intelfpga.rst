@@ -44,6 +44,10 @@ Download Quartus from `Intel FPGA Software Download Center <https://www.intel.co
 
 "components" folder is created after tar command, run the 'QuartusProSetup-23.1.0.115-windows' file inside the components.
 
+Installation guide: https://cdrdv2-public.intel.com/666293/quartus_install-683472-666293.pdf
+https://www.intel.com/content/www/us/en/docs/programmable/683472/23-1/setting-environment-variables.html
+
+
 Nios® II EDS on Windows requires Ubuntu 18.04 LTS on Windows Subsystem for Linux (WSL). Nios® II EDS requires you to install an Eclipse IDE manually.
 Nios II EDS need WSL1 not WSL2
 https://www.intel.com/content/www/us/en/docs/programmable/683472/23-1/installing-windows-subsystem-for-linux.html
