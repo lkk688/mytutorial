@@ -28,8 +28,24 @@ These two files need to convert to Flash format (the format required to program 
 When the upload is complete, Press button PGM_SEL (S5) until PGM_LED 1 is lit then press button PGM_CONFIG (S6) to configure the FPGA with the new image.
 Or move the dipsw factory_load(SW6.4) to user position, then power cyle the board to configure FPGA from user portion of the flash.
 
+Open the BoardTestSystem, show error:
+Current bitMode value is 64
+Current $QUARTUS_ROOTDIR = null
+
 The development board includes integrated USB-Blaster circuitry for FPGA programming. We need to install the On-Board USB-Blaster II driver on the host computer.
 
+Install Quartus
+Download Quartus from `Intel FPGA Software Download Center <https://www.intel.com/content/www/us/en/collections/products/fpga/software/downloads.html>`_, select '23.1 for Windows'-> Multiple Download->Select Quartus-pro-23.1xxx-windows.tar (38.8GB device support not included) and Intel Arria 10 device support.
 
+.. code-block:: console 
 
+  C:\Users\lkk\Downloads>tar xvf Quartus-pro-23.1.0.115-windows.tar
+  C:\Users\lkk\Downloads>tar xvf Quartus-pro-23.1.0.115-devices-1.tar
+
+"components" folder is created after tar command, run the 'QuartusProSetup-23.1.0.115-windows' file inside the components.
+
+Nios® II EDS on Windows requires Ubuntu 18.04 LTS on Windows Subsystem for Linux (WSL). Nios® II EDS requires you to install an Eclipse IDE manually.
+Nios II EDS need WSL1 not WSL2
+https://www.intel.com/content/www/us/en/docs/programmable/683472/23-1/installing-windows-subsystem-for-linux.html
+https://cdrdv2-public.intel.com/666293/quartus_install-683472-666293.pdf
 
