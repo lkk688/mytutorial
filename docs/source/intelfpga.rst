@@ -28,13 +28,11 @@ These two files need to convert to Flash format (the format required to program 
 When the upload is complete, Press button PGM_SEL (S5) until PGM_LED 1 is lit then press button PGM_CONFIG (S6) to configure the FPGA with the new image.
 Or move the dipsw factory_load(SW6.4) to user position, then power cyle the board to configure FPGA from user portion of the flash.
 
-Open the BoardTestSystem, show error:
-Current bitMode value is 64
-Current $QUARTUS_ROOTDIR = null
-
 The development board includes integrated USB-Blaster circuitry for FPGA programming. We need to install the On-Board USB-Blaster II driver on the host computer.
 
 Install Quartus
+~~~~~~~~~~~~~~~~
+
 Download Quartus from `Intel FPGA Software Download Center <https://www.intel.com/content/www/us/en/collections/products/fpga/software/downloads.html>`_, select '23.1 for Windows'-> Multiple Download->Select Quartus-pro-23.1xxx-windows.tar (38.8GB device support not included) and Intel Arria 10 device support.
 
 .. code-block:: console 
@@ -42,10 +40,35 @@ Download Quartus from `Intel FPGA Software Download Center <https://www.intel.co
   C:\Users\lkk\Downloads>tar xvf Quartus-pro-23.1.0.115-windows.tar
   C:\Users\lkk\Downloads>tar xvf Quartus-pro-23.1.0.115-devices-1.tar
 
-"components" folder is created after tar command, run the 'QuartusProSetup-23.1.0.115-windows' file inside the components.
+"components" folder is created after tar command, run the 'QuartusProSetup-23.1.0.115-windows' file inside the components. Select "H:\intelFPGA\quartus23.1" as the installation directory, select componets want to install (arria10 device is selected), skip MATLAB setup (only version R2013b and above)
+
 
 Installation guide: https://cdrdv2-public.intel.com/666293/quartus_install-683472-666293.pdf
 https://www.intel.com/content/www/us/en/docs/programmable/683472/23-1/setting-environment-variables.html
+
+To setup the License for Quartus II, visit Intel license center. To add one computer, use "ipconfig /all" to get the physical address as the NIC ID (ref: https://www.intel.com/content/www/us/en/docs/programmable/683472/21-3/creating-a-computer-profile.html). After the computer NIC ID is assigned, click to generate license. Get the license file over email and save to "H:\intelFPGA"
+
+BoardTestSystem
+~~~~~~~~~~~~~~~~
+Connect the board J3 USB port to host PC, set factory_load(SW6.4) to user position (OFF mode), turn on the board. Open BoardTestSystem application inside the "examples" folder of the download board package. Remember to disable the Windows Realtime Projection, otherwise the BoardTestSystem will be blocked and deleted. Select "Restore -> Factory Restore".
+
+Perform configuration of different parts in BoardTestSystem
+ * Click Configure->Configure with Flash/GPIO design. After configuration, the GPIO tab will be enabled. You can change the LCD display, GPIO, LEDs, and Switches.
+ 
+You can use the Quartus Programmer to configure the FPGA with your SRAM Object File (.sof)
+Start the Quartus Programmer, open Programmer inside Tools
+ * Select hardware setup select: USB-BlasterII
+ * Click Auto Detect and select the devices "10AX115S2" in the list. It will show three device in the JTAG chain.
+ * Click Change File and select the path to the desired .sof.
+
+Click New Project Wizard in Quartus, 
+
+
+https://www.intel.com/content/www/us/en/support/programmable/support-resources/design-guidance/arria-10.html
+
+Open the BoardTestSystem, show error:
+Current bitMode value is 64
+Current $QUARTUS_ROOTDIR = null
 
 
 Nios® II EDS on Windows requires Ubuntu 18.04 LTS on Windows Subsystem for Linux (WSL). Nios® II EDS requires you to install an Eclipse IDE manually.
