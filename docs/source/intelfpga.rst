@@ -119,3 +119,24 @@ Follow the ADRV9009+Arria10 GX example: https://wiki.analog.com/resources/eval/u
  nios2-terminal: "USB-BlasterII [USB-1]", device 1, instance 0
  nios2-terminal: (Use the IDE stop button or Ctrl-C to terminate)
 
+nios2-terminal has no response, switch to WSL1 for testing
+
+.. code-block:: console 
+
+ C:\Users\lkk>wsl --list --online
+ C:\Users\lkk>wsl --install -d Ubuntu-20.04
+ C:\Users\lkk>wsl --list --verbose
+   NAME            STATE           VERSION
+ * Ubuntu-22.04    Running         2
+   Ubuntu-20.04    Running         2
+
+ C:\Users\lkk>wsl --set-version Ubuntu-20.04 1
+ Conversion in progress, this may take a few minutes.
+ The operation completed successfully.
+
+ C:\Users\lkk>wsl --list --verbose
+   NAME            STATE           VERSION
+ * Ubuntu-22.04    Running         2
+   Ubuntu-20.04    Stopped         1
+ C:\Users\lkk>wsl --distribution Ubuntu-20.04 --user lkk
+
