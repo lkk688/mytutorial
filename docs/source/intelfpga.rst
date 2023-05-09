@@ -76,3 +76,44 @@ Nios II EDS need WSL1 not WSL2
 https://www.intel.com/content/www/us/en/docs/programmable/683472/23-1/installing-windows-subsystem-for-linux.html
 https://cdrdv2-public.intel.com/666293/quartus_install-683472-666293.pdf
 
+ADRV9009 Example
+---------------------
+
+.. code-block:: console 
+(base) lkk@Alienware-LKKi7G8:/mnt/h/intelFPGA/quartus23.1/nios2eds$ export PATH=/mnt/h/intelFPGA/quartus23.1/nios2eds/bin:$PATH
+(base) lkk@Alienware-LKKi7G8:/mnt/h/FPGADeveloper/adrv9009_a10gx/adrv9009_a10gx$ nios2-configure-sof adrv9009_a10gx.sof
+Searching for SOF file:
+in .
+  adrv9009_a10gx.sof
+
+Info: *******************************************************************
+Info: Running Quartus Prime Programmer
+Info: Command: quartus_pgm --no_banner --mode=jtag -o p;./adrv9009_a10gx.sof
+Info (213045): Using programming cable "USB-BlasterII [USB-1]"
+Info (213011): Using programming file ./adrv9009_a10gx.sof with checksum 0x30E72CA2 for device 10AX115S2F45@1
+Info (209060): Started Programmer operation at Mon May  8 23:34:35 2023
+Info (209016): Configuring device index 1
+Info (209017): Device 1 contains JTAG ID code 0x02E660DD
+Info (209007): Configuration succeeded -- 1 device(s) configured
+Info (209011): Successfully performed operation(s)
+Info (209061): Ended Programmer operation at Mon May  8 23:34:50 2023
+Info: Quartus Prime Programmer was successful. 0 errors, 0 warnings
+    Info: Peak virtual memory: 1936 megabytes
+    Info: Processing ended: Mon May  8 23:34:50 2023
+    Info: Elapsed time: 00:00:23
+    Info: System process ID: 34076
+(base) lkk@Alienware-LKKi7G8:/mnt/h/FPGADeveloper/adrv9009_a10gx/adrv9009_a10gx$ export PATH=/mnt/h/intelFPGA/quartus23.
+1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/:$PATH
+(base) lkk@Alienware-LKKi7G8:/mnt/h/FPGADeveloper/adrv9009_a10gx/adrv9009_a10gx$ nios2-download -g zImage
+Using cable "USB-BlasterII [USB-1]", device 1, instance 0x00
+Processor is already paused
+Initializing CPU cache (if present)
+OK
+Downloaded 5471KB in 0.5s (10942.0KB/s)
+Verified OK
+Starting processor at address 0xC4000000
+(base) lkk@Alienware-LKKi7G8:/mnt/h/FPGADeveloper/adrv9009_a10gx/adrv9009_a10gx$ nios2-terminal.exe
+nios2-terminal: connected to hardware target using JTAG UART on cable
+nios2-terminal: "USB-BlasterII [USB-1]", device 1, instance 0
+nios2-terminal: (Use the IDE stop button or Ctrl-C to terminate)
+
