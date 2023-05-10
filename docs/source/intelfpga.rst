@@ -141,11 +141,17 @@ Install a new distribution (Ubuntu20.04), set the wsl version from 2 to 1, ref: 
  * Ubuntu-22.04    Running         2
    Ubuntu-20.04    Stopped         1
  C:\Users\lkk>wsl --distribution Ubuntu-20.04 --user lkk
+ lkk@Alienware-LKKi7G8:~$ ls
+ QuartusProSetup-23.1.0.115-linux.run  QuartusProSetup-part2-23.1.0.115-linux.qdz  quartus  ubuntu20
+ lkk@Alienware-LKKi7G8:~$ ./QuartusProSetup-23.1.0.115-linux.run --mode text --installdir ./quartus
+
 
 ADRV9009 Arria 10 GX Quick Start Guide: https://wiki.analog.com/resources/eval/user-guides/adrv9009/quickstart/a10gx
 IIO Oscilloscope: https://wiki.analog.com/resources/tools-software/linux-software/iio_oscilloscope
 Nios2 Linux on the Altera FPGA Development Boards: https://wiki.analog.com/resources/tools-software/linux-drivers/platforms/nios2
 ADRV9009 HDL Reference Design: https://wiki.analog.com/resources/eval/user-guides/adrv9009/reference_hdl
 https://github.com/analogdevicesinc/hdl/tree/master/projects/adrv9009
+https://github.com/analogdevicesinc/hdl/tree/master
 ADI™ Reference Designs HDL User Guide: https://wiki.analog.com/resources/fpga/docs/hdl
+Building HDL: https://wiki.analog.com/resources/fpga/docs/build#windows_environment_setup
 Intel® Arria® 10 FPGA Developer Center: https://www.intel.com/content/www/us/en/support/programmable/support-resources/design-guidance/arria-10.html
