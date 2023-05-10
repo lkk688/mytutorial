@@ -119,7 +119,9 @@ Follow the ADRV9009+Arria10 GX example: https://wiki.analog.com/resources/eval/u
  nios2-terminal: "USB-BlasterII [USB-1]", device 1, instance 0
  nios2-terminal: (Use the IDE stop button or Ctrl-C to terminate)
 
-nios2-terminal has no response, switch to WSL1 for testing
+nios2-terminal has no response, switch to WSL1 for testing. As stated in  Quartus install instruction, Nios II EDS only works with WSL1, in section 2.3.1 of: https://cdrdv2-public.intel.com/666293/quartus_install-683472-666293.pdf
+
+Install a new distribution (Ubuntu20.04), set the wsl version from 2 to 1, ref: https://learn.microsoft.com/en-us/windows/wsl/basic-commands
 
 .. code-block:: console 
 
@@ -140,3 +142,10 @@ nios2-terminal has no response, switch to WSL1 for testing
    Ubuntu-20.04    Stopped         1
  C:\Users\lkk>wsl --distribution Ubuntu-20.04 --user lkk
 
+ADRV9009 Arria 10 GX Quick Start Guide: https://wiki.analog.com/resources/eval/user-guides/adrv9009/quickstart/a10gx
+IIO Oscilloscope: https://wiki.analog.com/resources/tools-software/linux-software/iio_oscilloscope
+Nios2 Linux on the Altera FPGA Development Boards: https://wiki.analog.com/resources/tools-software/linux-drivers/platforms/nios2
+ADRV9009 HDL Reference Design: https://wiki.analog.com/resources/eval/user-guides/adrv9009/reference_hdl
+https://github.com/analogdevicesinc/hdl/tree/master/projects/adrv9009
+ADI™ Reference Designs HDL User Guide: https://wiki.analog.com/resources/fpga/docs/hdl
+Intel® Arria® 10 FPGA Developer Center: https://www.intel.com/content/www/us/en/support/programmable/support-resources/design-guidance/arria-10.html
