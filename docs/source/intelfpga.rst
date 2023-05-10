@@ -82,6 +82,20 @@ Nios II EDS need WSL1 not WSL2
 https://www.intel.com/content/www/us/en/docs/programmable/683472/23-1/installing-windows-subsystem-for-linux.html
 https://cdrdv2-public.intel.com/666293/quartus_install-683472-666293.pdf
 
+Create a Quartus Project
+~~~~~~~~~~~~~~~~~~~~~~~~
+Click file > new project wizard… to begin the new project wizard, setup the directory for this project: "click file > new project wizard… to begin the new project wizard", and select the "Arria10 GX" in the Board section. Go back to the "device" tab, it will show "10AX115S2F45I1SG" in the list, select the device, then click Next. 
+
+
+Next page shows add files. For this project we do not need to add any files, click Next. For this introduction to Quartus we will not be writing any code, therefore we do not need to use any EDA tools for this project. Just leave everything set to the default and click next. It will show a Summary page with project directory and selected device. Click Finish.
+
+Go ahead and click file > new… to open the new file dialog box. We are going to create our first block diagram/schematic file, simply select it from the list and click ok. Save the file, click file > save as… and then give your file a name, choose the current path and click save. It will save as a '.bdf' file.
+
+Click the symbol tool from the tool bar, this will open the symbol browser where you will notice three categories listed in the libraries box. Drop down primitives > logic to access basic logic functions. Select **and2** and then click ok to add the gate to the design. Once done you can press the esc key to exit the symbol tool.
+
+Click the Pins dropdown button in the toolbar, and select output pin. Place to the diagram and connect to the **and2** output. Place two input pins and connect them to both inputs on the AND gate. In order to change the name of the pin you can either double click the pin name in the editor or right click the pin and choose properties. Go ahead and run analysis and elaboration using the tool found in the menu bar at the top of the screen.
+
+
 ADRV9009 Example
 ---------------------
 Follow the ADRV9009+Arria10 GX example: https://wiki.analog.com/resources/eval/user-guides/adrv9009/quickstart/a10gx
@@ -146,7 +160,10 @@ Install a new distribution (Ubuntu20.04), set the wsl version from 2 to 1, ref: 
    NAME            STATE           VERSION
  * Ubuntu-22.04    Running         2
    Ubuntu-20.04    Stopped         1
- C:\Users\lkk>wsl --distribution Ubuntu-20.04 --user lkk
+ C:\Users\lkk>wsl --distribution Ubuntu-20.04 --user lkk #start the linux
+ >wsl -t Ubuntu-20.04 #shut down the linux
+ 
+.. code-block:: console 
  lkk@Alienware-LKKi7G8:~$ ls
  QuartusProSetup-23.1.0.115-linux.run  QuartusProSetup-part2-23.1.0.115-linux.qdz  quartus  ubuntu20
  lkk@Alienware-LKKi7G8:~$ ./QuartusProSetup-23.1.0.115-linux.run --mode text --installdir ./quartus
