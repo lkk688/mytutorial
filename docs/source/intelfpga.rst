@@ -54,6 +54,12 @@ https://www.intel.com/content/www/us/en/docs/programmable/683472/23-1/setting-en
 
 To setup the License for Quartus II, visit Intel license center. To add one computer, use "ipconfig /all" to get the physical address as the NIC ID (ref: https://www.intel.com/content/www/us/en/docs/programmable/683472/21-3/creating-a-computer-profile.html). After the computer NIC ID is assigned, click to generate license. Get the license file over email and save to "H:\intelFPGA"
 
+Nios® II EDS on Windows requires Ubuntu 18.04 LTS on Windows Subsystem for Linux (WSL). Nios® II EDS requires you to install an Eclipse IDE manually.
+Nios II EDS need WSL1 not WSL2
+https://www.intel.com/content/www/us/en/docs/programmable/683472/23-1/installing-windows-subsystem-for-linux.html
+https://cdrdv2-public.intel.com/666293/quartus_install-683472-666293.pdf
+
+
 BoardTestSystem
 ~~~~~~~~~~~~~~~~
 Connect the board J3 USB port to host PC, set factory_load(SW6.4) to user position (OFF mode), turn on the board. Open BoardTestSystem application inside the "examples" folder of the download board package. Remember to disable the Windows Realtime Projection, otherwise the BoardTestSystem will be blocked and deleted. Select "Restore -> Factory Restore".
@@ -67,20 +73,9 @@ Start the Quartus Programmer, open Programmer inside Tools
  * Click Auto Detect and select the devices "10AX115S2" in the list. It will show three device in the JTAG chain.
  * Click Change File and select the path to the desired .sof.
 
-Click New Project Wizard in Quartus, 
-
-
-https://www.intel.com/content/www/us/en/support/programmable/support-resources/design-guidance/arria-10.html
-
-Open the BoardTestSystem, show error:
-Current bitMode value is 64
-Current $QUARTUS_ROOTDIR = null
-
-
-Nios® II EDS on Windows requires Ubuntu 18.04 LTS on Windows Subsystem for Linux (WSL). Nios® II EDS requires you to install an Eclipse IDE manually.
-Nios II EDS need WSL1 not WSL2
-https://www.intel.com/content/www/us/en/docs/programmable/683472/23-1/installing-windows-subsystem-for-linux.html
-https://cdrdv2-public.intel.com/666293/quartus_install-683472-666293.pdf
+Quartus installation is required to run BoardTestSystem, otherwise it will show error when you open the BoardTestSystem, :
+  Current bitMode value is 64
+  Current $QUARTUS_ROOTDIR = null
 
 Create a Quartus Project
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -95,6 +90,28 @@ Click the symbol tool from the tool bar, this will open the symbol browser where
 
 Click the Pins dropdown button in the toolbar, and select output pin. Place to the diagram and connect to the **and2** output. Place two input pins and connect them to both inputs on the AND gate. In order to change the name of the pin you can either double click the pin name in the editor or right click the pin and choose properties. Go ahead and run analysis and elaboration using the tool found in the menu bar at the top of the screen.
 
+
+There are different stages of processing required to convert our design into something that can be loaded on to the FPGA.
+  * Analysis – in this part of the process Quartus checks the design for any errors such as syntax or semantic error.
+  * Elaboration – in the first stage of compilation, Quartus maps out the design in RTL blocks. These are the building blocks within the FPGA that perform basic functions such as memory storage, logic gates and registers.
+  * Synthesis – in the final stage of compilation, Quartus synthesizes a design at the logic level, converting the RTL design into a gate level design.
+
+Once the process has completed you will have a compilation report and the analysis and elaboration process in the left-hand menu will have a green tick next to it. Now we can open the pin planner by clicking assignments > pin planner from the menu at the top of the screen (In order to get our pins to appear in the pin planner we could run a full compilation)
+
+We can open the pin planner by clicking assignments > pin planner from the menu at the top of the screen. The input pins should correspond to the physical pins you have connected to the push buttons and the output pin should correspond to the output pin with the LED connected. Check the schematic of the Arria10 GX board. You can find following pin assignments
+  * S3 PB0 switch->Net 'USER_PB0'->'T12' pin, in IO BANK-3E
+  * S2 PB1 switch->Net 'USER_PB1'->'U12' pin, in IO BANK-3E
+  * D10 LED_GR contains Green and Red Leds, voltage low to lit the LED 
+    * Green -> Net 'USER_LED_G0'->'L28' pin, in IO BANK-3H
+    * Red -> Net 'USER_LED_R0'->'L27' pin, in IO BANK-3H
+  
+Once you are done you can close the pin planner. You should notice that Quartus has labelled the pins with the physical outputs that we have just assigned. To load the design on to the FPGA, we must first run a complete compilation, which will synthesize the design and then create a binary .sof file that can be loaded on to the FPGA.
+
+Once the compilation has complete we can open the programming tool in order to load our design on to the FPGA. You can either use the button on the top toolbar or click tools > programmer from the menu bar. On the programming menu you should see your programmer (e.g. the USB-Blaster) appearing at the top of the screen if your device is connected and configured correctly. If you see "no device" then you may need to select it by clicking "hardware setup…". You should also see the .sof file appearing in the list. Click "Start" to program the FPGA.
+
+If you see the Progress failed. You can reboot the FPGA and change the SW4.2 dip switch from OFF to ON to disable MAX V in the JTAG chain and only leave Arria 10 in the JTAG. 
+
+After the download is successfully, you can press any of the PB0 and PB1 switch to turn on the Green LED.
 
 ADRV9009 Example
 ---------------------
