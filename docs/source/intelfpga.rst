@@ -113,6 +113,8 @@ If you see the Progress failed. You can reboot the FPGA and change the SW4.2 dip
 
 After the download is successfully, you can press any of the PB0 and PB1 switch to turn on the Green LED.
 
+Create a new verilog file: binarycount.v and save it under the current workspace.
+
 ADRV9009 Example
 ---------------------
 Follow the ADRV9009+Arria10 GX example: https://wiki.analog.com/resources/eval/user-guides/adrv9009/quickstart/a10gx
