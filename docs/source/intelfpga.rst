@@ -8,10 +8,16 @@ Intel FPGA
 Intel Arria 10 GX Kit
 ---------------------
 
+Device Information
+~~~~~~~~~~~~~~~~~~
+Go to the `Intel Arria 10 GX Kit <https://www.intel.com/content/www/us/en/products/details/fpga/development-kits/arria/10-gx.html>`_ official website, download the ** Intel® Arria® 10 GX FPGA Package ** in the downloads section. Unzip it and install the Board Test System.
+ * Intel Arria 10 GX Kit features a 10AX115S2F45I1SG device
+ * Two FMC loopback cards supporting transceiver, LVDS and single-ended I/Os
+ * Two FMC low-pin count (LPC + 15 transceivers) connector.
+ * PCIe x8 edge connector.
+
 Boot the device
 ~~~~~~~~~~~~~~~~
-Get the `Intel Arria 10 GX Kit <https://www.intel.com/content/www/us/en/products/details/fpga/development-kits/arria/10-gx.html>`_ official website, download the ** Intel® Arria® 10 GX FPGA Package ** in the downloads section. Unzip it and install the Board Test System.
-
 Follow ** Arria 10 FPGA Development Kit User Guide **, setup the SW6.4 to the ON position (factory default) and SW5 to default setting (MSEL0~2=100 position, OFF for 1, ON for 0), attach the Ethernet cable, then power on the FPGA board via J13 and set the SW1 to on.  When the board powers up, the parallel flash loader (PFL) on the MAX V reads a design from flash memory and configures the FPGA. When the configuration is complete, green LEDs illuminate signaling the device configured successfully. If the configuration fails, the red LED illuminates. The LCD will first display "Connecting", then show IP address "192.168.1.68". 
 
 In the host computer, connect to this IP address to open the web page for the ** Board Update Portal ** . There are two files required:
@@ -144,7 +150,68 @@ Install a new distribution (Ubuntu20.04), set the wsl version from 2 to 1, ref: 
  lkk@Alienware-LKKi7G8:~$ ls
  QuartusProSetup-23.1.0.115-linux.run  QuartusProSetup-part2-23.1.0.115-linux.qdz  quartus  ubuntu20
  lkk@Alienware-LKKi7G8:~$ ./QuartusProSetup-23.1.0.115-linux.run --mode text --installdir ./quartus
+ lkk@Alienware-LKKi7G8:~/adi$ export PATH=~/quartus/quartus/bin/:$PATH
+ lkk@Alienware-LKKi7G8:~/adi$ git clone https://github.com/analogdevicesinc/hdl.git
+ lkk@Alienware-LKKi7G8:~/adi/hdl/projects/adrv9009/a10soc$ sudo apt update
+ lkk@Alienware-LKKi7G8:~/adi/hdl/projects/adrv9009/a10soc$ sudo apt install make
+ lkk@Alienware-LKKi7G8:~/adi/hdl/projects/adrv9009/a10soc$ sudo apt install build-essential
+ lkk@Alienware-LKKi7G8:~/adi/hdl/projects/adrv9009/a10soc$ sudo apt install dos2unix
+ lkk@Alienware-LKKi7G8:~/adi/hdl/projects/adrv9009/a10soc$ sudo apt-get install libncurses5
 
+Follow the ADI Building HDL instruction: https://wiki.analog.com/resources/fpga/docs/build, build the adrv9009/a10soc project:
+
+.. code-block:: console 
+
+ lkk@Alienware-LKKi7G8:~/adi/hdl/projects/adrv9009/a10soc$ export ADI_IGNORE_VERSION_CHECK=1
+ lkk@Alienware-LKKi7G8:~/adi/hdl/projects/adrv9009/a10soc$ make
+ Building adrv9009_a10soc [/home/lkk/adi/hdl/projects/adrv9009/a10soc/adrv9009_a10soc_quartus.log] .
+
+ 2023.05.10.00:23:53 Error: Unknown device part 10AS066N3F40E2SG
+ CRITICAL WARNING: Quartus version mismatch; expected 22.4.0, got 23.1.0.
+
+ lkk@Alienware-LKKi7G8:~/adi/hdl/projects/adrv9009/a10soc$ cat adrv9009_a10soc.qsf
+ set_global_assignment -name DEVICE 10AS066N3F40E2SG
+ set_global_assignment -name QSYS_FILE system_bd.qsys
+
+Show build error of "Unknown device part 10AS066N3F40E2SG". The device setup code is in "projects/scripts/adi_project_intel.tcl" and based on the project name:
+
+.. code-block:: console 
+ 
+  if [regexp "_a10gx" $project_name] {
+     set family "Arria 10"
+     set device 10AX115S2F45I1SG
+   }
+
+   if [regexp "_a10soc" $project_name] {
+     set family "Arria 10"
+     set device 10AS066N3F40E2SG
+   }
+
+Change the project name in Makefile and system_project.tcl to "adrv9009_a10gx", it still show "Error: Unknown device part 10AX115S2F45I1SG". Setup some paths and run quartus_sh in command line (similar to make) and show progress in terminal.
+
+.. code-block:: console 
+
+ export ALTERA_ROOT="/home/lkk/quartus/"		# Change this to the path you've installed Altera Quartus at
+ export QUARTUS_ROOTDIR_OVERRIDE="$ALTERA_ROOT/quartus"
+ export QSYS_ROOTDIR="$QUARTUS_ROOTDIR_OVERRIDE/sopc_builder/bin"
+ export QUARTUS_LIBRARY_PATHS="$QUARTUS_ROOTDIR_OVERRIDE/linux64/:/lib/x86_64-linux-gnu/"
+ export SOPC_KIT_NIOS2="$ALTERA_ROOT/nios2eds"
+ export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$QUARTUS_LIBRARY_PATHS"
+ export PATH="$PATH:$ALTERA_ROOT/quartus/bin"
+ lkk@Alienware-LKKi7G8:~/adi/hdl/projects/adrv9009/a10soc$ quartus_sh --64bit -t system_project.tcl
+ 2023.05.10.10:26:44 Error: Unknown device part 10AX115S2F45I1SG
+ child process exited abnormally
+     while executing
+ "exec -ignorestderr $quartus(quartus_rootpath)/sopc_builder/bin/qsys-generate  system_bd.qsys --synthesis=VERILOG --family=$family --part=$device  --qu..."
+     (procedure "adi_project" line 161)
+     invoked from within
+ "adi_project adrv9009_a10gx"
+     (file "system_project.tcl" line 4)
+ 
+
+
+https://www.intel.com/content/www/us/en/support/programmable/support-resources/design-guidance/arria-10.html#tab-blade-1-0
+Quartus II Scripting Reference Manual: https://www.intel.com/programmable/technical-pdfs/654662.pdf
 
 ADRV9009 Arria 10 GX Quick Start Guide: https://wiki.analog.com/resources/eval/user-guides/adrv9009/quickstart/a10gx
 IIO Oscilloscope: https://wiki.analog.com/resources/tools-software/linux-software/iio_oscilloscope
