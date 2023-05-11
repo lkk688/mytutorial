@@ -269,9 +269,12 @@ Change the project name in Makefile and system_project.tcl to "adrv9009_a10gx", 
 References
 ---------------------
 https://siytek.com/verilog-quartus/
+https://people.ece.cornell.edu/land/courses/ece5760/
 https://www.intel.com/content/www/us/en/support/programmable/support-resources/design-guidance/arria-10.html#tab-blade-1-0
+Intel® FPGA AI Suite: https://www.intel.com/content/www/us/en/docs/programmable/768970/2023-1/about-the.html
+Intel® High Level Synthesis Compiler Pro Edition: Getting Started Guide: https://www.intel.com/content/www/us/en/docs/programmable/683680/23-1/pro-edition-getting-started-guide.html
 Quartus II Scripting Reference Manual: https://www.intel.com/programmable/technical-pdfs/654662.pdf
-
+https://www.intel.com/content/www/us/en/support/programmable/support-resources/design-software/fpga-development-tools-support.html?f:guidetm83741EA404664A899395C861EDA3D38B=%5BIntel%C2%AE%20Arria%C2%AE%3BIntel%C2%AE%20Arria%C2%AE%2010%20FPGAs%20and%20SoC%20FPGAs%5D
 ADRV9009 Arria 10 GX Quick Start Guide: https://wiki.analog.com/resources/eval/user-guides/adrv9009/quickstart/a10gx
 IIO Oscilloscope: https://wiki.analog.com/resources/tools-software/linux-software/iio_oscilloscope
 Nios2 Linux on the Altera FPGA Development Boards: https://wiki.analog.com/resources/tools-software/linux-drivers/platforms/nios2
