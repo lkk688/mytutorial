@@ -233,6 +233,8 @@ Open the windows terminal, go to the project project, run the following command 
 
   H:\QuartusWorkspace\Helloworld>quartus_sh -t Helloworld_compile.tcl
 
+Compile ADI Example
+~~~~~~~~~~~~~~~~~~~~
 We can also build the ADRV9009 example from `ADI HDL <https://github.com/analogdevicesinc/hdl.git>`_ 
 
 .. note::
@@ -242,6 +244,7 @@ Download the ADI HDL repository and run the tcl in the following directory
 
 .. code-block:: console 
 
+  H:\FPGADeveloper\adi\hdl\projects\adrv9009\a10soc>set ADI_IGNORE_VERSION_CHECK=1
   H:\FPGADeveloper\adi\hdl\projects\adrv9009\a10soc>quartus_sh -t system_project.tcl
 
 The following figure shows the compilation is successful, sof file is generated.
@@ -249,6 +252,26 @@ The following figure shows the compilation is successful, sof file is generated.
 .. image:: imgs/FPGA/adrv9009build.png
   :width: 600
   :alt: adrv9009 build
+
+ADI's example uses Make to build the example: `ADI HDL build Guide <https://wiki.analog.com/resources/fpga/docs/build>`_
+
+JESD204B
+~~~~~~~~
+Check the Intel JESD204B page: `JESD204B Intel® FPGA IP <https://www.intel.com/content/www/us/en/products/details/fpga/intellectual-property/interface-protocols/jesd204b.html>`_ 
+
+General procedure on how to generate the JESD204B design example in `User Guide <https://www.intel.com/content/www/us/en/docs/programmable/683094/22-1/procedure-55160.html>`_ To generate the design example from the IP parameter editor:
+  * In the IP Catalog (Tools > IP Catalog), locate and select JESD204B. The IP parameter editor appears.
+  * Specify a top-level name and the folder for your custom IP variation, and the target device. Click OK.
+  * Select a design from the Presets library. When you select a design, the system automatically populates the IP parameters for the design.
+  * Click the Generate Example Design button.
+
+AN 729: Implementing JESD204B IP Core System Reference Design with Nios II Processor: https://www.intel.com/content/www/us/en/docs/programmable/683844/current/custom-peripheral-access-macros-in-macros.html
+
+JESD204 Interface Framework: https://wiki.analog.com/resources/fpga/peripherals/jesd204
+https://www.analog.com/en/design-center/evaluation-hardware-and-software/jesd204-interface-framework.html
+https://wiki.analog.com/resources/fpga/peripherals/jesd204
+
+
 
 ADRV9009 Example
 -----------------
@@ -382,7 +405,7 @@ Change the project name in Makefile and system_project.tcl to "adrv9009_a10gx", 
       (file "system_project.tcl" line 4)
  
 FPGA References
----------------------
+----------------
 https://siytek.com/verilog-quartus/
 https://people.ece.cornell.edu/land/courses/ece5760/
 https://www.intel.com/content/www/us/en/support/programmable/support-resources/design-guidance/arria-10.html#tab-blade-1-0
@@ -394,8 +417,10 @@ https://www.doulos.com/knowhow/fpga/create-a-simple-tcl-script-for-altera-quartu
 
 Nios2 Linux on the Altera FPGA Development Boards: https://wiki.analog.com/resources/tools-software/linux-drivers/platforms/nios2
 Intel® Arria® 10 FPGA Developer Center: https://www.intel.com/content/www/us/en/support/programmable/support-resources/design-guidance/arria-10.html
+JESD204B Intel® FPGA IP Design Example User Guide
 
-
+ADI References
+----------------
 ADRV9009 Arria 10 GX Quick Start Guide: https://wiki.analog.com/resources/eval/user-guides/adrv9009/quickstart/a10gx
 ADRV9009 HDL Reference Design: https://wiki.analog.com/resources/eval/user-guides/adrv9009/reference_hdl
 https://github.com/analogdevicesinc/hdl/tree/master/projects/adrv9009
@@ -404,3 +429,17 @@ ADI™ Reference Designs HDL User Guide: https://wiki.analog.com/resources/fpga/
 Building HDL: https://wiki.analog.com/resources/fpga/docs/build#windows_environment_setup
 https://wiki.analog.com/resources/fpga/peripherals/jesd204/tutorial/hdl_altera
 IIO Oscilloscope: https://wiki.analog.com/resources/tools-software/linux-software/iio_oscilloscope
+https://wiki.analog.com/resources/fpga/docs/hdl/porting_project_quick_start_guide
+https://www.intel.com/content/www/us/en/products/details/fpga/intellectual-property/interface-protocols/jesd204b.html
+Linux Drivers: https://wiki.analog.com/resources/tools-software/linux-drivers-all
+ADRV9009 Linux Driver: https://wiki.analog.com/resources/tools-software/linux-drivers/iio-transceiver/adrv9009
+https://www.analog.com/en/design-center/landing-pages/001/transceiver-evaluation-software.html
+
+https://wiki.analog.com/resources/eval/user-guides/adrv9009
+
+https://wiki.analog.com/resources/eval/user-guides/adrv9009/reference_hdl
+for a10gx: https://github.com/analogdevicesinc/hdl/tree/master/library/jesd204/ad_ip_jesd204_tpl_adc
+Other branches contain a10gx: https://github.com/analogdevicesinc/hdl/tree/a10gx_modify_interconnect_architecture/projects/adrv9009/a10gx
+
+https://wiki.analog.com/resources/fpga/docs/hdl/porting_project_quick_start_guide
+https://wiki.analog.com/resources/fpga/docs/arch
