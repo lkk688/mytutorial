@@ -14,8 +14,11 @@ Contents
 --------
 
 .. toctree::
-   HPC2
-   test
    CondaEnv
+   HPC2
+   WSL2
+   3ddetection
+   intelfpga
+   test
    usage
    api

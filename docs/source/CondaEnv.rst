@@ -1,7 +1,7 @@
 CondaEnv
 =====
 
-.. _setup:
+.. _CondaEnv:
 
 Conda Environment Setup Tutorial
 ------------
