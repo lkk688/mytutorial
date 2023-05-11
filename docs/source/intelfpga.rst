@@ -115,6 +115,28 @@ After the download is successfully, you can press any of the PB0 and PB1 switch 
 
 Create a new verilog file: binarycount.v and save it under the current workspace.
 
+.. code-block:: console 
+
+ module bin_counter(clk, out); //define the input and output
+ input wire clk;//wire format input clock either 1 or 0
+ output reg [0:7] out;//output as a 8-bits register
+
+ //specify the action between the begin and end statement following the always
+ always @ (posedge clk) //occur on the positive edge of the clk input
+ begin
+  out <= out + 1;
+ end
+
+ endmodule
+
+The Arria10 GX board has X4 50MHz clock to Net 'CLK_50' and 'MV_CLK_50', 'CLK_50' connect to pin 'AU33' in BANK-2I.
+
+Create a new verilog file clock_divider.v, 
+
+Convert these two verilog files into symbols to place into the schematic. 
+
+
+
 ADRV9009 Example
 ---------------------
 Follow the ADRV9009+Arria10 GX example: https://wiki.analog.com/resources/eval/user-guides/adrv9009/quickstart/a10gx
@@ -244,8 +266,9 @@ Change the project name in Makefile and system_project.tcl to "adrv9009_a10gx", 
  "adi_project adrv9009_a10gx"
      (file "system_project.tcl" line 4)
  
-
-
+References
+---------------------
+https://siytek.com/verilog-quartus/
 https://www.intel.com/content/www/us/en/support/programmable/support-resources/design-guidance/arria-10.html#tab-blade-1-0
 Quartus II Scripting Reference Manual: https://www.intel.com/programmable/technical-pdfs/654662.pdf
 
