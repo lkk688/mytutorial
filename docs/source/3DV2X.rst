@@ -1,9 +1,10 @@
-V2X Data
+3D V2X Data
 =============
 
 DAIR-V2X Dependencies
 ---------------------
 Use `DAIR-V2X <https://github.com/AIR-THU/DAIR-V2X/tree/main>`_ to read the Lidar pcd file in cooperative sensing dataset. Install the following required packages
+
 .. code-block:: console
 
   (mypy310) lkk@Alienware-LKKi7G8:~/Developer$ git clone https://github.com/klintan/pypcd.git
@@ -38,11 +39,13 @@ DAIR V2X dataset is saved in '/data/cmpe249-fa22/DAIR-C' folder. Based on 'https
                 ├── {id}.json
         ├── data_info.json              # Relevant index information of Infrastructure data
 
+
  * The 'cooperative' folder contains the following files
     ├── cooperative                     # Coopetative Files
         ├── label_world                 # Vehicle-Infrastructure Cooperative (VIC) Annotation files
             ├── {id}.json           
         ├── data_info.json              # Relevant index information combined the Infrastructure data and the Vehicle data
+
 
 There are four data folders under root '/data/cmpe249-fa22/DAIR-C':
  * 'cooperative-vehicle-infrastructure-vehicle-side-image' folder contains all images (6digit_id.jpg) in vehicle side.
@@ -86,6 +89,18 @@ The conversion process involve the following major steps:
   (mycondapy39) [010796032@coe-hpc2 training]$ cd image_2/
   (mycondapy39) [010796032@coe-hpc2 image_2]$ cp /data/cmpe249-fa22/DAIR-C/cooperative-vehicle-infrastructure-vehicle-side-image/* .
 
+The visualization of the vehicle-side Lidar with 3D bounding boxes is shown here
+
+.. image:: imgs/3D/V2XConvertedtoKittiwithboxes.png
+  :width: 600
+  :alt: V2XConvertedtoKittiwithboxes
+
+The camera view and the projected Lidar to camera is shown here
+
+.. image:: imgs/3D/V2Xkittiimage.png
+  :width: 600
+  :alt: V2Xkitti image
+
 In 'mydetector3d/datasets/dairv2x/dair2kitti.py', convert the infrastructure-side data to Kitti format, set: 
  * 'source-root=/data/cmpe249-fa22/DAIR-C/cooperative-vehicle-infrastructure/infrastructure-side/'
  * 'target-root=/data/cmpe249-fa22/DAIR-C/infrastructure-side-point-cloud-kitti'
@@ -105,6 +120,25 @@ Created kitti folder "/data/cmpe249-fa22/DAIR-C/infrastructure-side-point-cloud-
  calib  label_2  velodyne
  (mycondapy39) [010796032@coe-hpc2 training]$ mkdir image_2 && cd image_2
  (mycondapy39) [010796032@coe-hpc2 image_2]$ cp /data/cmpe249-fa22/DAIR-C/cooperative-vehicle-infrastructure-infrastructure-side-image/* .
+
+Infrastructure to Vehicle Transform 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Code 'mydetector3d/datasets/dairv2x/point_cloud_i2v.py' is used to transform the Lidar data from the Infrastructure view to the vehicle view.
+
+.. image:: imgs/3D/fusionpoints1-big.png
+  :width: 600
+  :alt: fusion big image
+
+We can also check the details of the fusion
+
+.. image:: imgs/3D/fusionpoints1.png
+  :width: 600
+  :alt: fusion details
+
+I2V Fusion
+~~~~~~~~~~~
+After the Lidar from the Infrastructure is converted to the vehicle view, we can perform raw data fusion. One example of the fusion result is shown here
+
 
 Prepare the dataset 
 ~~~~~~~~~~~~~~~~~~~

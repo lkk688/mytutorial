@@ -17,7 +17,8 @@ Contents
    CondaEnv
    HPC2
    WSL2
-   3ddetection
+   mydetector3d
+   3DV2X
    intelfpga
    test
    usage

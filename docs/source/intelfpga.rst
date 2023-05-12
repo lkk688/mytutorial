@@ -217,6 +217,7 @@ Step1: add the following code at the begining of the tcl file
 Step2: add the compile code "execute_flow -compile" at the end of the tcl file, before project close. Save the tcl file as "Hellowworld_compile.tcl"
 
 .. code-block:: console 
+  
   execute_flow -compile
   # Close project
   if {$need_to_close_project} {
