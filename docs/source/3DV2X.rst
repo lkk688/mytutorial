@@ -236,6 +236,16 @@ If this frame has no object, set gt_boxes_lidar empty:
   if len(gt_names)==0:
        gt_boxes_lidar = np.zeros((0, 7))
 
+Training and Evaluation 
+~~~~~~~~~~~~~~~~~~~~~~~
+Train the vehicle side data in mydetector3d
+  * cfg_dataset='mydetector3d/tools/cfgs/dairkitti_models/my3dmodel.yaml', model is saved in '/data/cmpe249-fa22/Mymodels/dairkitti_models/my3dmodel/0511/ckpt/checkpoint_epoch_64.pth'
+
+Run the evaluation and Lidar detection result is
+
+.. image:: imgs/3D/dairvehiclesidepred.png
+  :width: 900
+  :alt: detection results
 
 OpenCOOD
 ------------------
