@@ -72,25 +72,25 @@ The top view of the Lidar from the Infrastructure is
 
 .. image:: imgs/3D/infraview1.png
   :width: 900
-  :alt: colormap
+  :alt: infraview1
 
 The 3D view of the Lidar from the Infrastructure is
 
-.. image:: imgs/3D/infraview1.png
+.. image:: imgs/3D/infraview2.png
   :width: 900
-  :alt: colormap
+  :alt: infraview2
 
 The fusion top view of the Lidar from the Infrastructure and Lidar from the vehicle is
 
 .. image:: imgs/3D/fusiontop.png
   :width: 900
-  :alt: colormap
+  :alt: fusiontop
 
 The fusion 3D view of the Lidar from the Infrastructure and Lidar from the vehicle is
 
 .. image:: imgs/3D/fusionview1.png
   :width: 900
-  :alt: colormap
+  :alt: fusionview1
 
 Convert the dataset to KITTI format 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
