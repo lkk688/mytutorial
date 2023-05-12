@@ -185,7 +185,7 @@ After the Lidar from the Infrastructure is converted to the vehicle view, we can
 Prepare the dataset 
 ~~~~~~~~~~~~~~~~~~~
 
-Run dairkitti_dataset.py to generate the split files, infos, and gt_database.
+Run dairkitti_dataset.py to generate the split files, infos, and gt_database forthe vehicle side data.
  * run **create_split** option in dairkitti_dataset.py to create the split files (trainval.txt, train.txt, and val.txt) in 'ImageSets'
  * run **create_infos** to generate 'kitti_infos_xx.pkl' and call **create_groundtruth_database** to generate the gt_database
  
@@ -201,6 +201,21 @@ Run dairkitti_dataset.py to generate the split files, infos, and gt_database.
   Database Tricyclist: 3286
   ---------------Data preparation Done---------------
   $ ls /data/cmpe249-fa22/DAIR-C/single-vehicle-side-point-cloud-kitti/
+  gt_database  kitti_dbinfos_train.pkl  kitti_infos_train.pkl     kitti_infos_val.pkl  training
+  ImageSets    kitti_infos_test.pkl     kitti_infos_trainval.pkl  testing
+
+Run dairkitti_dataset.py again to generate the split file, infos, and gt_database for the infrastructure data
+
+.. code-block:: console
+  gt_database sample: 9939/9939
+  Database Car: 127726
+  Database Motorcyclist: 23287
+  Database Cyclist: 10555
+  Database Trafficcone: 187382
+  Database Pedestrian: 19794
+  Database Barrowlist: 81
+  ---------------Data preparation Done---------------
+  $ ls /data/cmpe249-fa22/DAIR-C/infrastructure-side-point-cloud-kitti/
   gt_database  kitti_dbinfos_train.pkl  kitti_infos_train.pkl     kitti_infos_val.pkl  training
   ImageSets    kitti_infos_test.pkl     kitti_infos_trainval.pkl  testing
 
