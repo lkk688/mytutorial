@@ -56,6 +56,42 @@ There are four data folders under root '/data/cmpe249-fa22/DAIR-C':
  
 Copy the split data (json files in 'https://github.com/AIR-THU/DAIR-V2X/tree/main/data/split_datas') to the data folder ('/data/cmpe249-fa22/DAIR-C')
 
+Use 'mydetector3d/tools/visual_utils/v2xvisualize.py' to visualize the DAIR-C dataset. The vehicle Lidar view is
+
+.. image:: imgs/3D/vehicleview.png
+  :width: 900
+  :alt: colormap
+
+The color of the points is related to the height based on the following color map
+
+.. image:: imgs/3D/colormap.png
+  :width: 400
+  :alt: colormap
+
+The top view of the Lidar from the Infrastructure is
+
+.. image:: imgs/3D/infraview1.png
+  :width: 900
+  :alt: colormap
+
+The 3D view of the Lidar from the Infrastructure is
+
+.. image:: imgs/3D/infraview1.png
+  :width: 900
+  :alt: colormap
+
+The fusion top view of the Lidar from the Infrastructure and Lidar from the vehicle is
+
+.. image:: imgs/3D/fusiontop.png
+  :width: 900
+  :alt: colormap
+
+The fusion 3D view of the Lidar from the Infrastructure and Lidar from the vehicle is
+
+.. image:: imgs/3D/fusionview1.png
+  :width: 900
+  :alt: colormap
+
 Convert the dataset to KITTI format 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -89,16 +125,22 @@ The conversion process involve the following major steps:
   (mycondapy39) [010796032@coe-hpc2 training]$ cd image_2/
   (mycondapy39) [010796032@coe-hpc2 image_2]$ cp /data/cmpe249-fa22/DAIR-C/cooperative-vehicle-infrastructure-vehicle-side-image/* .
 
-The visualization of the vehicle-side Lidar with 3D bounding boxes is shown here
+Using 'mydetector3d/tools/visual_utils/v2xvisualize.py' to visualize the converted kitti-format lidar
+
+.. image:: imgs/3D/v2xvehiclekittitop.png
+  :width: 900
+  :alt: v2xvehiclekittitop
+
+Using 'VisUtils/waymokittiallvis2.py', the visualization of the vehicle-side Lidar with 3D bounding boxes is shown here
 
 .. image:: imgs/3D/V2XConvertedtoKittiwithboxes.png
-  :width: 600
+  :width: 900
   :alt: V2XConvertedtoKittiwithboxes
 
 The camera view and the projected Lidar to camera is shown here
 
 .. image:: imgs/3D/V2Xkittiimage.png
-  :width: 600
+  :width: 900
   :alt: V2Xkitti image
 
 In 'mydetector3d/datasets/dairv2x/dair2kitti.py', convert the infrastructure-side data to Kitti format, set: 

@@ -93,6 +93,12 @@ In ** runevaluation ** , input "det_annos" from detection results
                     eval_gt_annos, map_name_to_kitti=map_name_to_kitti, info_with_fakelidar = False)
     result_str, result_dict = kitti_eval.get_official_eval_result(eval_gt_annos, eval_det_annos, class_names)
 
+One example of the 3D detection result based on Waymokitti dataset and SECOND model is shown
+
+.. image:: imgs/3D/waymokitti_second_epoch64_onebatch_1.png
+  :width: 900
+  :alt: colormap
+
 Kitti Dataset Process
 -----------------------------
 Run **create_kitti_infos** in 'mydetector3d/datasets/kitti/kitti_dataset.py', create 'kitti_infos_train.pkl', 'kitti_infos_val.pkl', 'kitti_infos_trainval.pkl', and 'kitti_infos_test.pkl' based on split file
