@@ -1,5 +1,8 @@
 3D V2X Data
 =============
+DAIR-V2X Cooperative Dataset (DAIR-V2X-C) (from https://thudair.baai.ac.cn/cooptest) contains 18330 frames of infrastructure multi-modality data (point cloud & image), 20515 frames of vehicle multi-modality data (point cloud & image), 2D & 3D joint annotation files of raw data, calibration files, and timestamp files. DAIR-V2X-C can be used for Vehicle-Infrastructure Cooperative (VIC) 3D object detection to improve environmental perception performance in autonomous driving.
+
+2D and 3D bounding boxes of the obstacle objects are provided as well as their category attributes, occlusion states, and truncated states in the annotation. There are total 10 object classes: Car, Truck, Van, Bus, Pedestrian, Cyclist, Tricyclist, Motorcyclist, Barrowlist, TrafficCone. 3D bounding box in the Lidar/Virtual Lidar coordinate system including height, width, length, x_loc, y_loc, z_loc, rotation.
 
 DAIR-V2X Dependencies
 ---------------------
@@ -163,6 +166,29 @@ Created kitti folder "/data/cmpe249-fa22/DAIR-C/infrastructure-side-point-cloud-
  (mycondapy39) [010796032@coe-hpc2 training]$ mkdir image_2 && cd image_2
  (mycondapy39) [010796032@coe-hpc2 image_2]$ cp /data/cmpe249-fa22/DAIR-C/cooperative-vehicle-infrastructure-infrastructure-side-image/* .
 
+.. note::
+    During the **dair2kitti** conversion process, classes of ["Truck","Van","Bus","Car"] has been converted to 'Car' in **rewrite_label** function. There are 7 classes left in the converted kitti data: Car, Pedestrian, Cyclist, Tricyclist, Motorcyclist, Barrowlist, TrafficCone.
+    The current mydetector3d training will only pick the classes in the class_names list, i.e., other classes are ignored.
+
+Use **checklabelfiles** function in dairkitti_dataset to see the class names in label
+
+.. code-block:: console
+
+  #single vehicle side total: 15285
+  {'Car': 133189, 'Motorcyclist': 18738, 'Cyclist': 11113, 'Tricyclist': 4173, 'Trafficcone': 106764, 'Pedestrian': 11434}
+  #infrastructure side total: 12424
+  {'Car': 160048, 'Motorcyclist': 28986, 'Trafficcone': 233529, 'Cyclist': 13228, 'Pedestrian': 24789, 'Barrowlist': 108}
+
+Run **replacelabelnames** in dairkitti_dataset, to replace some of the class names, the final output contains four classes
+
+.. code-block:: console
+
+  (mycondapy39) [ 3DDepth]$ python mydetector3d/datasets/kitti/dairkitti_dataset.py
+  #single vihicle side
+  {'Car': 133189, 'Cyclist': 34024, 'Other': 106764, 'Pedestrian': 11434}
+  #infrastructure side
+  {'Car': 160048, 'Cyclist': 42214, 'Other': 233637, 'Pedestrian': 24789}
+
 Infrastructure to Vehicle Transform 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Code 'mydetector3d/datasets/dairv2x/point_cloud_i2v.py' is used to transform the Lidar data from the Infrastructure view to the vehicle view.
@@ -199,10 +225,25 @@ Run dairkitti_dataset.py to generate the split files, infos, and gt_database for
   Database Trafficcone: 85790
   Database Pedestrian: 9060
   Database Tricyclist: 3286
+  $ dairkitti_dataset.py # after replacelabelnames
+  gt_database sample: 12228/12228
+  Database Car: 106628
+  Database Cyclist: 27047
+  Database Other: 85790
+  Database Pedestrian: 9060
   ---------------Data preparation Done---------------
   $ ls /data/cmpe249-fa22/DAIR-C/single-vehicle-side-point-cloud-kitti/
   gt_database  kitti_dbinfos_train.pkl  kitti_infos_train.pkl     kitti_infos_val.pkl  training
   ImageSets    kitti_infos_test.pkl     kitti_infos_trainval.pkl  testing
+
+Use **checkinfopklfiles** to check the pkl file
+
+.. code-block:: console
+
+ info['point_cloud'] = {'num_features': 4, 'lidar_idx': sample_idx}
+ info['image'] = {'image_idx': sample_idx, 'image_shape': self.get_image_shape(sample_idx)}
+ info['calib'] = calib_info
+ info['annos'] = annotations #['name'], ['truncated'], ['occluded'], ['alpha'], ['bbox']: (N,4), ['dimensions']: lhw(camera) format (N,3), ['location']: (N,3), ['rotation_y'], ['score'], ['difficulty'], ['index'], ['gt_boxes_lidar']: (N,7), ['num_points_in_gt']
 
 Run dairkitti_dataset.py again to generate the split file, infos, and gt_database for the infrastructure data
 
@@ -214,6 +255,13 @@ Run dairkitti_dataset.py again to generate the split file, infos, and gt_databas
   Database Trafficcone: 187382
   Database Pedestrian: 19794
   Database Barrowlist: 81
+  ---------------Data preparation Done---------------
+  $ dairkitti_dataset.py # after replacelabelnames
+  gt_database sample: 9939/9939
+  Database Car: 127726
+  Database Cyclist: 33842
+  Database Other: 187463
+  Database Pedestrian: 19794
   ---------------Data preparation Done---------------
   $ ls /data/cmpe249-fa22/DAIR-C/infrastructure-side-point-cloud-kitti/
   gt_database  kitti_dbinfos_train.pkl  kitti_infos_train.pkl     kitti_infos_val.pkl  training
@@ -246,6 +294,13 @@ Run the evaluation and Lidar detection result is
 .. image:: imgs/3D/dairvehiclesidepred.png
   :width: 900
   :alt: detection results
+
+
+Train the vehicle side data in mydetector3d after **replacelabelnames**, data_tag='0513' in GPU3
+  * cfg_dataset='mydetector3d/tools/cfgs/dairkitti_models/my3dmodel.yaml', model is saved in '/data/cmpe249-fa22/Mymodels/dairkitti_models/my3dmodel/0513/ckpt/'
+
+Train the infrastructure side data in mydetector3d after **replacelabelnames**, data_tag='0513infra' in GPU2
+  * cfg_dataset='mydetector3d/tools/cfgs/dairkitti_models/my3dmodel_infra.yaml', model is saved in '/data/cmpe249-fa22/Mymodels/dairkitti_models/my3dmodel/0513infra/ckpt/'
 
 OpenCOOD
 ------------------
