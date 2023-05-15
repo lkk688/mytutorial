@@ -192,6 +192,11 @@ Run **replacelabelnames** in dairkitti_dataset, to replace some of the class nam
 Infrastructure to Vehicle Transform 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Code 'mydetector3d/datasets/dairv2x/point_cloud_i2v.py' is used to transform the Lidar data from the Infrastructure view to the vehicle view.
+  * Read data_info from cooperative/data_info.json, which contains the vehicle-side image/Lidar data path (e.g., 000289) and infrastructure-side image/Lidar data path (e.g., 007489)
+  * Find the matched i_data (infrastructure) and v_data (vehicle) dict
+  * Get infrastructure-side virtuallidar2world path, get vehicle-side novatel2world, and lidar2novatel path; destination file name from infrastructure (007489)
+  * call **trans_pcd_i2v**, read infrastructure lidar pcd, to virtuallidar to world transform, then world to novatel transform, then do novatel to lidar transform
+  * save points to bin files in '/data/cmpe249-fa22/DAIR-C/'
 
 .. image:: imgs/3D/fusionpoints1-big.png
   :width: 600
@@ -287,7 +292,26 @@ If this frame has no object, set gt_boxes_lidar empty:
 Training and Evaluation 
 ~~~~~~~~~~~~~~~~~~~~~~~
 Train the vehicle side data in mydetector3d
-  * cfg_dataset='mydetector3d/tools/cfgs/dairkitti_models/my3dmodel.yaml', model is saved in '/data/cmpe249-fa22/Mymodels/dairkitti_models/my3dmodel/0511/ckpt/checkpoint_epoch_64.pth'
+  * cfg_dataset='mydetector3d/tools/cfgs/dairkitti_models/my3dmodel.yaml', model is saved in '/data/cmpe249-fa22/Mymodels/dairkitti_models/my3dmodel/0511/ckpt/checkpoint_epoch_120.pth'/latest_model.pth
+  * Evaluation results (filter out empty frame and classes not in the kittclasses) saved in /data/cmpe249-fa22/Mymodels/eval/dairkitti_models_my3dmodel_epochmodel/txtresults
+
+.. code-block:: console
+
+  Car AP@0.70, 0.70, 0.70:
+  bbox AP:22.9647, 20.1308, 19.5203
+  bev  AP:64.3469, 65.0784, 65.2450
+  3d   AP:56.6919, 52.6843, 51.5003
+  aos  AP:11.50, 10.21, 9.93
+  Pedestrian AP@0.50, 0.50, 0.50:
+  bbox AP:13.2223, 11.7845, 11.7958
+  bev  AP:53.5280, 48.6861, 47.9500
+  3d   AP:50.1386, 43.0288, 42.3967
+  aos  AP:11.34, 10.48, 10.48
+  Cyclist AP@0.50, 0.50, 0.50:
+  bbox AP:11.4549, 13.7494, 13.9884
+  bev  AP:22.5282, 30.7371, 30.5679
+  3d   AP:20.9868, 26.8777, 26.7182
+  aos  AP:5.08, 6.16, 6.28
 
 Run the evaluation and Lidar detection result is
 
@@ -295,12 +319,60 @@ Run the evaluation and Lidar detection result is
   :width: 900
   :alt: detection results
 
+Train the infrastructure side data in mydetector3d
+  * cfg_dataset='mydetector3d/tools/cfgs/dairkitti_models/my3dmodel_infra.yaml', model is saved in '/data/cmpe249-fa22/Mymodels/dairkitti_models/my3dmodel_infra/0512infra/ckpt/checkpoint_epoch_120.pth'/latest_model.pth
+  * Evaluation results (filter out empty frame and classes not in the kittclasses) is 0
+
 
 Train the vehicle side data in mydetector3d after **replacelabelnames**, data_tag='0513' in GPU3
-  * cfg_dataset='mydetector3d/tools/cfgs/dairkitti_models/my3dmodel.yaml', model is saved in '/data/cmpe249-fa22/Mymodels/dairkitti_models/my3dmodel/0513/ckpt/'
+  * cfg_dataset='mydetector3d/tools/cfgs/dairkitti_models/my3dmodel.yaml', model is saved in '/data/cmpe249-fa22/Mymodels/dairkitti_models/my3dmodel/0513/ckpt/checkpoint_epoch_128.pth'
+  * Evaluation results (filter out empty frame and classes not in the kittclasses) result is saved to /data/cmpe249-fa22/Mymodels/eval/dairkitti_models_my3dmodel_epochmodel/txtresults
+
+.. code-block:: console
+
+  Average predicted number of objects(3057 samples): 140.240
+  Finished detection: {'recall/roi_0.3': 0.0, 'recall/rcnn_0.3': 0.8291671061421088, 'recall/roi_0.5': 0.0, 'recall/rcnn_0.5': 0.671465738494533, 'recall/roi_0.7': 0.0, 'recall/rcnn_0.7': 0.31039271525507156, 'infer_time': 64.6671114404217, 'total_pred_objects': 428715, 'total_annos': 3057}
+  Car AP@0.70, 0.70, 0.70:
+  bbox AP:22.1671, 20.0946, 19.4177
+  bev  AP:67.3517, 68.4604, 68.3072
+  3d   AP:59.0924, 55.3433, 54.4236
+  aos  AP:10.59, 9.66, 9.35
+  Pedestrian AP@0.50, 0.50, 0.50:
+  bbox AP:12.6278, 12.0752, 12.0567
+  bev  AP:54.4139, 48.7479, 48.4298
+  3d   AP:51.6765, 43.4523, 43.0454
+  aos  AP:11.05, 10.60, 10.59
+  Cyclist AP@0.50, 0.50, 0.50:
+  bbox AP:22.8686, 22.5770, 22.6723
+  bev  AP:57.5935, 58.9456, 58.0578
+  3d   AP:54.5871, 53.7105, 52.8249
+  aos  AP:10.90, 10.70, 10.76
 
 Train the infrastructure side data in mydetector3d after **replacelabelnames**, data_tag='0513infra' in GPU2
-  * cfg_dataset='mydetector3d/tools/cfgs/dairkitti_models/my3dmodel_infra.yaml', model is saved in '/data/cmpe249-fa22/Mymodels/dairkitti_models/my3dmodel/0513infra/ckpt/'
+  * cfg_dataset='mydetector3d/tools/cfgs/dairkitti_models/my3dmodel_infra.yaml', model is saved in '/data/cmpe249-fa22/Mymodels/dairkitti_models/my3dmodel_infra/0513infra/ckpt/checkpoint_epoch_128.pth'
+  * Evaluation results (filter out empty frame and classes not in the kittclasses)
+
+.. code-block:: console
+
+  Average predicted number of objects(2485 samples): 85.658
+  Finished detection: {'recall/roi_0.3': 0.0, 'recall/rcnn_0.3': 0.626487269085486, 'recall/roi_0.5': 0.0, 'recall/rcnn_0.5': 0.5321511381078345, 'recall/roi_0.7': 0.0, 'recall/rcnn_0.7': 0.30276607556905394, 'infer_time': 68.14103801150797, 'total_pred_objects': 212861, 'total_annos': 2485}
+  Car AP@0.70, 0.70, 0.70:
+  bbox AP:23.7721, 18.4526, 18.3909
+  bev  AP:72.1776, 54.1334, 54.0990
+  3d   AP:70.9812, 53.2164, 53.0006
+  aos  AP:12.27, 9.49, 9.46
+  Pedestrian AP@0.50, 0.50, 0.50:
+  bbox AP:34.0897, 33.7425, 33.8436
+  bev  AP:36.2813, 34.1492, 34.2634
+  3d   AP:33.5470, 31.4709, 31.5814
+  aos  AP:17.07, 17.10, 17.16
+  Cyclist AP@0.50, 0.50, 0.50:
+  bbox AP:45.7644, 40.9651, 41.1427
+  bev  AP:63.7247, 52.2808, 52.0245
+  3d   AP:61.5907, 51.3137, 50.9824
+  aos  AP:23.37, 21.38, 21.48
+
+Train 'mydetector3d/tools/cfgs/dairkitti_models/myvoxelnext.yaml' in GPU2
 
 OpenCOOD
 ------------------
