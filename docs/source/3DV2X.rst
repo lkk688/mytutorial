@@ -192,11 +192,33 @@ Run **replacelabelnames** in dairkitti_dataset, to replace some of the class nam
 Infrastructure to Vehicle Transform 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Code 'mydetector3d/datasets/dairv2x/point_cloud_i2v.py' is used to transform the Lidar data from the Infrastructure view to the vehicle view.
-  * Read data_info from cooperative/data_info.json, which contains the vehicle-side image/Lidar data path (e.g., 000289) and infrastructure-side image/Lidar data path (e.g., 007489)
-  * Find the matched i_data (infrastructure) and v_data (vehicle) dict
+  * Read data_info (size 6617 array) from cooperative/data_info.json, each data in data_info contains the vehicle-side image/Lidar data path (e.g., 000289) and infrastructure-side image/Lidar data path (e.g., 007489)
+     * 'infrastructure_image_path', 'infrastructure_pointcloud_path', 'vehicle_pointcloud_path', 'cooperative_label_path', and 'system_error_offset'
+  * Find the matched i_data (infrastructure, 12424) and v_data (vehicle, 15285) dict
+  * data_info (6617) is a sub-set of i_data and v_data
   * Get infrastructure-side virtuallidar2world path, get vehicle-side novatel2world, and lidar2novatel path; destination file name from infrastructure (007489)
   * call **trans_pcd_i2v**, read infrastructure lidar pcd, to virtuallidar to world transform, then world to novatel transform, then do novatel to lidar transform
-  * save points to bin files in '/data/cmpe249-fa22/DAIR-C/'
+  * save points to bin files in '/data/cmpe249-fa22/DAIR-C/early-fusion/velodyne/lidar_i2v/'
+
+In dairkitti_dataset, add matched infrastructure lidar points for fusion via "dataset_cfg.Early_Fusion" flag. The total number of matched vehicle and infrastructure lidar frame is less than the original lidar frames, the number of useful frames changes:
+  * total lidar files: 15285
+  * training sample list len, kitti_info len: 12228
+  * i2vmap size: 6601
+  * newkitti_infos: 5250
+  * dataloader len: 1313 (batchsize=4)
+
+The infrastructure lidar points has nan value. Modify the **mask_points_by_range** in common_utils.py, to remove 'nan' points and limit the range in Z-axis
+
+.. code-block:: console
+
+  mask = (points[:, 0] >= limit_range[0]) & (points[:, 0] <= limit_range[3]) & ~np.isnan(points[:, 0])\
+            & (points[:, 1] >= limit_range[1]) & (points[:, 1] <= limit_range[4]) & ~np.isnan(points[:, 1])\
+              & (points[:, 2] >= limit_range[2]) & (points[:, 2] <= limit_range[5]) & ~np.isnan(points[:, 2])\
+              & ~np.isnan(points[:, 3])
+
+I2V Fusion
+~~~~~~~~~~~
+After the Lidar from the Infrastructure is converted to the vehicle view, we can perform raw data fusion. One example of the fusion result is shown here
 
 .. image:: imgs/3D/fusionpoints1-big.png
   :width: 600
@@ -207,11 +229,6 @@ We can also check the details of the fusion
 .. image:: imgs/3D/fusionpoints1.png
   :width: 600
   :alt: fusion details
-
-I2V Fusion
-~~~~~~~~~~~
-After the Lidar from the Infrastructure is converted to the vehicle view, we can perform raw data fusion. One example of the fusion result is shown here
-
 
 Prepare the dataset 
 ~~~~~~~~~~~~~~~~~~~
@@ -372,7 +389,59 @@ Train the infrastructure side data in mydetector3d after **replacelabelnames**, 
   3d   AP:61.5907, 51.3137, 50.9824
   aos  AP:23.37, 21.38, 21.48
 
-Train 'mydetector3d/tools/cfgs/dairkitti_models/myvoxelnext.yaml' in GPU2
+Train 'mydetector3d/tools/cfgs/dairkitti_models/myvoxelnext.yaml', '0514' in GPU2
+  * model is saved in "/data/cmpe249-fa22/Mymodels/dairkitti_models/myvoxelnext/0514/ckpt/latest_model.pth"
+  * Evaluation result
+
+.. code-block:: console
+
+  Average predicted number of objects(3057 samples): 31.808
+  Finished detection: {'recall/roi_0.3': 0.0, 'recall/rcnn_0.3': 0.7716661392961361, 'recall/roi_0.5': 0.0, 'recall/rcnn_0.5': 0.5561298034665823, 'recall/roi_0.7': 0.0, 'recall/rcnn_0.7': 0.2290721794466125, 'infer_time': 69.39488329918557, 'total_pred_objects': 97238, 'total_annos': 3057}
+  Car AP@0.70, 0.70, 0.70:
+  bbox AP:19.0752, 19.6097, 17.7932
+  bev  AP:62.8174, 59.2183, 59.2639
+  3d   AP:54.4923, 42.8873, 42.1973
+  aos  AP:9.32, 10.69, 9.81
+  Pedestrian AP@0.50, 0.50, 0.50:
+  bbox AP:13.6921, 13.7351, 13.5351
+  bev  AP:60.5654, 51.0911, 51.0959
+  3d   AP:54.6608, 44.5123, 44.3112
+  aos  AP:4.40, 4.22, 4.12
+  Cyclist AP@0.50, 0.50, 0.50:
+  bbox AP:25.4608, 23.8307, 23.9123
+  bev  AP:68.0980, 61.8668, 61.2499
+  3d   AP:63.8344, 53.5704, 53.1876
+  aos  AP:12.79, 12.42, 12.43
+
+
+Train 'mydetector3d/tools/cfgs/dairkitti_models/myvoxelnext_infra.yaml', '0514' in GPU2
+  * model is saved in "/data/cmpe249-fa22/Mymodels/dairkitti_models/myvoxelnext_infra/0514/ckpt/checkpoint_epoch_128.pth"
+  * Evaluation results (filter out empty frame and classes not in the kittclasses)
+
+.. code-block:: console
+
+  Average predicted number of objects(2485 samples): 32.017
+  Finished detection: {'recall/roi_0.3': 0.0, 'recall/rcnn_0.3': 0.6052164636469525, 'recall/roi_0.5': 0.0, 'recall/rcnn_0.5': 0.47907209649151455, 'recall/roi_0.7': 0.0, 'recall/rcnn_0.7': 0.26994546226445904, 'infer_time': 58.342159752677105, 'total_pred_objects': 79563, 'total_annos': 2485}
+  Car AP@0.70, 0.70, 0.70:
+  bbox AP:17.3477, 13.8236, 13.8174
+  bev  AP:72.1020, 54.0964, 54.0660
+  3d   AP:70.5954, 52.9636, 52.0443
+  aos  AP:9.42, 7.54, 7.53
+  Pedestrian AP@0.50, 0.50, 0.50:
+  bbox AP:37.3775, 32.6868, 36.6653
+  bev  AP:37.0466, 32.3041, 32.3247
+  3d   AP:32.7240, 30.7940, 30.7913
+  aos  AP:18.55, 16.16, 18.20
+  Cyclist AP@0.50, 0.50, 0.50:
+  bbox AP:48.6067, 43.8676, 38.4401
+  bev  AP:67.0253, 52.8233, 52.7723
+  3d   AP:60.3989, 52.1308, 51.9856
+  aos  AP:24.37, 22.89, 20.14
+
+
+Train Fusion Models
+~~~~~~~~~~~~~~~~~~~~
+
 
 OpenCOOD
 ------------------
