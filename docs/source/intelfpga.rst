@@ -260,8 +260,58 @@ JESD204B
 ~~~~~~~~
 Check the Intel JESD204B page: `JESD204B Intel® FPGA IP <https://www.intel.com/content/www/us/en/products/details/fpga/intellectual-property/interface-protocols/jesd204b.html>`_ 
 
-General procedure on how to generate the JESD204B design example in `User Guide <https://www.intel.com/content/www/us/en/docs/programmable/683094/22-1/procedure-55160.html>`_ To generate the design example from the IP parameter editor:
-  * In the IP Catalog (Tools > IP Catalog), locate and select JESD204B. The IP parameter editor appears.
+General procedure on how to generate the JESD204B design example in `User Guide <https://www.intel.com/content/www/us/en/docs/programmable/683094/22-1/procedure-55160.html>`_ 
+
+Create a new project named "myjesd204b" in Quartus II
+
+.. image:: imgs/FPGA/jesd204bnewproject.png
+  :width: 600
+  :alt: jesd204bnewproject
+
+To generate the design example from the IP parameter editor, In the IP Catalog (Tools > IP Catalog), locate and select JESD204B. 
+
+.. image:: imgs/FPGA/ipcatalog.png
+  :width: 600
+  :alt: ipcatalog
+
+Click "add", and specify the name of the new ip variant, click "Create"
+
+.. image:: imgs/FPGA/newipvariant.png
+  :width: 600
+  :alt: newipvariant
+
+The system automatically populates the IP parameters window for the design
+
+.. image:: imgs/FPGA/IPparameter.png
+  :width: 600
+  :alt: IPparameter
+
+In the parameter editor, click on the Example Design tab.
+
+.. image:: imgs/FPGA/jesddesignexample.png
+  :width: 600
+  :alt: jesddesignexample
+
+Under the Available Example Designs section, select the available designs. 
+  * None: No design example available that matches the IP parameters selected.
+  * RTL State Machine Control: Design example has RTL state machine as control unit.
+  * Nios II Control: Design example has Nios II processor as control unit. This option is available for Arria 10 devices only.
+
+Select "Nios Control" in "Select Design" and click other options
+
+.. image:: imgs/FPGA/ipniosexample.png
+  :width: 600
+  :alt: ipniosexample
+
+Click the Generate Example Design button on the top right corner to generate the design example based on your settings. Select the default directory "H:/QuartusWorkspace/myJESD204B/jesd204_0_example_design". After the generation is finished, one "jesd204_0_example_design" folder is created and it contains two sub-folders "ed_synth" and "ip_sim". There is one quartus project file "altera_jesd204_ed_RX_TX.qpf" inside the "ed_synth". Open this project file
+
+.. image:: imgs/FPGA/designexampleproject.png
+  :width: 600
+  :alt: designexampleproject
+
+The design diagram can be accessed in `JESD204B Design Example <https://www.intel.com/content/www/us/en/docs/programmable/683094/22-1/design-example-with-nios-control-unit.html>`_
+
+The IP parameter editor appears.
   * Specify a top-level name and the folder for your custom IP variation, and the target device. Click OK.
   * Select a design from the Presets library. When you select a design, the system automatically populates the IP parameters for the design.
   * Click the Generate Example Design button.
