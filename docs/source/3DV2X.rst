@@ -345,6 +345,10 @@ Train the vehicle side data in mydetector3d after **replacelabelnames**, data_ta
   * cfg_dataset='mydetector3d/tools/cfgs/dairkitti_models/my3dmodel.yaml', model is saved in '/data/cmpe249-fa22/Mymodels/dairkitti_models/my3dmodel/0513/ckpt/checkpoint_epoch_128.pth'
   * Evaluation results (filter out empty frame and classes not in the kittclasses) result is saved to /data/cmpe249-fa22/Mymodels/eval/dairkitti_models_my3dmodel_epochmodel/txtresults
 
+.. image:: imgs/3D/dairvehiclesidepred2.png
+  :width: 900
+  :alt: detection results
+
 .. code-block:: console
 
   Average predicted number of objects(3057 samples): 140.240

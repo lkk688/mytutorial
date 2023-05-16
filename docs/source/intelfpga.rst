@@ -472,6 +472,14 @@ JESD204B Intel® FPGA IP Design Example User Guide
 
 ADI References
 ----------------
+https://www.analog.com/en/products/adrv9009.html#product-overview
+https://www.analog.com/en/design-center/evaluation-hardware-and-software/evaluation-boards-kits/EVAL-ADRV9008-9009.html#eb-overview
+https://wiki.analog.com/resources/eval/user-guides/adrv9009
+https://wiki.analog.com/resources/eval/user-guides/adrv9009/no-os-setup
+https://www.analog.com/en/design-center/landing-pages/001/transceiver-evaluation-software.html
+https://github.com/analogdevicesinc/no-OS
+https://wiki.analog.com/resources/eval/user-guides/adrv9009/quickstart/a10gx
+
 ADRV9009 Arria 10 GX Quick Start Guide: https://wiki.analog.com/resources/eval/user-guides/adrv9009/quickstart/a10gx
 ADRV9009 HDL Reference Design: https://wiki.analog.com/resources/eval/user-guides/adrv9009/reference_hdl
 https://github.com/analogdevicesinc/hdl/tree/master/projects/adrv9009
