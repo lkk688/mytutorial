@@ -441,7 +441,104 @@ Train 'mydetector3d/tools/cfgs/dairkitti_models/myvoxelnext_infra.yaml', '0514' 
 
 Train Fusion Models
 ~~~~~~~~~~~~~~~~~~~~
+Config file='mydetector3d/tools/cfgs/dairkitti_models/my3dmodel.yaml'
+  * fusion training result is saved in "/data/cmpe249-fa22/Mymodels/dairkitti_models/my3dmodel/0515/ckpt/checkpoint_epoch_128.pth"
+  * Evaluation result is saved to /data/cmpe249-fa22/Mymodels/eval/dairkitti_models_my3dmodel_epoch128/txtresults
 
+.. code-block:: console
+
+  Average predicted number of objects(1351 samples): 149.688
+  Finished detection: {'recall/roi_0.3': 0.0, 'recall/rcnn_0.3': 0.8347341135810227, 'recall/roi_0.5': 0.0, 'recall/rcnn_0.5': 0.6716675830649596, 'recall/roi_0.7': 0.0, 'recall/rcnn_0.7': 0.32884298169821696, 'infer_time': 90.00867711016413, 'total_pred_objects': 202228, 'total_annos': 1351}
+  Car AP@0.70, 0.70, 0.70:
+  bbox AP:21.5416, 20.4308, 19.6968
+  bev  AP:80.9123, 77.6669, 76.0540
+  3d   AP:74.1940, 64.9879, 63.3278
+  aos  AP:10.27, 9.86, 9.51
+  Pedestrian AP@0.50, 0.50, 0.50:
+  bbox AP:5.2918, 5.4963, 5.4031
+  bev  AP:51.3546, 41.8877, 41.4453
+  3d   AP:47.6064, 36.4693, 35.6941
+  aos  AP:2.62, 2.50, 2.50
+  Cyclist AP@0.50, 0.50, 0.50:
+  bbox AP:24.6030, 25.4492, 25.2234
+  bev  AP:72.4071, 69.5883, 68.2706
+  3d   AP:70.2918, 65.0319, 63.4337
+  aos  AP:10.83, 11.74, 11.65
+
+Config file='mydetector3d/tools/cfgs/dairkitti_models/my3dmodel.yaml', disable 'Lidar_Fusion' (use the small set of data with vehicle and infrastructure cooperation, but the Infrastructure Lidar data is not used)
+  * fusion training result is saved in "/data/cmpe249-fa22/Mymodels/dairkitti_models/my3dmodel/0515nolidarfusion/ckpt/checkpoint_epoch_128.pth"
+
+.. code-block:: console
+
+  Average predicted number of objects(1351 samples): 207.742
+  Finished detection: {'recall/roi_0.3': 0.0, 'recall/rcnn_0.3': 0.7967166758306496, 'recall/roi_0.5': 0.0, 'recall/rcnn_0.5': 0.6008561778336344, 'recall/roi_0.7': 0.0, 'recall/rcnn_0.7': 0.24161495562013982, 'infer_time': 110.38009090536445, 'total_pred_objects': 280659, 'total_annos': 1351}
+  Car AP@0.70, 0.70, 0.70:
+  bbox AP:10.7006, 12.1243, 11.8581
+  bev  AP:38.5465, 48.0391, 48.7998
+  3d   AP:29.6970, 35.0667, 34.8825
+  aos  AP:5.21, 5.99, 5.87
+  Pedestrian AP@0.50, 0.50, 0.50:
+  bbox AP:5.0162, 5.1991, 5.0259
+  bev  AP:43.5028, 39.1187, 38.8207
+  3d   AP:39.1552, 33.4822, 33.0070
+  aos  AP:2.56, 2.55, 2.48
+  Cyclist AP@0.50, 0.50, 0.50:
+  bbox AP:18.4654, 21.0681, 20.9794
+  bev  AP:46.5717, 52.7549, 51.6042
+  3d   AP:42.2533, 46.8303, 45.8203
+  aos  AP:8.82, 10.27, 10.24
+  
+
+
+Config file='mydetector3d/tools/cfgs/dairkitti_models/my3dmodel2.yaml', modify the MAX_POINTS_PER_VOXEL and add more filters in VFE and MAP_TO_BEV (Num point features after VFE is 128).
+  * Training results saved in "/data/cmpe249-fa22/Mymodels/dairkitti_models/my3dmodel2/0516/ckpt/checkpoint_epoch_128.pth"
+  * Result is saved to /data/cmpe249-fa22/Mymodels/eval/dairkitti_models_my3dmodel2_0516/txtresults
+
+.. code-block:: console
+
+  Average predicted number of objects(1351 samples): 43.711
+  Finished detection: {'recall/roi_0.3': 0.0, 'recall/rcnn_0.3': 0.7898436886340429, 'recall/roi_0.5': 0.0, 'recall/rcnn_0.5': 0.6265807870552196, 'recall/roi_0.7': 0.0, 'recall/rcnn_0.7': 0.3065352289686592, 'infer_time': 81.65811786990194, 'total_pred_objects': 59054, 'total_annos': 1351}
+  Car AP@0.70, 0.70, 0.70:
+  bbox AP:19.8701, 18.5302, 17.3661
+  bev  AP:80.1939, 75.9804, 75.4748
+  3d   AP:72.7171, 64.0618, 62.0966
+  aos  AP:9.62, 9.11, 8.54
+  Pedestrian AP@0.50, 0.50, 0.50:
+  bbox AP:5.8957, 5.8491, 5.7967
+  bev  AP:54.4264, 44.6858, 43.9075
+  3d   AP:49.6394, 37.7629, 37.1243
+  aos  AP:4.05, 3.05, 3.00
+  Cyclist AP@0.50, 0.50, 0.50:
+  bbox AP:23.4062, 24.6677, 24.6010
+  bev  AP:69.0258, 67.8017, 66.6623
+  3d   AP:67.5499, 62.6145, 61.3039
+  aos  AP:10.10, 11.29, 11.28
+
+Config file='mydetector3d/tools/cfgs/dairkitti_models/myvoxelnext.yaml'
+  * Training results saved in "/data/cmpe249-fa22/Mymodels/dairkitti_models/myvoxelnext/0516/ckpt/checkpoint_epoch_128.pth"
+  * Result is saved to /data/cmpe249-fa22/Mymodels/eval/dairkitti_models_myvoxelnext_0516/txtresults
+
+.. code-block:: console
+
+  Average predicted number of objects(1351 samples): 31.134
+  Finished detection: {'recall/roi_0.3': 0.0, 'recall/rcnn_0.3': 0.80944152069751, 'recall/roi_0.5': 0.0, 'recall/rcnn_0.5': 0.6190008640326762, 'recall/roi_0.7': 0.0, 'recall/rcnn_0.7': 0.308381116958605, 'infer_time': 88.02486030307747, 'total_pred_objects': 42062, 'total_annos': 1351}
+  Car AP@0.70, 0.70, 0.70:
+  bbox AP:15.5940, 15.5772, 14.6006
+  bev  AP:86.8837, 80.1227, 79.6426
+  3d   AP:82.6152, 69.4716, 68.6104
+  aos  AP:7.81, 7.63, 7.17
+  Pedestrian AP@0.50, 0.50, 0.50:
+  bbox AP:13.4294, 14.2041, 14.0227
+  bev  AP:58.7801, 50.2011, 50.2017
+  3d   AP:50.6428, 43.2261, 42.5002
+  aos  AP:7.54, 7.82, 7.72
+  Cyclist AP@0.50, 0.50, 0.50:
+  bbox AP:15.1565, 24.4733, 24.3833
+  bev  AP:82.4833, 77.6059, 76.9294
+  3d   AP:76.3442, 72.5238, 68.6905
+  aos  AP:6.75, 12.61, 12.57
+
+Train 'mydetector3d/tools/cfgs/dairkitti_models/my3dmodelv2.yaml' '0517'
 
 OpenCOOD
 ------------------

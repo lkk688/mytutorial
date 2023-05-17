@@ -223,7 +223,7 @@ Waymo annotation format version like KITTI:
 Created a new dataset file 'mydetector3d/datasets/kitti/waymokitti_dataset.py' based on kitti_dataset.py.
 
 Waymo Dataset Process
---------------------
+-----------------------
 
 Prepare the dataset 
 ~~~~~~~~~~~~~~~~~~~
@@ -235,9 +235,11 @@ In 'mydetector3d/datasets/waymo/waymo_dataset.py', specify the '--func' in main 
 In ** mygeninfo ** function:
     #. call waymo_utils.process_single_sequence for each tfrecord sequence file, all returned infos dict list are saved in train0to9_infos_train.pkl under root folder '/data/cmpe249-fa22/Waymo132/'
     #. waymo_utils.process_single_sequence created one folder for each sequence under the folder '/data/cmpe249-fa22/Waymo132/train0to9'. One pkl file contains list of all sequence info is saved, including annotations (via generate_labels). 
-      * generate_labels in mydetector3d/datasets/waymo/waymo_utils.py utilize waymo frame.laser_labels for box annatation, loc = [box.center_x, box.center_y, box.center_z], dimensions.append([box.length, box.width, box.height]) the same to the unified coordinate of OpenPCDet
-      * **annotations** contains 'heading_angles', 'speed_global', 'accel_global' are not in Kitti, Kitti's 'alpha', 'rotation_y' are not in here
-      * annotations[gt_boxes_lidar] is calcuated from
+
+generate_labels in mydetector3d/datasets/waymo/waymo_utils.py 
+    * utilize waymo frame.laser_labels for box annatation, loc = [box.center_x, box.center_y, box.center_z], dimensions.append([box.length, box.width, box.height]) the same to the unified coordinate of OpenPCDet
+    * **annotations** contains 'heading_angles', 'speed_global', 'accel_global' are not in Kitti, Kitti's 'alpha', 'rotation_y' are not in here
+    * annotations[gt_boxes_lidar] is calcuated from
 
 .. code-block:: console
   
@@ -252,17 +254,17 @@ In ** mygeninfo ** function:
 save_lidar_points save each frame's lidar data as one npy file (frame index as the name) under the sequence folder, 3d points in vehicle frame.
     
 In ** mygengtdb ** function->create_waymo_gt_database:
-    #. call dataset.create_groundtruth_database (in waymo_dataset.py) for 'train' split
-      * created '%s_gt_database_%s_sampled_%d_global.npy' (stacked_gt_points) and '%s_waymo_dbinfos_%s_sampled_%d.pkl' (array of dbinfo dict) under the root folder
-      * each dbinfo is the following dict, each item is the groundtruth object with its gt_boxes and gt_points
+    * call dataset.create_groundtruth_database (in waymo_dataset.py) for 'train' split
+    * created '%s_gt_database_%s_sampled_%d_global.npy' (stacked_gt_points) and '%s_waymo_dbinfos_%s_sampled_%d.pkl' (array of dbinfo dict) under the root folder
+    * each dbinfo is the following dict, each item is the groundtruth object with its gt_boxes and gt_points
 
-      .. code-block:: console
+    .. code-block:: console
 
-       db_info = {'name': names[i], 'path': db_path, 'sequence_name': sequence_name,
-                                     'sample_idx': sample_idx, 'gt_idx': i, 'box3d_lidar': gt_boxes[i],
-                                     'num_points_in_gt': gt_points.shape[0], 'difficulty': difficulty[i]}
+     db_info = {'name': names[i], 'path': db_path, 'sequence_name': sequence_name,
+                                   'sample_idx': sample_idx, 'gt_idx': i, 'box3d_lidar': gt_boxes[i],
+                                   'num_points_in_gt': gt_points.shape[0], 'difficulty': difficulty[i]}
 
-      * created '%s_gt_database_%s_sampled_%d' folder under the root
+    * created '%s_gt_database_%s_sampled_%d' folder under the root
 
 Prepare all dataset
 ~~~~~~~~~~~~~~~~~~~~
@@ -348,7 +350,8 @@ In **  __getitem__ ** function
     data_dict['voxels'] = voxels
     data_dict['voxel_coords'] = coordinates
     data_dict['voxel_num_points'] = num_points
-  
+
+
  * get the final data_dict
   #. 'gt_boxes': (16, 16, 8), 16: batch size, 16: number of boxes (many are zeros), 8: boxes value
   #. 'points': (302730, 5): 5: add 0 in the left of 4 point features (xyzr)
