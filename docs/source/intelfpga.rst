@@ -260,8 +260,65 @@ JESD204B
 ~~~~~~~~
 Check the Intel JESD204B page: `JESD204B Intel® FPGA IP <https://www.intel.com/content/www/us/en/products/details/fpga/intellectual-property/interface-protocols/jesd204b.html>`_ 
 
-General procedure on how to generate the JESD204B design example in `User Guide <https://www.intel.com/content/www/us/en/docs/programmable/683094/22-1/procedure-55160.html>`_ To generate the design example from the IP parameter editor:
-  * In the IP Catalog (Tools > IP Catalog), locate and select JESD204B. The IP parameter editor appears.
+General procedure on how to generate the JESD204B design example in `User Guide <https://www.intel.com/content/www/us/en/docs/programmable/683094/22-1/procedure-55160.html>`_ 
+
+Create a new project named "myjesd204b" in Quartus II
+
+.. image:: imgs/FPGA/jesd204bnewproject.png
+  :width: 600
+  :alt: jesd204bnewproject
+
+To generate the design example from the IP parameter editor, In the IP Catalog (Tools > IP Catalog), locate and select JESD204B. 
+
+.. image:: imgs/FPGA/ipcatalog.png
+  :width: 600
+  :alt: ipcatalog
+
+Click "add", and specify the name of the new ip variant, click "Create"
+
+.. image:: imgs/FPGA/newipvariant.png
+  :width: 600
+  :alt: newipvariant
+
+The system automatically populates the IP parameters window for the design
+
+.. image:: imgs/FPGA/IPparameter.png
+  :width: 600
+  :alt: IPparameter
+
+In the parameter editor, click on the Example Design tab.
+
+.. image:: imgs/FPGA/jesddesignexample.png
+  :width: 600
+  :alt: jesddesignexample
+
+Under the Available Example Designs section, select the available designs. 
+  * None: No design example available that matches the IP parameters selected.
+  * RTL State Machine Control: Design example has RTL state machine as control unit.
+  * Nios II Control: Design example has Nios II processor as control unit. This option is available for Arria 10 devices only.
+
+Select "Nios Control" in "Select Design" and click other options
+
+.. image:: imgs/FPGA/ipniosexample.png
+  :width: 600
+  :alt: ipniosexample
+
+Click the Generate Example Design button on the top right corner to generate the design example based on your settings. Select the default directory "H:/QuartusWorkspace/myJESD204B/jesd204_0_example_design". After the generation is finished, one "jesd204_0_example_design" folder is created and it contains two sub-folders "ed_synth" and "ip_sim". There is one quartus project file "altera_jesd204_ed_RX_TX.qpf" inside the "ed_synth". Open this project file
+
+.. image:: imgs/FPGA/designexampleproject.png
+  :width: 600
+  :alt: designexampleproject
+
+The design diagram can be accessed in `JESD204B Design Example <https://www.intel.com/content/www/us/en/docs/programmable/683094/22-1/design-example-with-nios-control-unit.html>`_
+
+The JESD204B serial data, control, and configuration signal pins are assigned to FMC port A connector. The global reset pin (global_rst_n) connects to the user PB0 push-button on the board. The control plane clock (mgmt_clk) is sourced from the on-board Si570 programmable oscillator. The Si570 clock output routes through a Si53301 clock buffer that allows you to select between the Si570 clock output and SMA input. The example design is configured in internal serial loopback mode. Therefore, the JESD204B data path reference clock (device_clk) is sourced from an on-board clock source, the Si5338 programmable oscillator. In general, when interoperating with an external converter, the device_clk is sourced from the converter through the FMC connector.
+
+.. image:: imgs/FPGA/jesd204bdiagram.png
+  :width: 600
+  :alt: jesd204bdiagram
+
+
+The IP parameter editor appears.
   * Specify a top-level name and the folder for your custom IP variation, and the target device. Click OK.
   * Select a design from the Presets library. When you select a design, the system automatically populates the IP parameters for the design.
   * Click the Generate Example Design button.
@@ -272,7 +329,7 @@ JESD204 Interface Framework: https://wiki.analog.com/resources/fpga/peripherals/
 https://www.analog.com/en/design-center/evaluation-hardware-and-software/jesd204-interface-framework.html
 https://wiki.analog.com/resources/fpga/peripherals/jesd204
 
-
+NIOS v:https://www.intel.com/content/www/us/en/docs/programmable/726952/23-1/about-the-embedded-processor.html
 
 ADRV9009 Example
 -----------------
@@ -302,8 +359,7 @@ Follow the ADRV9009+Arria10 GX example: https://wiki.analog.com/resources/eval/u
      Info: Processing ended: Mon May  8 23:34:50 2023
      Info: Elapsed time: 00:00:23
      Info: System process ID: 34076
- (base) lkk@Alienware-LKKi7G8:/mnt/h/FPGADeveloper/adrv9009_a10gx/adrv9009_a10gx$ export PATH=/mnt/h/intelFPGA/quartus23.
- 1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/:$PATH
+ (base) lkk@Alienware-LKKi7G8:/mnt/h/FPGADeveloper/adrv9009_a10gx/adrv9009_a10gx$ export PATH=/mnt/h/intelFPGA/quartus23.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/:$PATH
  (base) lkk@Alienware-LKKi7G8:/mnt/h/FPGADeveloper/adrv9009_a10gx/adrv9009_a10gx$ nios2-download -g zImage
  Using cable "USB-BlasterII [USB-1]", device 1, instance 0x00
  Processor is already paused
@@ -338,7 +394,8 @@ Install a new distribution (Ubuntu20.04), set the wsl version from 2 to 1, ref: 
    NAME            STATE           VERSION
  * Ubuntu-22.04    Running         2
    Ubuntu-20.04    Stopped         1
- C:\Users\lkk>wsl --distribution Ubuntu-20.04 --user lkk #start the linux
+  C:\Users\lkk>wsl --setdefault Ubuntu20.04
+  C:\Users\lkk>wsl --distribution Ubuntu-20.04 --user lkk #start the linux
  >wsl -t Ubuntu-20.04 #shut down the linux
  
 .. code-block:: console 
@@ -353,6 +410,11 @@ Install a new distribution (Ubuntu20.04), set the wsl version from 2 to 1, ref: 
  lkk@Alienware-LKKi7G8:~/adi/hdl/projects/adrv9009/a10soc$ sudo apt install build-essential
  lkk@Alienware-LKKi7G8:~/adi/hdl/projects/adrv9009/a10soc$ sudo apt install dos2unix
  lkk@Alienware-LKKi7G8:~/adi/hdl/projects/adrv9009/a10soc$ sudo apt-get install libncurses5
+
+ export PATH=/home/lkk/quartus/quartus/bin/:$PATH
+ export PATH=/home/lkk/quartus/nios2eds/bin/gnu/H-x86_64-pc-linux-gnu/bin/:$PATH
+ export PATH=/home/lkk/quartus/nios2eds/bin/:$PATH
+ quartus_sh -t system_project.tcl
 
 Follow the ADI Building HDL instruction: https://wiki.analog.com/resources/fpga/docs/build, build the adrv9009/a10soc project:
 
@@ -405,6 +467,20 @@ Change the project name in Makefile and system_project.tcl to "adrv9009_a10gx", 
   "adi_project adrv9009_a10gx"
       (file "system_project.tcl" line 4)
  
+ https://wiki.analog.com/resources/tools-software/linux-build/generic/nios2
+Build linux success.
+ .. code-block:: console 
+
+  wget https://raw.githubusercontent.com/analogdevicesinc/wiki-scripts/master/linux/build_nios2_kernel_image.sh && chmod +x build_nios2_kernel_image.sh && ./build_nios2_kernel_image.sh /home/lkk/quartus/nios2eds/bin/gnu/H-x86_64-pc-linux-gnu/bin/nios2-elf-
+
+  Kernel: arch/nios2/boot/zImage is ready
+
+  Exported files: zImage
+  root@Alienware-LKKi7G8:/mnt/h/FPGADeveloper/adrv9009_a10gx/adrv9009_a10gx# nios2-configure-sof adrv9009_a10gx.sof
+  root@Alienware-LKKi7G8:/home/lkk# nios2-download -g zImage
+  nios2-terminal.exe
+
+
 FPGA References
 ----------------
 https://siytek.com/verilog-quartus/
@@ -417,11 +493,24 @@ https://www.intel.com/content/www/us/en/support/programmable/support-resources/d
 https://www.doulos.com/knowhow/fpga/create-a-simple-tcl-script-for-altera-quartus-ii/
 
 Nios2 Linux on the Altera FPGA Development Boards: https://wiki.analog.com/resources/tools-software/linux-drivers/platforms/nios2
+https://github.com/analogdevicesinc/linux
+sudo apt-get install make build-essential libncurses-dev bison flex libssl-dev libelf-dev
+
 Intel® Arria® 10 FPGA Developer Center: https://www.intel.com/content/www/us/en/support/programmable/support-resources/design-guidance/arria-10.html
 JESD204B Intel® FPGA IP Design Example User Guide
 
+Nios® V Embedded Processor Design Handbook: https://www.intel.com/content/www/us/en/docs/programmable/726952/22-1-21-2-0/introduction-71358.html
+
 ADI References
 ----------------
+https://www.analog.com/en/products/adrv9009.html#product-overview
+https://www.analog.com/en/design-center/evaluation-hardware-and-software/evaluation-boards-kits/EVAL-ADRV9008-9009.html#eb-overview
+https://wiki.analog.com/resources/eval/user-guides/adrv9009
+https://wiki.analog.com/resources/eval/user-guides/adrv9009/no-os-setup
+https://www.analog.com/en/design-center/landing-pages/001/transceiver-evaluation-software.html
+https://github.com/analogdevicesinc/no-OS
+https://wiki.analog.com/resources/eval/user-guides/adrv9009/quickstart/a10gx
+
 ADRV9009 Arria 10 GX Quick Start Guide: https://wiki.analog.com/resources/eval/user-guides/adrv9009/quickstart/a10gx
 ADRV9009 HDL Reference Design: https://wiki.analog.com/resources/eval/user-guides/adrv9009/reference_hdl
 https://github.com/analogdevicesinc/hdl/tree/master/projects/adrv9009
