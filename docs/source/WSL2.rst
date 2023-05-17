@@ -55,6 +55,9 @@ You can check the version of WSL and perform conversion from WSL2 to WSL1 if nee
     Conversion in progress, this may take a few minutes.
     The operation completed successfully.
 
+    C:\Users\lkk>wsl --setdefault Ubuntu20.04
+    The operation completed successfully.
+
 Export WSL
 ~~~~~~~~~~~~
 You can export the WSL distribution to a local file
