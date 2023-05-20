@@ -4,9 +4,10 @@ CondaEnv
 .. _CondaEnv:
 
 Conda Environment Setup Tutorial
-------------
+------------------------------------
 
 Install Miniconda
+~~~~~~~~~~~~~~~~~~
 
 .. code-block:: console
 
@@ -23,7 +24,11 @@ Create a Conda virtual environment with python 3.10 (the default python version 
    (mycondapy310) lkk@lkk-intel13:~$ conda info --envs #check existing conda environment
    (mycondapy310) lkk@lkk-intel13:~$ conda deactivate #To deactivate an active environment
 
-Then install CUDA and cuDNN with conda and pip, and setup the environment path for cudnn
+Install CUDA
+~~~~~~~~~~~~~~~~~~
+There are two options to install CUDA: 1) using conda to install the cuda; 2) download cuda from nvidia, install cuda to the system.
+
+Option1: install CUDA and cuDNN with conda and pip, and setup the environment path for cudnn
 
 .. code-block:: console
    
@@ -47,11 +52,29 @@ Install cuda development kit, otherwise 'nvcc' is not available
 
 .. code-block:: console
 
-   (mycondapy310) $ conda install -c conda-forge cudatoolkit-dev
-   $ nvcc -V #show Cuda compilation tools, release 11.7, V11.7.64
+   #(mycondapy310) $ conda install -c conda-forge cudatoolkit-dev #this will install 11.7
+   (mycondapy310) $ conda install -c "nvidia/label/cuda-11.8.0" cuda-toolkit #https://anaconda.org/nvidia/cuda-toolkit
+   $ nvcc -V #show Cuda compilation tools
+
+Option2: You can also go to nvidia cuda toolkit website, select the version (Ubuntu22.04 Cuda11.8) and install cuda locally
+
+.. code-block:: console
+
+   wget https://developer.download.nvidia.com/compute/cuda/11.8.0/local_installers/cuda_11.8.0_520.61.05_linux.run
+   sudo sh cuda_11.8.0_520.61.05_linux.run
+
+When install CUDA, do not select the "install the driver" option. After cuda installation, setup the PATH and make sure that PATH includes /usr/local/cuda/bin and LD_LIBRARY_PATH includes /usr/local/cuda/lib64
+
+.. code-block:: console
+   export PATH=/usr/local/cuda/bin:$PATH
+   export LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH
+
+You can add these path setup code in ~/.bashrc or setup in conda "$CONDA_PREFIX/etc/conda/activate.d/env_vars.sh"
+
+
    
 Tensorflow Installation
-----------------
+------------------------
 
 Install the latest Tensorflow via pip, and verify the GPU setup
 

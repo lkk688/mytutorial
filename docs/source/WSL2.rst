@@ -81,3 +81,12 @@ You can import the distribution again in a new driver (e.g., in H: drive)
     H:\WSL>wsl --import Ubuntu20.04 ./Ubuntu20 ./Ubuntu2004_export.tar
     Import in progress, this may take a few minutes.
     The operation completed successfully.
+
+Install CUDA inside WSL Linux
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Download CUDA11.8 Linux WSL:
+
+.. code-block:: console
+
+    wget https://developer.download.nvidia.com/compute/cuda/11.8.0/local_installers/cuda_11.8.0_520.61.05_linux.run
+    sudo sh cuda_11.8.0_520.61.05_linux.run

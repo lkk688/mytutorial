@@ -541,8 +541,121 @@ Config file='mydetector3d/tools/cfgs/dairkitti_models/myvoxelnext.yaml'
   bev  AP:82.4833, 77.6059, 76.9294
   3d   AP:76.3442, 72.5238, 68.6905
   aos  AP:6.75, 12.61, 12.57
+  
 
-Train 'mydetector3d/tools/cfgs/dairkitti_models/my3dmodelv2.yaml' '0517'
+Train 'mydetector3d/tools/cfgs/dairkitti_models/my3dmodelv2.yaml' in '0517'
+  * Model saved in '/data/cmpe249-fa22/Mymodels/dairkitti_models/my3dmodelv2/0517/ckpt/latest_model.pth'
+  * Result is saved to /data/cmpe249-fa22/Mymodels/eval/dairkitti_models_my3dmodelv2_0517/txtresults
+
+.. code-block:: console
+
+  Average predicted number of objects(1351 samples): 137.924
+  Finished detection: {'recall/roi_0.3': 0.0, 'recall/rcnn_0.3': 0.8374440342471133, 'recall/roi_0.5': 0.0, 'recall/rcnn_0.5': 0.6819967009661456, 'recall/roi_0.7': 0.0, 'recall/rcnn_0.7': 0.3456916188830414, 'infer_time': 135.41728434478037, 'total_pred_objects': 186335, 'total_annos': 1351}
+  Car AP@0.70, 0.70, 0.70:
+  bbox AP:24.1560, 22.3951, 21.0895
+  bev  AP:81.0365, 78.1048, 77.8612
+  3d   AP:75.3015, 67.5120, 65.1881
+  aos  AP:11.44, 10.69, 10.06
+  Pedestrian AP@0.50, 0.50, 0.50:
+  bbox AP:8.9119, 8.3005, 8.1552
+  bev  AP:58.9776, 48.5291, 48.3065
+  3d   AP:53.7915, 42.8447, 42.5377
+  aos  AP:4.01, 3.68, 3.62
+  Cyclist AP@0.50, 0.50, 0.50:
+  bbox AP:20.5838, 23.2865, 23.4181
+  bev  AP:72.0387, 71.0033, 70.3623
+  3d   AP:69.2169, 66.7102, 65.5677
+  aos  AP:9.78, 11.46, 11.55
+
+Train 'mydetector3d/tools/cfgs/dairkitti_models/my3dmodelv2.yaml' in '0518' (set compress_raito=8)
+  * Save latest model to /data/cmpe249-fa22/Mymodels/dairkitti_models/my3dmodelv2/0518/ckpt/latest_model
+  * 'mydetector3d/tools/cfgs/dairkitti_models/my3dmodelv2_compressor.yaml'
+  * Result is saved to /data/cmpe249-fa22/Mymodels/eval/dairkitti_models_my3dmodelv2_compressor_0518conv/txtresults
+
+.. code-block:: console
+
+  Average predicted number of objects(1351 samples): 140.478
+  Finished detection: {'recall/roi_0.3': 0.0, 'recall/rcnn_0.3': 0.8368549210588327, 'recall/roi_0.5': 0.0, 'recall/rcnn_0.5': 0.6812897651402089, 'recall/roi_0.7': 0.0, 'recall/rcnn_0.7': 0.3413714555023172, 'infer_time': 142.1786172855535, 'total_pred_objects': 189786, 'total_annos': 1351}
+  Car AP@0.70, 0.70, 0.70:
+  bbox AP:25.1129, 21.7680, 20.5236
+  bev  AP:80.5588, 77.6377, 77.2339
+  3d   AP:75.1016, 66.9202, 64.2415
+  aos  AP:11.33, 9.80, 9.22
+  Pedestrian AP@0.50, 0.50, 0.50:
+  bbox AP:7.7580, 7.5677, 7.2327
+  bev  AP:55.1335, 45.3889, 44.7832
+  3d   AP:51.8617, 40.2456, 39.6877
+  aos  AP:3.80, 3.75, 3.73
+  Cyclist AP@0.50, 0.50, 0.50:
+  bbox AP:20.0710, 24.9068, 24.4860
+  bev  AP:71.1439, 71.2478, 70.2554
+  3d   AP:68.5503, 66.5361, 65.5088
+  aos  AP:8.86, 11.64, 11.43
+
+Train 'mydetector3d/tools/cfgs/dairkitti_models/my3dmodelv2.yaml' in '0518conv' (added one conv(384,64) in my3dmodelv2.py)
+  * Save latest model to /data/cmpe249-fa22/Mymodels/dairkitti_models/my3dmodelv2/0518conv/ckpt/latest_model
+  * Add GET_ITEM_LIST: ["points", "images"]
+  * Result is saved to /data/cmpe249-fa22/Mymodels/eval/dairkitti_models_my3dmodelv2_0518conv/txtresults
+
+.. code-block:: console
+
+  Average predicted number of objects(1351 samples): 137.685
+  Finished detection: {'recall/roi_0.3': 0.0, 'recall/rcnn_0.3': 0.8315136281517556, 'recall/roi_0.5': 0.0, 'recall/rcnn_0.5': 0.6637734663419999, 'recall/roi_0.7': 0.0, 'recall/rcnn_0.7': 0.3284502395726966, 'infer_time': 137.0744020981196, 'total_pred_objects': 186013, 'total_annos': 1351}
+  Car AP@0.70, 0.70, 0.70:
+  bbox AP:19.3310, 20.6579, 19.9613
+  bev  AP:79.5797, 77.2212, 75.6694
+  3d   AP:73.9871, 64.8375, 63.0783
+  aos  AP:9.29, 10.41, 10.06
+  Pedestrian AP@0.50, 0.50, 0.50:
+  bbox AP:9.1300, 7.6350, 7.3503
+  bev  AP:52.3427, 43.5257, 42.1801
+  3d   AP:48.3685, 37.4823, 37.0189
+  aos  AP:5.03, 4.23, 4.17
+  Pedestrian AP@0.50, 0.50, 0.50:
+  bbox AP:9.1300, 7.6350, 7.3503
+  bev  AP:52.3427, 43.5257, 42.1801
+  3d   AP:48.3685, 37.4823, 37.0189
+  aos  AP:5.03, 4.23, 4.17
+
+Add BEV Fusion Process
+-----------------------
+File "/lts/home/010796032/3DObject/3DDepth/mydetector3d/datasets/processor/data_processor.py", line 250, in image_calibrate
+    img_process_infos = data_dict['img_process_infos']
+
+File "/lts/home/010796032/3DObject/3DDepth/mydetector3d/datasets/processor/data_processor.py", line 244, in image_normalize
+    data_dict["camera_imgs"] = [compose(img) for img in data_dict["camera_imgs"]]
+
+img_bev = batch_dict['spatial_features_img']#[1, 80, 180, 180]
+        lidar_bev = batch_dict['spatial_features']#[6, 128, 250, 250]
+        cat_bev = torch.cat([img_bev,lidar_bev],dim=1)
+
+MeanVFE
+  * Input: voxel_features([220121, 10, 4]), voxel_num_points([220121]) = batch_dict['voxels'], batch_dict['voxel_num_points']
+  * Output; batch_dict['voxel_features'] = points_mean.contiguous() #[220121, 4]
+
+VoxelResBackBone8x
+  * Input: voxel_features([220121, 4]), voxel_coords([220121, 4]) = batch_dict['voxel_features'], batch_dict['voxel_coords']
+  * Output: batch_dict: 'encoded_spconv_tensor': out([1, 250, 250]), 'encoded_spconv_tensor_stride': 8, 'multi_scale_3d_features'
+
+HeightCompression
+  * Input: encoded_spconv_tensor = batch_dict['encoded_spconv_tensor'] #Sparse
+  * Output: batch_dict['spatial_features'] = spatial_features #[6, 128, 250, 250], batch_dict['spatial_features_stride']=8
+
+SwinTransformer
+  * Input: x = batch_dict['camera_imgs'] #[6, 1, 3, 256, 704]
+  * Out: batch_dict['image_features'] = outs #3 items: [6, 192, 32, 88], [6, 384, 16, 44], [6, 768, 8, 22]
+
+GeneralizedLSSFPN
+  * inputs = batch_dict['image_features']
+  * Output: batch_dict['image_fpn'] = tuple(outs) #2 items: [6, 256, 32, 88], [6, 256, 16, 44]
+
+DepthLSSTransform (lists images into 3D and then splats onto bev features, from https://github.com/mit-han-lab/bevfusion/)
+  * x = batch_dict['image_fpn']  #img=[1, 6, 256, 32, 88]
+  * Output: batch_dict['spatial_features_img'] = x #[1, 80, 180, 180]
+
+ConvFuser
+  * Input: img_bev = batch_dict['spatial_features_img']#[1, 80, 180, 180], lidar_bev = batch_dict['spatial_features']#[6, 128, 250, 250]* Output: batch_dict['spatial_features'] = mm_bev
+
 
 OpenCOOD
 ------------------
