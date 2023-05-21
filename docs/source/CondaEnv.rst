@@ -59,7 +59,9 @@ Install cuda development kit, otherwise 'nvcc' is not available
 Option2: You can also go to nvidia cuda toolkit website, select the version (Ubuntu22.04 Cuda11.8) and install cuda locally
 
 .. code-block:: console
-
+   
+   sudo apt install gcc
+   sudo apt-get install linux-headers-$(uname -r) #The kernel headers and development packages for the currently running kernel
    wget https://developer.download.nvidia.com/compute/cuda/11.8.0/local_installers/cuda_11.8.0_520.61.05_linux.run
    sudo sh cuda_11.8.0_520.61.05_linux.run
 

@@ -121,7 +121,7 @@ Install pypcd
    (mycondapy39) [010796032@coe-hpc2 pypcd]$ python setup.py install
 
 Share Conda Environment
-------------
+-------------------------
 
 You can share your environment with someone else and allow them to quickly reproduce your environment via a copy of your environment.yml file. To export environment file, ref: https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html:
 

@@ -14,9 +14,69 @@ Extrinsic coordinates are expressed relative to the **ego frame**, i.e. the midp
 
 In nuScenes-lidarseg, each lidar point from a keyframe in nuScenes with one of 32 possible semantic labels (i.e. lidar semantic segmentation). nuScenes-lidarseg contains 1.4 billion annotated points across 40,000 pointclouds and 1000 scenes (850 scenes for training and validation, and 150 scenes for testing).
 
-Download Nuscenes data from https://www.nuscenes.org/nuscenes, 
+Download Nuscenes data from https://www.nuscenes.org/nuscenes, untar the mini.tgz sample data, it will create four folders: "maps", "samples", "sweeps", and "v1.0-mini"
 
-untar the mini.tgz sample data, it will create four folders: "maps", "samples", "sweeps", and "v1.0-mini"
+Install nuScenes development kit
+
+.. code-block:: console
+    
+    tar zxvf .\v1.0-mini.tgz
+    pip install nuscenes-devkit
+
+Check nuscenes tutorial in mydetector3d/datasets/nuscenes/nuscenes_tutorial.ipynb
+
 .. code-block:: console
 
-    D:\Data\Nuscenes> tar zxvf .\v1.0-mini.tgz
+    from nuscenes.nuscenes import NuScenes
+    nusc = NuScenes(version='v1.0-mini', dataroot='/data/cmpe249-fa22/nuScenes/nuScenesv1.0-mini', verbose=True)
+    nusc.scene[0] #each scene is 20s sequence with 'token', 'name', 'first_sample_token', 'last_sample_token'
+
+Untar the full nuScenes dataset in HPC:
+
+.. code-block:: console
+
+    (mycondapy39) [010796032@coe-hpc2 nuScenes]$ tar zxvf v1.0-trainval01_blobs.tgz
+    $ tar zxvf v1.0-trainval02_blobs.tgz
+    $ tar zxvf v1.0-trainval03_blobs.tgz
+    $ tar zxvf v1.0-trainval04_blobs.tgz
+    $ tar zxvf v1.0-trainval05_blobs.tgz
+    $ tar zxvf v1.0-trainval06_blobs.tgz
+    $ tar zxvf v1.0-trainval07_blobs.tgz
+    $ tar zxvf v1.0-trainval08_blobs.tgz
+    $ tar zxvf v1.0-trainval09_blobs.tgz
+    $ tar zxvf v1.0-trainval10_blobs.tgz
+    (mycondapy39) [010796032@cs001 nuScenes]$ tar zxvf v1.0-trainval_meta.tgz
+    (mycondapy39) [010796032@coe-hpc2 nuScenes]$ ls samples/
+    CAM_BACK       CAM_BACK_RIGHT  CAM_FRONT_LEFT   LIDAR_TOP        RADAR_BACK_RIGHT  RADAR_FRONT_LEFT
+    CAM_BACK_LEFT  CAM_FRONT       CAM_FRONT_RIGHT  RADAR_BACK_LEFT  RADAR_FRONT       RADAR_FRONT_RIGHT
+    (mycondapy39) [010796032@coe-hpc2 nuScenes]$ ls sweeps
+    CAM_BACK       CAM_BACK_RIGHT  CAM_FRONT_LEFT   LIDAR_TOP        RADAR_BACK_RIGHT  RADAR_FRONT_LEFT
+    CAM_BACK_LEFT  CAM_FRONT       CAM_FRONT_RIGHT  RADAR_BACK_LEFT  RADAR_FRONT       RADAR_FRONT_RIGHT
+    (mycondapy39) [010796032@cs001 nuScenes]$ ls maps/
+    36092f0b03a857c6a3403e25b4b7aab3.png  53992ee3023e5494b90c316c183be829.png
+    37819e65e09e5547b8a3ceaefba56bb2.png  93406b464a165eaba6d9de76ca09f5da.png
+    (mycondapy39) [010796032@cs001 nuScenes]$ ls v1.0-trainval
+    attribute.json          category.json  instance.json  map.json                sample_data.json  scene.json   visibility.json
+    calibrated_sensor.json  ego_pose.json  log.json       sample_annotation.json  sample.json       sensor.json
+
+    sweeps/RADAR_FRONT/n008-2018-08-01-15-52-19-0400__RADAR_FRONT__1533153432872720.pcd
+    .v1.0-trainval02_blobs.txt
+
+Put all folders inside the "v1.0-trainval", and run **create_nuscenes_infos** in "/home/010796032/3DObject/3DDepth/mydetector3d/datasets/nuscenes/nuscenes_dataset.py" to generate info.pkl files
+
+.. code-block:: console
+
+    (mycondapy39) [010796032@cs001 nuScenes]$ ls v1.0-trainval
+    maps  nuscenes_infos_10sweeps_train.pkl  nuscenes_infos_10sweeps_val.pkl  samples  sweeps  v1.0-trainval
+
+Run "create_groundtruth" in "nuscenes_dataset.py" to generate groundtruth folder:
+
+Each dbinfo is 
+
+.. code-block:: console
+    gt_points.tofile(f) #saved 
+    db_info = {'name': gt_names[i], 'path': db_path, 'image_idx': sample_idx, 'gt_idx': i,
+                                'box3d_lidar': gt_boxes[i], 'num_points_in_gt': gt_points.shape[0]}
+
+After untar, "samples" folder is created for sensor data for keyframes (annotated images), "sweeps" folder is created for sensor data for intermediate frames (unannotated images), .v1.0-trainvalxx_blobs.txt (01-10) files are JSON tables that include all the meta data and annotation. 
+

@@ -84,7 +84,19 @@ You can import the distribution again in a new driver (e.g., in H: drive)
 
 Install CUDA inside WSL Linux
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Download CUDA11.8 Linux WSL:
+Verify CUDA-capable GPU, check environment, and install gcc
+
+.. code-block:: console
+
+    lspci | grep -i nvidia # Did not show anything in WSL Linux
+    uname -m && cat /etc/*release
+    gcc --version # install gcc if not available
+    sudo apt-get update
+    sudo apt install gcc
+    uname -r #check kernel version
+        5.15.90.1-microsoft-standard-WSL2
+
+Download CUDA11.8 Linux WSL2 (the download path is the same to Ubuntu22.04 cuda11.8):
 
 .. code-block:: console
 
