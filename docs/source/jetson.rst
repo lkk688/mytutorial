@@ -7,8 +7,8 @@ The working directory in SSD (Samsung 970 EVO 1TB) in lkk@xavieragx:/ssd$
     * conda activate mycondapy310
 
 
-Jetson Setup
---------------
+Jetson Xavier AGX Setup
+-----------------------
 Detailed steps see my Google doc: https://docs.google.com/document/d/1OAvlxpsP6h7YDicX29Bo7IWV_irWsoOyeB0_lujoHME/edit#heading=h.l55ml9jogv02
 
 Jetpack page: https://developer.nvidia.com/embedded/jetpack
@@ -30,6 +30,12 @@ Show Jetpack version:
     sudo apt update
     sudo apt dist-upgrade
     sudo apt install --fix-broken -o Dpkg::Options::="--force-overwrite"
+
+Jetson Orin Nano
+----------------
+Jetson Orin Nano: Jetson Orin Nano 8GB with SD card slot (P3767-0005)
+Jetson Orin Nano Developer Kit User Guide: https://developer.nvidia.com/embedded/learn/jetson-orin-nano-devkit-user-guide/index.html
+Develop guide: https://docs.nvidia.com/jetson/archives/r35.3.1/DeveloperGuide/index.html
 
 Install Miniconda for ARM
 -------------------------
