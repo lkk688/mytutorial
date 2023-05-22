@@ -19,7 +19,7 @@ Download Nuscenes data from https://www.nuscenes.org/nuscenes, untar the mini.tg
 Install nuScenes development kit
 
 .. code-block:: console
-    
+
     tar zxvf .\v1.0-mini.tgz
     pip install nuscenes-devkit
 
@@ -71,12 +71,96 @@ Put all folders inside the "v1.0-trainval", and run **create_nuscenes_infos** in
 
 Run "create_groundtruth" in "nuscenes_dataset.py" to generate groundtruth folder:
 
+.. code-block:: console
+
+    3DDepth/mydetector3d/datasets/nuscenes/nuscenes_dataset.py 
+    ======
+    Loading NuScenes tables for version v1.0-trainval...
+    23 category,
+    8 attribute,
+    4 visibility,
+    64386 instance,
+    12 sensor,
+    10200 calibrated_sensor,
+    2631083 ego_pose,
+    68 log,
+    850 scene,
+    34149 sample,
+    2631083 sample_data,
+    1166187 sample_annotation,
+    4 map,
+    Done loading in 25.048 seconds.
+    2023-05-21 08:46:41,467   INFO  Total samples for NuScenes dataset: 28130
+    Database traffic_cone: 62964
+    Database truck: 65262
+    Database car: 339949
+    Database pedestrian: 161928
+    Database ignore: 26297
+    Database construction_vehicle: 11050
+    Database barrier: 107507
+    Database motorcycle: 8846
+    Database bicycle: 8185
+    Database bus: 12286
+    Database trailer: 19202
+
 Each dbinfo is 
 
 .. code-block:: console
+
     gt_points.tofile(f) #saved 
     db_info = {'name': gt_names[i], 'path': db_path, 'image_idx': sample_idx, 'gt_idx': i,
                                 'box3d_lidar': gt_boxes[i], 'num_points_in_gt': gt_points.shape[0]}
 
 After untar, "samples" folder is created for sensor data for keyframes (annotated images), "sweeps" folder is created for sensor data for intermediate frames (unannotated images), .v1.0-trainvalxx_blobs.txt (01-10) files are JSON tables that include all the meta data and annotation. 
 
+Training
+---------------------
+
+'mydetector3d/tools/cfgs/nuscenes_models/bevfusion.yaml'
+
+'mydetector3d/tools/cfgs/nuscenes_models/cbgs_pp_multihead.yaml'
+
+BEVFusion
+---------------------
+Add bevfusion
+
+Model forward process
+
+MeanVFE
+  * Input: voxel_features([600911, 10, 5]), voxel_num_points([600911]) = batch_dict['voxels'], batch_dict['voxel_num_points']
+  * Output; batch_dict['voxel_features'] = points_mean.contiguous() #[600911, 5]
+
+VoxelResBackBone8x
+  * Input: voxel_features([600911, 5]), voxel_coords([600911, 4]) = batch_dict['voxel_features'], batch_dict['voxel_coords']
+  * Output: batch_dict: 'encoded_spconv_tensor': out([2, 180, 180]), 'encoded_spconv_tensor_stride': 8, 'multi_scale_3d_features'
+
+HeightCompression
+  * Input: encoded_spconv_tensor = batch_dict['encoded_spconv_tensor'] #Sparse [2, 180, 180]
+  * Output: batch_dict['spatial_features'] = spatial_features #[6, 256, 180, 180], batch_dict['spatial_features_stride']=8
+
+SwinTransformer
+  * Input: x = batch_dict['camera_imgs'] #[6, 6, 3, 256, 704]
+  * Out: batch_dict['image_features'] = outs #3 items: [36, 192, 32, 88], [36, 384, 16, 44], [36, 768, 8, 22] 
+
+GeneralizedLSSFPN
+  * inputs = batch_dict['image_features']
+  * Output: batch_dict['image_fpn'] = tuple(outs) #2 items: [36, 256, 32, 88], [36, 256, 16, 44]
+
+DepthLSSTransform (lists images into 3D and then splats onto bev features, from https://github.com/mit-han-lab/bevfusion/)
+  * x = batch_dict['image_fpn']  #img=[6, 6, 256, 32, 88] 
+  * points = batch_dict['points'] # [1456967, 6]
+  * Output: batch_dict['spatial_features_img'] = x #[6, 80, 180, 180]
+
+ConvFuser
+  * Input: img_bev = batch_dict['spatial_features_img']#[6, 80, 180, 180], lidar_bev = batch_dict['spatial_features']#[6, 256, 180, 180]
+  * cat_bev = torch.cat([img_bev,lidar_bev],dim=1)
+  * Output: batch_dict['spatial_features'] = mm_bev #[6, 256, 180, 180]
+
+BaseBEVBackbone
+  * Input: spatial_features = data_dict['spatial_features'] #[6, 256, 180, 180]
+  * data_dict['spatial_features_2d'] = x #[6, 512, 180, 180]
+
+TransFusionHead
+  * Input: feats = batch_dict['spatial_features_2d'] #[6, 512, 180, 180]
+  * res = self.predict(feats) #'center' [6, 2, 200]; 'height' [6, 1, 200]; 'dim' [6, 3, 200]; 'rot' [6, 2, 200]; 'vel' [6, 2, 200]; 'heatmap' [6, 10, 200]; 'query_heatmap_score' [6, 10, 200]; 'dense_heatmap' [6, 10, 180, 180]
+  * loss, tb_dict = self.loss(gt_bboxes_3d [6, 51, 9], gt_labels_3d [6, 51], res)

@@ -1,6 +1,11 @@
 NVIDIA Jetson
 =============
 
+Quick Start
+--------------
+The working directory in SSD (Samsung 970 EVO 1TB) in lkk@xavieragx:/ssd$
+    * conda activate mycondapy310
+
 
 Jetson Setup
 --------------
@@ -8,7 +13,6 @@ Detailed steps see my Google doc: https://docs.google.com/document/d/1OAvlxpsP6h
 
 Jetpack page: https://developer.nvidia.com/embedded/jetpack
 
-The working directory in SSD (Samsung 970 EVO 1TB) in lkk@xavieragx:/ssd$
 
 Show Jetpack version: 
 
@@ -34,15 +38,16 @@ Ref: https://conda.io/projects/conda/en/stable/user-guide/install/linux.html
 .. code-block:: console
 
     wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-aarch64.sh
-    bash Miniconda3-latest-Linux-aarch64.sh
+    bash Miniconda3-latest-Linux-aarch64.sh #select the install location to /ssd/miniconda3, select conda init
+    conda config --set auto_activate_base false # if do not want to activate base automatically
     conda list
     conda update conda
     conda --version
     conda info
     conda update -n base conda
-    conda create --name myenv
+    conda create --name mycondapy310
     conda env create -f environment.yml #Creating an environment from an environment.yml file
-    conda activate myenv #activate environment
+    conda activate mycondapy310 #activate environment
     conda env list
     conda info --envs #same to the previous one
     conda deactivate #deactivate environment
