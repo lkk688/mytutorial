@@ -331,6 +331,25 @@ https://wiki.analog.com/resources/fpga/peripherals/jesd204
 
 NIOS v:https://www.intel.com/content/www/us/en/docs/programmable/726952/23-1/about-the-embedded-processor.html
 
+
+Mercury Arria 10 SOC Board
+--------------------------
+Mercury+ PE1 300 baseboard (https://www.enclustra.com/en/products/base-boards/mercury-pe1-200-300-400/#) and Mercury+ AA1 Arria 10 SOC module (https://www.enclustra.com/en/products/system-on-chip-modules/mercury-aa1/)
+  * The Arria 10 SOC module contains one 10AS027E4F29E3SG
+  * The baseboard can be powered via 12V connector or USB (need high-power 5V usb not the port in PC), if using power over USB, the "DIP Switch CFG A 2" should be in ON position. 
+
+There are four user LEDs (0~3)
+  * User LED 0: D1104, IOE_D0_LED0#
+  * User LED 1: D1105, IOE_D0_LED1#
+  * User LED 2: D1106, IOE_D0_LED2#
+  * User LED 3: D1107, IOE_D0_LED3#
+
+There are four user buttons (0~3) Shared with the system controller, module connector and Anios I/O connector B
+  * 0: S1104 IOB_D20_SC4_BTN0#
+  * 1: S1107 IOB_D21_SC5_BTN1#
+  * 2: S1105 IOB_D22_SC6_BTN2#
+  * 3: S1108 IOB_D23_SC7_BTN3#
+
 ADRV9009 Example
 -----------------
 Follow the ADRV9009+Arria10 GX example: https://wiki.analog.com/resources/eval/user-guides/adrv9009/quickstart/a10gx
