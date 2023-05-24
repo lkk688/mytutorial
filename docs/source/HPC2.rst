@@ -112,6 +112,7 @@ You can git clone our 3D detection framework and instal the development environm
    (mycondapy39) [sjsuid@coe-hpc2 3DDepth]$ python3 setup.py develop
    pip install kornia
    pip install pyquaternion
+   pip install efficientnet_pytorch==0.7.0
 
 Install pypcd
 
