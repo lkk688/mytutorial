@@ -494,33 +494,41 @@ Change the project name in Makefile and system_project.tcl to "adrv9009_a10gx", 
   "adi_project adrv9009_a10gx"
       (file "system_project.tcl" line 4)
  
- https://wiki.analog.com/resources/tools-software/linux-build/generic/nios2
-Build linux success.
+Ref nios2 linux build: https://wiki.analog.com/resources/tools-software/linux-build/generic/nios2. Build linux success.
+
  .. code-block:: console 
 
   wget https://raw.githubusercontent.com/analogdevicesinc/wiki-scripts/master/linux/build_nios2_kernel_image.sh && chmod +x build_nios2_kernel_image.sh && ./build_nios2_kernel_image.sh /home/lkk/quartus/nios2eds/bin/gnu/H-x86_64-pc-linux-gnu/bin/nios2-elf-
-
   Kernel: arch/nios2/boot/zImage is ready
-
   Exported files: zImage
+
+Download the sof file to FPGA, and download images to nios2, launch nios2-terminal, did not show Linux boot.
+
+ .. code-block:: console 
+
   root@Alienware-LKKi7G8:/mnt/h/FPGADeveloper/adrv9009_a10gx/adrv9009_a10gx# nios2-configure-sof adrv9009_a10gx.sof
   root@Alienware-LKKi7G8:/home/lkk# nios2-download -g zImage
   nios2-terminal.exe
 
 
 Build Linux Image
-----------------
-https://wiki.analog.com/resources/tools-software/linux-build/generic/socfpga
-root@Alienware-LKKi7G8:/home/lkk/linux# ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf-
-root@Alienware-LKKi7G8:/home/lkk/linux# make socfpga_adi_defconfig
-root@Alienware-LKKi7G8:/home/lkk/linux# sudo apt-get install gcc-arm-linux-gnueabihf
-root@Alienware-LKKi7G8:/home/lkk/linux# CC=arm-linux-gnueabihf-gcc
-root@Alienware-LKKi7G8:/home/lkk/linux# make zImage -j4
-  OBJCOPY arch/arm/boot/zImage
-  Kernel: arch/arm/boot/zImage is ready
+-----------------
+Build Linux image for Intel SOC FPGA via this: https://wiki.analog.com/resources/tools-software/linux-build/generic/socfpga
 
-root@Alienware-LKKi7G8:/home/lkk/linux# make arch/arm/boot/dts/socfpga_arria10_socdk_adrv9009.dts
-make: Nothing to be done for 'arch/arm/boot/dts/socfpga_arria10_socdk_adrv9009.dts'.
+ .. code-block:: console 
+
+  root@Alienware-LKKi7G8:/home/lkk/linux# ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf-
+  root@Alienware-LKKi7G8:/home/lkk/linux# make socfpga_adi_defconfig
+  root@Alienware-LKKi7G8:/home/lkk/linux# sudo apt-get install gcc-arm-linux-gnueabihf
+  root@Alienware-LKKi7G8:/home/lkk/linux# CC=arm-linux-gnueabihf-gcc
+  root@Alienware-LKKi7G8:/home/lkk/linux# make zImage -j4
+    OBJCOPY arch/arm/boot/zImage
+    Kernel: arch/arm/boot/zImage is ready
+
+  root@Alienware-LKKi7G8:/home/lkk/linux# make arch/arm/boot/dts/socfpga_arria10_socdk_adrv9009.dts
+  make: Nothing to be done for 'arch/arm/boot/dts/socfpga_arria10_socdk_adrv9009.dts'.
+
+Image build success, not sure of the result when make devicetree, the devicetree may already there?
 
 https://wiki.analog.com/resources/tools-software/linux-software/altera_soc_images
 
@@ -546,6 +554,7 @@ Intel® Arria® 10 FPGA Developer Center: https://www.intel.com/content/www/us/e
 JESD204B Intel® FPGA IP Design Example User Guide
 
 Nios® V Embedded Processor Design Handbook: https://www.intel.com/content/www/us/en/docs/programmable/726952/22-1-21-2-0/introduction-71358.html
+
 
 ADI References
 ----------------

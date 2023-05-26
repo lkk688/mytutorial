@@ -1,5 +1,5 @@
 CondaEnv
-=====
+=========
 
 .. _CondaEnv:
 
@@ -59,7 +59,7 @@ Install cuda development kit, otherwise 'nvcc' is not available
 Option2: You can also go to nvidia cuda toolkit website, select the version (Ubuntu22.04 Cuda11.8) and install cuda locally
 
 .. code-block:: console
-   
+
    sudo apt install gcc
    sudo apt-get install linux-headers-$(uname -r) #The kernel headers and development packages for the currently running kernel
    wget https://developer.download.nvidia.com/compute/cuda/11.8.0/local_installers/cuda_11.8.0_520.61.05_linux.run
@@ -68,6 +68,7 @@ Option2: You can also go to nvidia cuda toolkit website, select the version (Ubu
 When install CUDA, do not select the "install the driver" option. After cuda installation, setup the PATH and make sure that PATH includes /usr/local/cuda/bin and LD_LIBRARY_PATH includes /usr/local/cuda/lib64
 
 .. code-block:: console
+
    export PATH=/usr/local/cuda/bin:$PATH
    export LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH
 
@@ -93,7 +94,7 @@ The tensorflow may show warning of "Could not load dynamic library 'libnvinfer.s
    $ cp /home/lkk/Developer/TensorRT-8.5.3.1/lib/libnvinfer_plugin.so.8 /home/lkk/Developer/TensorRT-8.5.3.1/lib/libnvinfer_plugin.so.7
 
 Pytorch2.0 Installation
-----------------
+-------------------------
 
 .. code-block:: console
 
@@ -102,7 +103,7 @@ Pytorch2.0 Installation
    $ pip install chardet #solve the problem
 
 Waymo OpenDataset Installation
-----------------
+----------------------------------
 
 First install [openexr](https://www.excamera.com/sphinx/articles-openexr.html) for HDR images required by Waymo opendataset, then install waymo-open-dataset package
 
@@ -115,7 +116,7 @@ First install [openexr](https://www.excamera.com/sphinx/articles-openexr.html) f
    >>> from waymo_open_dataset.utils import frame_utils, transform_utils, range_image_utils # test import waymo_open_dataset in python, should show no errors
 
 3D Object Detection
-----------------
+-------------------------
 
 Install the required libraries (mayavi and open3d) for 3D object visualization
 
@@ -190,7 +191,7 @@ You can git clone our 3D detection framework and instal the development environm
    
 
 TensorRT Installation
-----------------
+-------------------------
 
 Use the tar installation options for [TensorRT](https://docs.nvidia.com/deeplearning/tensorrt/install-guide/index.html#installing-tar)
 After the tar file is downloaded, untar the file, setup the TensorRT path, and install the tensorrt python package:
