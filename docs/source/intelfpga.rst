@@ -337,12 +337,20 @@ Mercury Arria 10 SOC Board
 Mercury+ PE1 300 baseboard (https://www.enclustra.com/en/products/base-boards/mercury-pe1-200-300-400/#) and Mercury+ AA1 Arria 10 SOC module (https://www.enclustra.com/en/products/system-on-chip-modules/mercury-aa1/)
   * The Arria 10 SOC module contains one 10AS027E4F29E3SG
   * The baseboard can be powered via 12V connector or USB (need high-power 5V usb not the port in PC), if using power over USB, the "DIP Switch CFG A 2" should be in ON position. 
+  * Mercury PE1-300 board has one lattice FPGA onboard, which serves as the system controller (Enclustra Module Configuration Tool (MCT)). The system controller includes built-in Xilinx JTAG programmer functionality, making it possible to use a USB connection for JTAG debugging. It is fully supported by the Xilinx tools. The built-in Altera JTAG functionality is not supported by the system controller.
+  * It has one FMC HPC (5*80pin): J1200-A, J1200-B, J1200-C, J1200-D, J1200-E in schematic
 
-There are four user LEDs (0~3)
-  * User LED 0: D1104, IOE_D0_LED0#
-  * User LED 1: D1105, IOE_D0_LED1#
-  * User LED 2: D1106, IOE_D0_LED2#
-  * User LED 3: D1107, IOE_D0_LED3#
+To program the Mercury board via Quartus II, we leverage an external USB-Blaster II debugger and connect it to the mercury board via standard JTAG interface. Open the programmer in Quartus II to detect the device. If you see the error of "Attempted to access JTAG server --internal error code 82 occurred", Open the "Control Panel", Select "Adminstrative Tools", Select "Services", Highlight "Altera JTAG Server" then select Restart.
+
+.. image:: imgs/FPGA/restartjtag.png
+  :width: 600
+  :alt: restartjtag
+
+There are four user LEDs (yellow) (0~3), not connected to the FPGA module
+  * User LED 0: D1104, IOE_D0_LED0#, connect to J201 B3 (IO_P)
+  * User LED 1: D1105, IOE_D0_LED1#, connect to J201 B5 (IO_N)
+  * User LED 2: D1106, IOE_D0_LED2#, connect to J201 B7 (IO_P) connect to T8 IO3B_L2P
+  * User LED 3: D1107, IOE_D0_LED3#, connect to J201 B9 (IO_N)
 
 There are four user buttons (0~3) Shared with the system controller, module connector and Anios I/O connector B
   * 0: S1104 IOB_D20_SC4_BTN0#
@@ -500,8 +508,27 @@ Build linux success.
   nios2-terminal.exe
 
 
-FPGA References
+Build Linux Image
 ----------------
+https://wiki.analog.com/resources/tools-software/linux-build/generic/socfpga
+root@Alienware-LKKi7G8:/home/lkk/linux# ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf-
+root@Alienware-LKKi7G8:/home/lkk/linux# make socfpga_adi_defconfig
+root@Alienware-LKKi7G8:/home/lkk/linux# sudo apt-get install gcc-arm-linux-gnueabihf
+root@Alienware-LKKi7G8:/home/lkk/linux# CC=arm-linux-gnueabihf-gcc
+root@Alienware-LKKi7G8:/home/lkk/linux# make zImage -j4
+  OBJCOPY arch/arm/boot/zImage
+  Kernel: arch/arm/boot/zImage is ready
+
+root@Alienware-LKKi7G8:/home/lkk/linux# make arch/arm/boot/dts/socfpga_arria10_socdk_adrv9009.dts
+make: Nothing to be done for 'arch/arm/boot/dts/socfpga_arria10_socdk_adrv9009.dts'.
+
+https://wiki.analog.com/resources/tools-software/linux-software/altera_soc_images
+
+ADI Kuiper Linux
+----------------
+https://wiki.analog.com/resources/tools-software/linux-software/kuiper-linux
+
+
 https://siytek.com/verilog-quartus/
 https://people.ece.cornell.edu/land/courses/ece5760/
 https://www.intel.com/content/www/us/en/support/programmable/support-resources/design-guidance/arria-10.html#tab-blade-1-0
@@ -552,3 +579,11 @@ Other branches contain a10gx: https://github.com/analogdevicesinc/hdl/tree/a10gx
 
 https://wiki.analog.com/resources/fpga/docs/hdl/porting_project_quick_start_guide
 https://wiki.analog.com/resources/fpga/docs/arch
+
+https://wiki.analog.com/resources/tools-software/linux-drivers/iio-transceiver/adrv9009
+https://wiki.analog.com/resources/tools-software/linux-software/kuiper-linux
+
+https://wiki.analog.com/resources/tools-software/linux-software/altera_soc_images
+
+https://wiki.analog.com/resources/tools-software/linux-drivers-all#building_the_adi_linux_kernel
+Building the Intel SoC-FPGA kernel and devicetrees from source: https://wiki.analog.com/resources/tools-software/linux-build/generic/socfpga
