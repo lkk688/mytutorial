@@ -493,14 +493,29 @@ Change the project name in Makefile and system_project.tcl to "adrv9009_a10gx", 
       invoked from within
   "adi_project adrv9009_a10gx"
       (file "system_project.tcl" line 4)
- 
-Ref nios2 linux build: https://wiki.analog.com/resources/tools-software/linux-build/generic/nios2. Build linux success.
+
+.. note::
+
+    The ADI HDL project build in WSL1 Ubuntu and WSL2 Ubuntu are all failed. The "unknown device" error maybe caused by the Arria10 device license setup in the WSL linux. Tried to setup the device license in command line, but it still shows the same error. The HDL project build in Windows is successful due to the correct setting of the device license. 
+
+
+Build nios2 Linux Image
+------------------------
+Ref nios2 linux build: https://wiki.analog.com/resources/tools-software/linux-build/generic/nios2. Using the repo of https://github.com/analogdevicesinc/linux. Build linux success.
 
  .. code-block:: console 
 
   wget https://raw.githubusercontent.com/analogdevicesinc/wiki-scripts/master/linux/build_nios2_kernel_image.sh && chmod +x build_nios2_kernel_image.sh && ./build_nios2_kernel_image.sh /home/lkk/quartus/nios2eds/bin/gnu/H-x86_64-pc-linux-gnu/bin/nios2-elf-
   Kernel: arch/nios2/boot/zImage is ready
   Exported files: zImage
+
+This script performs the following four steps
+  * clone the ADI kernel tree (git clone https://github.com/analogdevicesinc/linux.git)
+  * Get root filesystem (wget https://swdownloads.analog.com/cse/nios2/rootfs/rootfs.cpio.gz -P arch/nios2/boot/rootfs.cpio.gz)
+  * download the Linaro GCC toolchain (export CROSS_COMPILE=~/nios2/tools/bin/nios2-linux-gnu-)
+  * configure Kernel for Nios2 platforms (export ARCH=nios2 & make adi_nios2_defconfig)
+  * build the ADI kernel tree (make zImage)
+  * export/copy the Image file and device tree file out of the kernel build folder
 
 Download the sof file to FPGA, and download images to nios2, launch nios2-terminal, did not show Linux boot.
 
@@ -510,9 +525,12 @@ Download the sof file to FPGA, and download images to nios2, launch nios2-termin
   root@Alienware-LKKi7G8:/home/lkk# nios2-download -g zImage
   nios2-terminal.exe
 
+.. note::
 
-Build Linux Image
------------------
+    We can build the nios2 linux image, and directly download the sof file and image file to the FPGA, the problem is that 'nios2-terminal' did not show the boot of Linux. If a development board has more than one JTAG port, the nios2-terminal command cannot work unless the correct JTAG cable is identified. In order to identify the correct JTAG cable, you must first run the **jtagconfig** command. For example, if the output states that USB-Blaster is port 2, then you can run the command using the correct JTAG port nios2-terminal -c 2. Ref: https://www.intel.com/content/www/us/en/docs/programmable/683525/21-3/nios2-terminal-64-bit-support.html. 
+
+Build Linux FPGA SoC Image
+----------------------------
 Build Linux image for Intel SOC FPGA via this: https://wiki.analog.com/resources/tools-software/linux-build/generic/socfpga
 
  .. code-block:: console 
@@ -529,13 +547,40 @@ Build Linux image for Intel SOC FPGA via this: https://wiki.analog.com/resources
   make: Nothing to be done for 'arch/arm/boot/dts/socfpga_arria10_socdk_adrv9009.dts'.
 
 Image build success, not sure of the result when make devicetree, the devicetree may already there?
+Refer the nios2 linux build, your_setup.dts is a generic file name - it should be replaced by the desired devicetree file name: 
 
-https://wiki.analog.com/resources/tools-software/linux-software/altera_soc_images
+ .. code-block:: console 
+
+  user@pc:~/nios2/linux$ cp arch/nios2/boot/dts/your_setup.dts arch/nios2/boot/devicetree.dts
+
+Copy the generated files to your SD Card
+
+ .. code-block:: console 
+
+  /linux$ cp arch/arm/boot/zImage /media/BOOT/zImage
+  linux$ cp arch/arm/boot/dts/socfpga_arria10_socdk_adin1300_dual-mii.dtb  /media/BOOT/socfpga_arria10_socdk_sdmmc.dtb
+
+You can download prebuild images from: https://wiki.analog.com/resources/tools-software/linux-software/altera_soc_images (same to Kuiper Linux).
+Using Windows host to flash SD cards: https://wiki.analog.com/resources/tools-software/linux-software/zynq_images/windows_hosts
+
 
 ADI Kuiper Linux
-----------------
-https://wiki.analog.com/resources/tools-software/linux-software/kuiper-linux
+-----------------
+Analog Devices Kuiper Linux is a distribution based on Raspberry Pi OS for the Raspberry Pi. Ref: https://wiki.analog.com/resources/tools-software/linux-software/kuiper-linux.
 
+Download the Linux Image, unzip the folder. Use balenaEtcher or Win32Disk writer to flash the image to the SD card. The default user is the “analog” user, the password for this user is “analog”. The password for the “root” account is “analog” as well.
+
+Configuring the SD Card for FPGA Projects
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+For Arria10 SOC projects:        
+  - copy <target>/fit_spl_fpga.itb, <target>/socfpga_arria10_socdk_sdmmc.dtb,        
+    <target>/u-boot.img and socfpga_arria10_common/zImage to the root        
+    of the BOOT FAT32 partition.        
+  - copy <target>/extlinux.conf to the root of BOOT FAT32, in folder 'extlinux';        
+  - write preloader file - <target>/u-boot-splx4.sfp - to the corresponding SD        
+    card partition (usually third partition). You can use 'dd' linux command in        
+    terminal, for example: "dd if=u-boot-splx4.sfp of=/dev/mmcblk0p3"
 
 https://siytek.com/verilog-quartus/
 https://people.ece.cornell.edu/land/courses/ece5760/
