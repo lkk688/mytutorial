@@ -501,7 +501,7 @@ Change the project name in Makefile and system_project.tcl to "adrv9009_a10gx", 
 
 Build nios2 Linux Image
 ------------------------
-Ref nios2 linux build: https://wiki.analog.com/resources/tools-software/linux-build/generic/nios2. Using the repo of https://github.com/analogdevicesinc/linux. Build linux success.
+Ref nios2 linux build: https://wiki.analog.com/resources/tools-software/linux-build/generic/nios2 or https://wiki.analog.com/resources/tools-software/linux-drivers/platforms/nios2?s[]=nios2. Using the repo of https://github.com/analogdevicesinc/linux. Build linux success.
 
  .. code-block:: console 
 
@@ -572,15 +572,25 @@ Download the Linux Image, unzip the folder. Use balenaEtcher or Win32Disk writer
 
 Configuring the SD Card for FPGA Projects
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+The SD card includes several folders in the root directory of the BOOT partition. In order to configure the SD card to work with a specific FPGA board and ADI hardware, several files must be copied onto the root directory. Using the host PC, drag and drop the required files onto the BOOT partition, and use the EJECT function when removing the SD card from the reader.
 
 For Arria10 SOC projects:        
   - copy <target>/fit_spl_fpga.itb, <target>/socfpga_arria10_socdk_sdmmc.dtb,        
     <target>/u-boot.img and socfpga_arria10_common/zImage to the root        
-    of the BOOT FAT32 partition.        
+    of the BOOT FAT32 partition, where target is the folder "socfpga_arria10_socdk_adrv9009"   
   - copy <target>/extlinux.conf to the root of BOOT FAT32, in folder 'extlinux';        
   - write preloader file - <target>/u-boot-splx4.sfp - to the corresponding SD        
     card partition (usually third partition). You can use 'dd' linux command in        
     terminal, for example: "dd if=u-boot-splx4.sfp of=/dev/mmcblk0p3"
+
+On the platform board, insert the SD card, plug in the console UART cable, power the system, and see the boot process in console
+
+.. code-block:: console 
+
+  $ kermit -l /dev/ttyACM0 -b 115200  -c
+
+When the platform running Kuiper Linux is powered up, any IIO devices present and enabled in the configuration file, will be displayed in the terminal window by running the iio_info command
+
 
 https://siytek.com/verilog-quartus/
 https://people.ece.cornell.edu/land/courses/ece5760/
