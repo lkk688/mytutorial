@@ -34,8 +34,67 @@ Show Jetpack version:
 Jetson Orin Nano
 ----------------
 Jetson Orin Nano: Jetson Orin Nano 8GB with SD card slot (P3767-0005)
-Jetson Orin Nano Developer Kit User Guide: https://developer.nvidia.com/embedded/learn/jetson-orin-nano-devkit-user-guide/index.html
-Develop guide: https://docs.nvidia.com/jetson/archives/r35.3.1/DeveloperGuide/index.html
+    * Jetson Orin Nano Developer Kit User Guide: https://developer.nvidia.com/embedded/learn/jetson-orin-nano-devkit-user-guide/index.html
+    * Develop guide: https://docs.nvidia.com/jetson/archives/r35.3.1/DeveloperGuide/index.html
+    * Software setup: https://developer.nvidia.com/embedded/learn/jetson-orin-nano-devkit-user-guide/software_setup.html
+    * Howto: https://developer.nvidia.com/embedded/learn/jetson-orin-nano-devkit-user-guide/howto.html
+
+The new version the NVIDIA SDK Manager supports various flash options, for example, the base L4T BSP can be flashed to any storage medium (microSD card, NVMe SSD, USB drive, or eMMC). We can direct flash the L4T to the NVMe SSD without the previous complicated steps of booting system in eMMC, then moving data to SSD.
+
+Prepare the Host Machine with NVIDIA SDK Manager
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Install NVIDIA SDK manager, ref: https://developer.nvidia.com/nvidia-sdk-manager
+    * On your x86-64 PC, download the Debian package file for the latest SDK Manager: https://developer.nvidia.com/embedded/downloads
+    * Run the following command to install the Debian package: "sudo apt install ./sdkmanager_*-*_amd64.deb"
+    * Installed SDK Manager on Intel NUC6 with Ubuntu20.04 (upgraded from Ubuntu18.04), the current version of SDK manager cannot be installed on Ubuntu22.04 (cannot flash the jetson)
+    * Intel NUC6 (mini pc) is in ENG276, account name is “lkk”, password is: studenteng276
+
+Flash L4T to Jetson via SDK Manager
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Connect NVIDIA Jetson Orin Nano Developer Kit to the PC with a USB Type-C cable. Turn the Jetson dev kit in Force Recovery Mode:
+    * For Jetson Orin Nano: prepare a jumper cable (any ribbon cable) to shortening the FC REC pin and GND pin of the 12-pin header under the module, then insert the power supply plug into the DC jack. While shortening the FC REC pin and GND pin of the 12-pin header under the module, insert the power supply plug into the DC jack. This will turn on the Jetson dev kit in Force Recovery Mode.
+    * For Jetson AGX device with three buttons: Press and hold the FORCE RECOVERY button (middle button). While pressing the FORCE RECOVERY button, press and release the RESET button (third button).
+    * In the host PC, you can type "lsusb" to see the USB device with "nvidia" name
+    * 
+.. image:: imgs/ENVs/lsusb.png
+  :width: 600
+  :alt: lsusb
+
+Launch SDK Manger, it will popup a window show detected devices, select the device in the list. From the Product Category panel, select Jetson. From the Hardware Configuration panel, de-select "Host Machine" and select Jetson Orin Nano Developer Kit for Target Hardware.
+Click " CONTINUE " button. Setup Process window shows the download progress.
+
+After the download is finished, SDK Manager went to step3 and opens a dialog show "SDK Manager is about to flash your Jetson XXX". This prompt provides instructions for preparing your device to get it ready for flashing. On the flashing prompt
+    * Select "Manual Setup - Jetson XX" for 1.
+    * In OEM configuration (7), "Pre-Config" means you will create the username/password for the Orin before flashing; "Runtime" means the username/password creation will be prompted when you boot the Orin after the flash.
+    * If choosing "Pre-Config", enter the user name and password you want to setup in the Jetson.
+    * In (8), you can select storage device, i.e., eMMC, NVMe. We can select NVMe to flash the L4T in the SSD. Then, Click "Flash" button.
+
+Jetson AGX Xavier can now support boot form NVMe SSD. The default boot is still eMMC, but you can select NVMe:
+
+.. image:: imgs/ENVs/agxxavierboot.png
+  :width: 600
+  :alt: agxxavierboot
+
+When flashing is done, the SDK Manager will popup another windows of "SDK Manager is about to Install SDK components on your Jetson".
+    * In this step, plugin the displayport or HDMI to the Jetson and complete the Ubuntu system configuration wizard. If the Jetson did not boot, click the RESET button to restart. 
+    * After the Jetson initial setup is finished, go back to the host PC with NVIDIA SDK manager. 
+    * Select the "USB", enter Username and Password, then click "Install" BSP.
+
+.. image:: imgs/ENVs/installsdk.png
+  :width: 600
+  :alt: installsdk
+
+When you the SDK is installed, you can see the final success screen in SDK manager.
+
+.. image:: imgs/ENVs/flashfinish.png
+  :width: 600
+  :alt: installsdk
+
+
+If you wish to customize your OS components before flashing, check these links 
+    * Compiling Source Code: https://developer.ridgerun.com/wiki/index.php/NVIDIA_Jetson_Orin/JetPack_5.0.2/Compiling_Code
+    * Flashing Board From Cmdline: https://developer.ridgerun.com/wiki/index.php/NVIDIA_Jetson_Orin/JetPack_5.0.2/Flashing_Board
 
 Install Miniconda for ARM
 -------------------------

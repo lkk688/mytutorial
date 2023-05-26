@@ -1,5 +1,5 @@
 Welcome to My Tutorial documentation!
-===================================
+=====================================
 
 Check out the :doc:`usage` section for further information, including
 how to :ref:`installation` the project.
@@ -19,7 +19,9 @@ Contents
    WSL2
    mydetector3d
    3DV2X
+   nuscenes
    intelfpga
+   jetson
    test
    usage
    api
