@@ -42,6 +42,8 @@ When your wsl2 installation is finished, you can use this command to enter into 
     wsl #enter default wsl distribution
     wsl --distribution Ubuntu-22.04 --user lkk #enter a specific distribution
 
+You can access the WSL2 Linux file from the Windows Explorer by accessing the following address "\\wsl$"
+
 You can check the version of WSL and perform conversion from WSL2 to WSL1 if needed
 
 .. code-block:: console
