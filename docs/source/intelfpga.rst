@@ -362,6 +362,17 @@ ADRV9009 Example
 -----------------
 Follow the ADRV9009+Arria10 GX example: https://wiki.analog.com/resources/eval/user-guides/adrv9009/quickstart/a10gx
 
+Open Nios II command shell in windows, it will automatically open the default WSL Linux. The PATH is automatically setup by the Nios II shell.
+
+.. code-block:: console 
+
+  root@Alienware-LKKi7G8:/mnt/h/intelFPGA/quartus23.1/quartus/bin64# jtagconfig.exe
+  1) USB-BlasterII [USB-1]
+    02E660DD   10AX115H(1|2|3|4|4E3)/..
+    020A40DD   5M(1270ZF324|2210Z)/EPM2210
+
+  2) Remote server arria10: Unable to connect
+
 .. code-block:: console 
 
  (base) lkk@Alienware-LKKi7G8:/mnt/h/intelFPGA/quartus23.1/nios2eds$ export PATH=/mnt/h/intelFPGA/quartus23.1/nios2eds/bin:$PATH
