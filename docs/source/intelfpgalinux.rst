@@ -227,5 +227,35 @@ Using the repo of https://github.com/analogdevicesinc/linux. Build linux success
   #Get Linux Kernel Source (very slow)
   (base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper$ git clone https://github.com/analogdevicesinc/linux.git
   #Get Root Filesystem
+  (base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/linux$ wget https://swdownloads.analog.com/cse/nios2/rootfs/rootfs.cpio.gz -P arch/nios2/boot/rootfs.cpio.gz
+  (base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/linux$ export ARCH=nios2
+  (base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/linux$ export CROSS_COMPILE=/home/lkk/intelFPGA_pro/23.1/nios2eds/bin/gnu/H-x86_64-pc-linux-gnu/bin/nios2-elf-
+  (base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/linux$ make adi_nios2_defconfig
+  LEX     scripts/kconfig/lexer.lex.c
+  YACC    scripts/kconfig/parser.tab.[ch]
+  HOSTCC  scripts/kconfig/lexer.lex.o
+  HOSTCC  scripts/kconfig/menu.o
+  HOSTCC  scripts/kconfig/parser.tab.o
+  HOSTCC  scripts/kconfig/preprocess.o
+  HOSTCC  scripts/kconfig/symbol.o
+  HOSTCC  scripts/kconfig/util.o
+  HOSTLD  scripts/kconfig/conf
+   #
+   # configuration written to .config
+   #
+
+  (base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/linux$ ls arch/nios2/boot/dts
+   10m50_devboard.dts  a10gx_adrv9009.dts  a10gx_daq2.dts
+   3c120_devboard.dts  a10gx_adrv9371.dts  Makefile
+  (base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/linux$ cp arch/nios2/boot/dts/a10gx_adrv9009.dts arch/nios2/boot/devicetree.dts
+  cat: arch/nios2/boot/rootfs.cpio.gz: Is a directory
+   make[1]: *** [usr/Makefile:85: usr/initramfs_inc_data] Error 1
+   make[1]: *** Deleting file 'usr/initramfs_inc_data'
+   make: *** [Makefile:1868: usr] Error 2
+
+
+
+flex: not found: sudo apt-get install make build-essential libncurses-dev bison flex libssl-dev libelf-dev
+
 
 Set CROSS_COMPILE to the common path prefix which your toolchain’s binaries have, e.g. the path to the directory containing the compiler binaries plus the target triplet and trailing dash.
