@@ -94,10 +94,13 @@ In the Programmer window, click Auto Detect and select "10AX115S2". In the Mode 
   :alt: programmerwindow
 
 In the command line, you can type jtagconfig to see the output
-$ jtagconfig
-1) USB-BlasterII [1-5]
-  02E660DD   10AX115H(1|2|3|4|4E3)/..
-  020A40DD   5M(1270ZF324|2210Z)/EPM2210
+
+.. code-block:: console 
+
+  $ jtagconfig
+  1) USB-BlasterII [1-5]
+    02E660DD   10AX115H(1|2|3|4|4E3)/..
+    020A40DD   5M(1270ZF324|2210Z)/EPM2210
 
 
 Helloworld
@@ -209,6 +212,27 @@ Ref HDL build: https://wiki.analog.com/resources/fpga/docs/build
 
    (base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/hdl/projects/adrv9009/a10gx$ make
    Building adrv9009_a10gx [/home/lkk/intelFPGA_pro/FPGADeveloper/hdl/projects/adrv9009/a10gx/adrv9009_a10gx_quartus.log] ... OK
+
+ADI HDL Design
+---------------
+ADI HDL related information
+  * ADI HDL repo: https://github.com/analogdevicesinc/hdl
+  * ADI Reference Designs HDL User Guide: https://wiki.analog.com/resources/fpga/docs/hdl
+  * all the projects have no-OS (baremetal https://github.com/analogdevicesinc/no-OS) and a Linux (https://github.com/analogdevicesinc/Linux) support.
+
+The HDL repository is divided into two seperate sections
+  * projects with all the currently supported projects. There are two special folders inside the /hdl/projects: 
+      * common: contains all the base designs, for all currently supported FPGA development boards
+      * scripts (Tcl scripts): defined all the custom Tcl processes, which are used to create a project, define the system and generate programming files for the FPGA.
+  * library with all the Analog Devices Inc. proprietary IP cores and hdl modules, which are required to build the projects. The library folder contains all the IP cores and common modules. An IP, in general, contains Verilog files, which describe the hardware logic, constraint files, to ease timing closure, and Tcl scripts, which generate all the other files required for IP integration (*_ip.tcl for Vivado and *_hw.tcl for Quartus).
+
+Running the HDL on hardware. HDL build alone will NOT let you do anything useful. You would need a software running on the processor (Microblaze, NIOS or ARM) to make the design work. There are two software solutions: 1) Linux and 2) No-OS. Ref: https://wiki.analog.com/resources/fpga/docs/run
+
+HDL Architecture: https://wiki.analog.com/resources/fpga/docs/arch
+
+Using and modifying the HDL designs: https://wiki.analog.com/resources/fpga/docs/tips
+
+
 
 Build nios2 Linux Image
 ------------------------
