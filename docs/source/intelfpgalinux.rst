@@ -210,3 +210,15 @@ Ref HDL build: https://wiki.analog.com/resources/fpga/docs/build
    (base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/hdl/projects/adrv9009/a10gx$ make
    Building adrv9009_a10gx [/home/lkk/intelFPGA_pro/FPGADeveloper/hdl/projects/adrv9009/a10gx/adrv9009_a10gx_quartus.log] ... OK
 
+Build nios2 Linux Image
+------------------------
+Ref nios2 linux build: https://wiki.analog.com/resources/tools-software/linux-build/generic/nios2 or https://wiki.analog.com/resources/tools-software/linux-drivers/platforms/nios2?s[]=nios2. 
+
+Using the repo of https://github.com/analogdevicesinc/linux. Build linux success.
+
+.. code-block:: console 
+  #Get Linux Kernel Source (very slow)
+  (base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper$ git clone https://github.com/analogdevicesinc/linux.git
+  #Get Root Filesystem
+
+Set CROSS_COMPILE to the common path prefix which your toolchain’s binaries have, e.g. the path to the directory containing the compiler binaries plus the target triplet and trailing dash.
