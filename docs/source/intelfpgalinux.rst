@@ -248,6 +248,7 @@ Ref nios2 linux build: https://wiki.analog.com/resources/tools-software/linux-bu
 Using the repo of https://github.com/analogdevicesinc/linux. Build linux success.
 
 .. code-block:: console 
+
   #Get Linux Kernel Source (very slow)
   (base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper$ git clone https://github.com/analogdevicesinc/linux.git
   #Get Root Filesystem
@@ -267,7 +268,6 @@ Using the repo of https://github.com/analogdevicesinc/linux. Build linux success
    #
    # configuration written to .config
    #
-
   (base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/linux$ ls arch/nios2/boot/dts
    10m50_devboard.dts  a10gx_adrv9009.dts  a10gx_daq2.dts
    3c120_devboard.dts  a10gx_adrv9371.dts  Makefile
@@ -278,6 +278,10 @@ Using the repo of https://github.com/analogdevicesinc/linux. Build linux success
    make[1]: *** Deleting file 'usr/initramfs_inc_data'
    make: *** [Makefile:1868: usr] Error 2
 
+It will show arch/nios2/boot/rootfs.cpio.gz is a directory, move the .gz file out of the directory:
+
+.. code-block:: console 
+
    (base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/linux/arch/nios2/boot$ ls
    compressed  devicetree.dts  dts  install.sh  Makefile  rootfs.cpio.gz
    (base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/linux/arch/nios2/boot$ mv rootfs.cpio.gz/ rootfs
@@ -285,54 +289,64 @@ Using the repo of https://github.com/analogdevicesinc/linux. Build linux success
 
    make[1]: *** No rule to make target 'arch/nios2/boot/dts/devicetree.dtb.o', needed by 'arch/nios2/boot/dts/built-in.a'.  Stop.
    make: *** [Makefile:1868: arch/nios2/boot/dts] Error 2
+
+If facing the above error, make sure the git branch is altera_4.9
+
+.. code-block:: console 
+
+  (base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/linux$ sudo dpkg-reconfigure dash
+  (base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/linux$ git checkout altera_4.9
+
+If facing multiple definition of 'yylloc' error, switch gcc version from 11 to 9 and make again:
+
+.. code-block:: console 
+
    (base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/linux$ make -j4 zImage
      OBJCOPY arch/nios2/boot/zImage
    Kernel: arch/nios2/boot/zImage is ready
 
+You can also try the all-in-one script (not used):
+
+.. code-block:: console 
+
+  (base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper$ wget https://raw.githubusercontent.com/analogdevicesinc/wiki-scripts/master/linux/build_nios2_kernel_image.sh
+  (base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper$ chmod +x build_nios2_kernel_image.sh
+  ./build_nios2_kernel_image.sh /home/lkk/intelFPGA_pro/23.1/nios2eds/bin/gnu/H-x86_64-pc-linux-gnu/bin/nios2-elf-
 
 
+.. note::
+  flex: not found error: sudo apt-get install make build-essential libncurses-dev bison flex libssl-dev libelf-dev
 
-(base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/linux$ sudo dpkg-reconfigure dash
-(base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/linux$ git checkout altera_4.9
+.. note::
+  Set CROSS_COMPILE to the common path prefix which your toolchain’s binaries have, e.g. the path to the directory containing the compiler binaries plus the target triplet and trailing dash.
 
-wget https://raw.githubusercontent.com/analogdevicesinc/wiki-scripts/master/linux/build_nios2_kernel_image.sh && chmod +x build_nios2_kernel_image.sh && ./build_nios2_kernel_image.sh /home/<user>/intelFPGA/<version>/nios2eds/bin/gnu/H-x86_64-pc-linux-gnu/bin/nios2-elf-
+.. note::
+  Error: multiple definition of 'yylloc', solution: switch gcc version from 11 to 9
 
-(base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper$ wget https://raw.githubusercontent.com/analogdevicesinc/wiki-scripts/master/linux/build_nios2_kernel_image.sh
-(base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper$ chmod +x build_nios2_kernel_image.sh
-./build_nios2_kernel_image.sh /home/lkk/intelFPGA_pro/23.1/nios2eds/bin/gnu/H-x86_64-pc-linux-gnu/bin/nios2-elf-
+.. code-block:: console 
 
+  (base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/linux$ sudo apt -y install gcc-9
+  (base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/linux$ sudo update-alternatives --config gcc
+  update-alternatives: error: no alternatives for gcc
+  (base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/linux$ ls /usr/bin/gcc*
+  /usr/bin/gcc     /usr/bin/gcc-ar     /usr/bin/gcc-nm     /usr/bin/gcc-ranlib
+  /usr/bin/gcc-11  /usr/bin/gcc-ar-11  /usr/bin/gcc-nm-11  /usr/bin/gcc-ranlib-11
+  /usr/bin/gcc-12  /usr/bin/gcc-ar-12  /usr/bin/gcc-nm-12  /usr/bin/gcc-ranlib-12
+  /usr/bin/gcc-9   /usr/bin/gcc-ar-9   /usr/bin/gcc-nm-9   /usr/bin/gcc-ranlib-9
+  (base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/linux$ sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 9
+  update-alternatives: using /usr/bin/gcc-9 to provide /usr/bin/gcc (gcc) in auto mode
+  (base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/linux$ sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-11 11
+  update-alternatives: using /usr/bin/gcc-11 to provide /usr/bin/gcc (gcc) in auto mode
+  (base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/linux$ sudo update-alternatives --config gcc
+  There are 2 choices for the alternative gcc (providing /usr/bin/gcc).
 
+    Selection    Path             Priority   Status
+  ------------------------------------------------------------
+  * 0            /usr/bin/gcc-11   11        auto mode
+    1            /usr/bin/gcc-11   11        manual mode
+    2            /usr/bin/gcc-9    9         manual mode
 
-flex: not found: sudo apt-get install make build-essential libncurses-dev bison flex libssl-dev libelf-dev
-
-
-Set CROSS_COMPILE to the common path prefix which your toolchain’s binaries have, e.g. the path to the directory containing the compiler binaries plus the target triplet and trailing dash.
-
-(base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/linux$ sudo apt -y install gcc-9
-(base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/linux$ sudo update-alternatives --config gcc
-update-alternatives: error: no alternatives for gcc
-(base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/linux$ ls /usr/bin/gcc*
-/usr/bin/gcc     /usr/bin/gcc-ar     /usr/bin/gcc-nm     /usr/bin/gcc-ranlib
-/usr/bin/gcc-11  /usr/bin/gcc-ar-11  /usr/bin/gcc-nm-11  /usr/bin/gcc-ranlib-11
-/usr/bin/gcc-12  /usr/bin/gcc-ar-12  /usr/bin/gcc-nm-12  /usr/bin/gcc-ranlib-12
-/usr/bin/gcc-9   /usr/bin/gcc-ar-9   /usr/bin/gcc-nm-9   /usr/bin/gcc-ranlib-9
-(base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/linux$ sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 9
-update-alternatives: using /usr/bin/gcc-9 to provide /usr/bin/gcc (gcc) in auto mode
-(base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/linux$ sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-11 11
-update-alternatives: using /usr/bin/gcc-11 to provide /usr/bin/gcc (gcc) in auto mode
-(base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/linux$ sudo update-alternatives --config gcc
-There are 2 choices for the alternative gcc (providing /usr/bin/gcc).
-
-  Selection    Path             Priority   Status
-------------------------------------------------------------
-* 0            /usr/bin/gcc-11   11        auto mode
-  1            /usr/bin/gcc-11   11        manual mode
-  2            /usr/bin/gcc-9    9         manual mode
-
-Press <enter> to keep the current choice[*], or type selection number: 2
-update-alternatives: using /usr/bin/gcc-9 to provide /usr/bin/gcc (gcc) in manual mode
-(base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/linux$ gcc --version
-gcc (Ubuntu 9.5.0-1ubuntu1~22.04) 9.5.0
-Copyright (C) 2019 Free Software Foundation, Inc.
-This is free software; see the source for copying conditions.  There is NO
-warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  Press <enter> to keep the current choice[*], or type selection number: 2
+  update-alternatives: using /usr/bin/gcc-9 to provide /usr/bin/gcc (gcc) in manual mode
+  (base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/linux$ gcc --version
+  gcc (Ubuntu 9.5.0-1ubuntu1~22.04) 9.5.0
