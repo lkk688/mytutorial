@@ -167,6 +167,13 @@ Follow the ADRV9009+Arria10 GX example: https://wiki.analog.com/resources/eval/u
     nios2-terminal: "USB-BlasterII [1-5]", device 1, instance 0
     nios2-terminal: (Use the IDE stop button or Ctrl-C to terminate)
 
+
+The default user is the “analog” user, the password for this user is “analog”. The password for the “root” account is “analog” as well.
+
+Nios II Command Shell login using root and password analog. 
+
+by running the iio_info command
+
 Build ADI HDL
 --------------------
 Ref HDL build: https://wiki.analog.com/resources/fpga/docs/build
