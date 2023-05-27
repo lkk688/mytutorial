@@ -188,3 +188,25 @@ Ref HDL build: https://wiki.analog.com/resources/fpga/docs/build
 
    (base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/hdl/projects/adrv9009/a10soc$ make
    Building adrv9009_a10soc [/home/lkk/intelFPGA_pro/FPGADeveloper/hdl/projects/adrv9009/a10soc/adrv9009_a10soc_quartus.log] ... OK
+
+   (base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/hdl/projects/adrv9009/a10gx$ quartus_sh -t system_project.tcl
+   Info (16678): Successfully loaded final database: elapsed time is 00:00:03.
+   Info (115017): Design contains a time-limited core -- only a single, time-limited programming file can be generated
+       Info (21726): Time Limited Core Name: Nios II Embedded Processor Encrypted output (6AF7 00A2)
+       Info (21726): Time Limited Core Name: Triple-Speed Ethernet (6AF7 00BD)
+   Info: Quartus Prime Assembler was successful. 0 errors, 0 warnings
+       Info: Peak virtual memory: 7335 megabytes
+       Info: Processing ended: Fri May 26 16:35:14 2023
+       Info: Elapsed time: 00:00:38
+       Info: System process ID: 30895
+   Info (21793): Quartus Prime Full Compilation was successful. 0 errors, 2282 warnings
+   Info (23030): Evaluation of Tcl script system_project.tcl was successful
+   Info: Quartus Prime Shell was successful. 0 errors, 2282 warnings
+       Info: Peak virtual memory: 1076 megabytes
+       Info: Processing ended: Fri May 26 16:35:20 2023
+       Info: Elapsed time: 00:14:37
+       Info: System process ID: 28456
+
+   (base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/hdl/projects/adrv9009/a10gx$ make
+   Building adrv9009_a10gx [/home/lkk/intelFPGA_pro/FPGADeveloper/hdl/projects/adrv9009/a10gx/adrv9009_a10gx_quartus.log] ... OK
+
