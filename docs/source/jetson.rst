@@ -96,6 +96,10 @@ If you wish to customize your OS components before flashing, check these links
     * Compiling Source Code: https://developer.ridgerun.com/wiki/index.php/NVIDIA_Jetson_Orin/JetPack_5.0.2/Compiling_Code
     * Flashing Board From Cmdline: https://developer.ridgerun.com/wiki/index.php/NVIDIA_Jetson_Orin/JetPack_5.0.2/Flashing_Board
 
+Jetson Setup
+------------
+In Settings, click Sharing, enable Screen Sharing. VNC address is vnc://lkk-xavieragx.local, IP: 192.168.86.27
+
 Install Miniconda for ARM
 -------------------------
 Ref: https://conda.io/projects/conda/en/stable/user-guide/install/linux.html
