@@ -127,6 +127,7 @@ JetPack 5.1.1 includes NVIDIA Jetson Linux 35.3.1 which includes the Linux Kerne
 Jetson Docker Setup
 -------------------
 In Settings, click Sharing, enable Screen Sharing. VNC address is vnc://lkk-xavieragx.local, IP: 192.168.86.27
+Jetson Orin nano: IP: 192.168.86.29 vnc://lkk-orinnano.local
 
 Use docker without sudo, ref: https://docs.docker.com/engine/install/linux-postinstall/
 
