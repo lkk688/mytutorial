@@ -203,6 +203,15 @@ Build pytorch container:
    Python3 version:  3.8
    building PyTorch torch-2.0.0+nv23.05-cp38-cp38-linux_aarch64.whl, torchvision v0.15.1, torchaudio v2.0.1, cuda arch 7.2;8.7
    Building l4t-pytorch:r35.3.1-pth2.0-py3 container...
+   .....
+   Successfully built 3fd38d3aa7d6
+   Successfully tagged l4t-pytorch:r35.3.1-pth2.0-py3
+   done building PyTorch torch-2.0.0+nv23.05-cp38-cp38-linux_aarch64.whl, torchvision v0.15.1, torchaudio v2.0.1, cuda arch 7.2;8.7
+   lkk@lkk-xavieragx:~/Developer/jetson-containers$ docker images
+   REPOSITORY                   TAG                  IMAGE ID       CREATED          SIZE
+   l4t-pytorch                  r35.3.1-pth2.0-py3   3fd38d3aa7d6   19 minutes ago   11.1GB
+   nvcr.io/nvidia/l4t-jetpack   r35.3.1              ff2dd43d5687   6 weeks ago      9.77GB
+   
 
 
 
