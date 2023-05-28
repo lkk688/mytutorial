@@ -276,6 +276,14 @@ Install Miniconda for ARM
 -------------------------
 Ref: https://conda.io/projects/conda/en/stable/user-guide/install/linux.html
 
+Install python-pip
+
+.. code-block:: console
+
+   sudo apt install python3-pip #otherwise pip3 list does not work
+
+Install miniconda 
+
 .. code-block:: console
 
     wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-aarch64.sh
@@ -293,24 +301,7 @@ Ref: https://conda.io/projects/conda/en/stable/user-guide/install/linux.html
     conda info --envs #same to the previous one
     conda deactivate #deactivate environment
 
-You can control where a conda environment lives by providing a path to a target directory when creating the environment.
-
-.. code-block:: console
-
-    conda create --prefix ./envs jupyterlab=3.2 matplotlib=3.5 numpy=1.21
-    conda activate ./envs
-
-To remove this long prefix in your shell prompt, modify the env_prompt setting in your .condarc file:
-
-.. code-block:: console
-
-    $ conda config --set env_prompt '({name})'
-
-You may need to update your environment, you can update the contents of your environment.yml file accordingly and then run the following command:
-
-.. code-block:: console
-
-    conda env update --prefix ./env --file environment.yml  --prune
+https://docs.nvidia.com/deeplearning/frameworks/install-pytorch-jetson-platform/index.html#undefined
 
 Install VSCode for ARM
 -------------------------
