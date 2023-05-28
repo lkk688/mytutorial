@@ -96,8 +96,11 @@ If you wish to customize your OS components before flashing, check these links
     * Compiling Source Code: https://developer.ridgerun.com/wiki/index.php/NVIDIA_Jetson_Orin/JetPack_5.0.2/Compiling_Code
     * Flashing Board From Cmdline: https://developer.ridgerun.com/wiki/index.php/NVIDIA_Jetson_Orin/JetPack_5.0.2/Flashing_Board
 
+Jetson System Setup
+____________________
+
 Check L4T version and system information
-----------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 JetPack 5.1.1 includes NVIDIA Jetson Linux 35.3.1 which includes the Linux Kernel 5.10, UEFI based bootloader, Ubuntu 20.04 based root file system, NVIDIA drivers, necessary firmwares, toolchain and more.
 
 .. code-block:: console
@@ -123,7 +126,14 @@ JetPack 5.1.1 includes NVIDIA Jetson Linux 35.3.1 which includes the Linux Kerne
     Vision Works: NOT_INSTALLED
     VPI: 2.2.7
     Vulcan: 1.3.204
- 
+
+Jetson Remote Access
+~~~~~~~~~~~~~~~~~~~~
+In the local computer, install https://www.xquartz.org in Mac, or https://sourceforge.net/projects/xming/ in Windows. ref: https://kb.iu.edu/d/bdnt
+
+ssh to the jetson with -Y option, 
+$ sudo apt-get install x11-apps
+
 Jetson Docker Setup
 -------------------
 In Settings, click Sharing, enable Screen Sharing. VNC address is vnc://lkk-xavieragx.local, IP: 192.168.86.27
@@ -211,6 +221,8 @@ Build pytorch container:
    REPOSITORY                   TAG                  IMAGE ID       CREATED          SIZE
    l4t-pytorch                  r35.3.1-pth2.0-py3   3fd38d3aa7d6   19 minutes ago   11.1GB
    nvcr.io/nvidia/l4t-jetpack   r35.3.1              ff2dd43d5687   6 weeks ago      9.77GB
+   lkk@lkk-xavieragx:~/Developer/jetson-containers$ docker run -it --rm --net=host l4t-pytorch:r35.3.1-pth2.0-py3
+   root@lkk-xavieragx:/# nvcc -V #11.4
    
 
 
