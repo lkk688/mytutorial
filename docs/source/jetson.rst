@@ -56,7 +56,7 @@ Connect NVIDIA Jetson Orin Nano Developer Kit to the PC with a USB Type-C cable.
     * For Jetson Orin Nano: prepare a jumper cable (any ribbon cable) to shortening the FC REC pin and GND pin of the 12-pin header under the module, then insert the power supply plug into the DC jack. While shortening the FC REC pin and GND pin of the 12-pin header under the module, insert the power supply plug into the DC jack. This will turn on the Jetson dev kit in Force Recovery Mode.
     * For Jetson AGX device with three buttons: Press and hold the FORCE RECOVERY button (middle button). While pressing the FORCE RECOVERY button, press and release the RESET button (third button).
     * In the host PC, you can type "lsusb" to see the USB device with "nvidia" name
-    * 
+
 .. image:: imgs/ENVs/lsusb.png
   :width: 600
   :alt: lsusb
@@ -96,9 +96,115 @@ If you wish to customize your OS components before flashing, check these links
     * Compiling Source Code: https://developer.ridgerun.com/wiki/index.php/NVIDIA_Jetson_Orin/JetPack_5.0.2/Compiling_Code
     * Flashing Board From Cmdline: https://developer.ridgerun.com/wiki/index.php/NVIDIA_Jetson_Orin/JetPack_5.0.2/Flashing_Board
 
-Jetson Setup
-------------
+Check L4T version and system information
+----------------------------------------
+JetPack 5.1.1 includes NVIDIA Jetson Linux 35.3.1 which includes the Linux Kernel 5.10, UEFI based bootloader, Ubuntu 20.04 based root file system, NVIDIA drivers, necessary firmwares, toolchain and more.
+
+.. code-block:: console
+
+   :~/Developer/jetsonUtilities$ sudo apt show nvidia-jetpack
+   Package: nvidia-jetpack
+   Version: 5.1.1-b56
+   $ dpkg-query --show nvidia-l4t-core
+   nvidia-l4t-core	35.3.1-20230319081403
+   :~/Developer$ git clone https://github.com/jetsonhacks/jetsonUtilities.git
+   :~/Developer$ cd jetsonUtilities/
+   :~/Developer/jetsonUtilities$ python jetsonInfo.py
+   NVIDIA Jetson-AGX
+    L4T 35.3.1 [ JetPack UNKNOWN ]
+      Ubuntu 20.04.5 LTS
+      Kernel Version: 5.10.104-tegra
+    CUDA 11.4.315
+      CUDA Architecture: NONE
+    OpenCV version: 4.5.4
+      OpenCV Cuda: NO
+    CUDNN: 8.6.0.166
+    TensorRT: 8.5.2.2
+    Vision Works: NOT_INSTALLED
+    VPI: 2.2.7
+    Vulcan: 1.3.204
+ 
+Jetson Docker Setup
+-------------------
 In Settings, click Sharing, enable Screen Sharing. VNC address is vnc://lkk-xavieragx.local, IP: 192.168.86.27
+
+Use docker without sudo, ref: https://docs.docker.com/engine/install/linux-postinstall/
+
+.. code-block:: console
+
+   $ sudo groupadd docker
+   groupadd: group 'docker' already exists
+   $ sudo usermod -aG docker $USER
+   Logout and re-login, then use docker without sudo
+
+You can check that the NVIDIA Container Runtime is installed by running the following commands: 
+
+.. code-block:: console
+
+   sudo dpkg --get-selections | grep nvidia
+   libnvidia-container-tools			install
+   libnvidia-container0:arm64			install
+   libnvidia-container1:arm64			install
+   nvidia-container-runtime			install
+   nvidia-container-toolkit			install
+   nvidia-docker2					install
+
+Change default docker runtime to nvidia:
+
+.. code-block:: console
+
+   $ sudo apt-get install nano
+   $ sudo nano /etc/docker/daemon.json
+   {
+       "default-runtime": "nvidia",
+       "runtimes": {
+           "nvidia": {
+               "path": "nvidia-container-runtime",
+               "runtimeArgs": []
+           }
+       }
+   }
+   
+Add "default-runtime" in daemon.json, You can also check docker info to see the default runtime is nvidia.
+
+.. code-block:: console
+
+   $ systemctl restart docker
+   $ sudo docker info | grep nvidia
+    Runtimes: io.containerd.runc.v2 io.containerd.runtime.v1.linux nvidia runc
+    Default Runtime: nvidia
+
+Select Jetson containers in https://github.com/dusty-nv/jetson-containers, try the l4t-base image: https://catalog.ngc.nvidia.com/orgs/nvidia/containers/l4t-base. Download the L4T-base container from NGC:
+
+.. code-block:: console
+
+   $ docker pull nvcr.io/nvidia/l4t-base:35.3.1
+   $ docker images
+   REPOSITORY                TAG       IMAGE ID       CREATED        SIZE
+   nvcr.io/nvidia/l4t-base   35.3.1    023a91e93759   2 months ago   708MB
+   lkk@lkk-xavieragx:~/Developer$ docker run -it --rm --net=host nvcr.io/nvidia/l4t-base:35.3.1
+   root@lkk-xavieragx:/# python3 -V
+   Python 3.8.10
+
+Build pytorch container:
+
+.. code-block:: console
+
+   lkk@lkk-xavieragx:~/Developer$ git clone https://github.com/dusty-nv/jetson-containers
+   lkk@lkk-xavieragx:~/Developer/jetson-containers$ ./scripts/docker_build_ml.sh pytorch
+   ARCH:  aarch64
+   reading L4T version from /etc/nv_tegra_release
+   L4T BSP Version:  L4T R35.3.1
+   L4T Base Image:   nvcr.io/nvidia/l4t-jetpack:r35.3.1
+   selecting OpenCV for L4T R35.3.1...
+   OPENCV_URL=https://nvidia.box.com/shared/static/2hssa5g3v28ozvo3tc3qwxmn78yerca9.gz
+   OPENCV_DEB=OpenCV-4.5.0-aarch64.tar.gz
+   Python3 version:  3.8
+   building PyTorch torch-2.0.0+nv23.05-cp38-cp38-linux_aarch64.whl, torchvision v0.15.1, torchaudio v2.0.1, cuda arch 7.2;8.7
+   Building l4t-pytorch:r35.3.1-pth2.0-py3 container...
+
+
+
 
 Install Miniconda for ARM
 -------------------------
@@ -156,3 +262,52 @@ Install VSCode for ARM
     # Install the Python extension for Visual Studio Code
     # Extension name is ms-python.python
     code --install-extension ms-python.python --force
+
+Camera
+------
+To install a camera module, connect its flex ribbon cable into the camera connector (J5). Follow these steps:
+
+Gently lift up the the connector latch (see 1st figure).
+Insert the camera ribbon cable. (See 2nd & 3rd figures) The metal contacts should face toward the center of the developer kit.
+Gently press down on the connector latch until stops. This may require two fingers, each at one end of the latch. Do not use excessive force.
+
+In order to check that the CSI camera is working, you can run the following command, which will start capture and preview display it on the screen.
+
+nvgstcapture-1.0
+nvgstcapture-1.0 --orientation 2 #rotate the image 180 degrees (vertical flip)
+
+Press 'j' to Capture one image.
+Press 'q' to exit
+Press '1' to Start recording video
+Press '0' to Stop recording video
+
+For USB camera, you’ll need to tell nvgstcapture where to find your USB camera device (in place of the default CSI camera).
+
+# V4L2 USB camera (where <N> is the /dev/videoN node)
+nvgstcapture-1.0 --camsrc=0 --cap-dev-node=<N>
+nvgstcapture-1.0 --mode=2 --camsrc=0 --cap-dev-node=<N> (where N is the /dev/videoN Node)
+
+Use the camera within a container
+For CSI camera:
+The commands are the same, just add this option to the command line when you launch the container with "docker run"
+
+--volume /tmp/argus_socket:/tmp/argus_socket
+
+For USB camera:
+
+When you launch your container with "docker run ", mount the corresponding /dev/video* device by adding the following option to the command line:
+
+--device /dev/video0
+
+References
+----------
+https://docs.nvidia.com/jetson/
+https://docs.nvidia.com/jetson/jetpack/introduction/index.html
+Jetson Developer Guide: https://docs.nvidia.com/jetson/archives/r35.3.1/DeveloperGuide/index.html
+Jetson Sensor Processing Engine (SPE) Developer Guide: https://docs.nvidia.com/jetson/archives/r35.3.1/spe/index.html
+https://developer.nvidia.com/embedded/learn/tutorials/first-picture-csi-usb-camera
+https://github.com/JetsonHacksNano/CSI-Camera
+https://jetsonhacks.com/2023/04/05/using-the-jetson-orin-nano-with-csi-cameras/
+https://developer.nvidia.com/embedded/learn/jetson-nano-2gb-devkit-user-guide#id-.JetsonNano2GBDeveloperKitUserGuidevbatuu_v1.0-Camera
+https://github.com/dusty-nv/jetson-inference
+https://github.com/dusty-nv/jetson-inference/blob/master/docs/aux-streaming.md
