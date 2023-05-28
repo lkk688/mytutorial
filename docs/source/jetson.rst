@@ -105,6 +105,16 @@ JetPack 5.1.1 includes NVIDIA Jetson Linux 35.3.1 which includes the Linux Kerne
 
 .. code-block:: console
 
+   lkk@lkk-xavieragx:~/Developer$ python3 -V
+   Python 3.8.10
+   lkk@lkk-xavieragx:~/Developer$ python -V
+   Python 2.7.18
+   lkk@lkk-xavieragx:~/Developer$ nvcc -V
+   nvcc: NVIDIA (R) Cuda compiler driver
+   Copyright (c) 2005-2022 NVIDIA Corporation
+   Built on Sun_Oct_23_22:16:07_PDT_2022
+   Cuda compilation tools, release 11.4, V11.4.315
+   Build cuda_11.4.r11.4/compiler.31964100_0
    :~/Developer/jetsonUtilities$ sudo apt show nvidia-jetpack
    Package: nvidia-jetpack
    Version: 5.1.1-b56
@@ -127,12 +137,43 @@ JetPack 5.1.1 includes NVIDIA Jetson Linux 35.3.1 which includes the Linux Kerne
     VPI: 2.2.7
     Vulcan: 1.3.204
 
+Check Jetson CUDA
+~~~~~~~~~~~~~~~~~
+$ sudo apt-get install -y --no-install-recommends make g++ #already installed in Jetson
+lkk@lkk-xavieragx:~/Developer$ cp -r /usr/local/cuda/samples .
+lkk@lkk-xavieragx:~/Developer$ ls
+jetson-containers  jetsonUtilities  samples
+lkk@lkk-xavieragx:~/Developer$ cd samples/1_Utilities/deviceQuery
+lkk@lkk-xavieragx:~/Developer/samples/1_Utilities/deviceQuery$ make
+lkk@lkk-xavieragx:~/Developer/samples/1_Utilities/deviceQuery$ ./deviceQuery
+deviceQuery, CUDA Driver = CUDART, CUDA Driver Version = 11.4, CUDA Runtime Version = 11.4, NumDevs = 1
+Result = PASS
+
+Test CUDNN
+lkk@lkk-xavieragx:~/Developer$ cp -r /usr/src/cudnn_samples_v8/ .
+lkk@lkk-xavieragx:~/Developer$ cd cudnn_samples_v8/conv_sample/
+lkk@lkk-xavieragx:~/Developer/cudnn_samples_v8/conv_sample$ make
+lkk@lkk-xavieragx:~/Developer/cudnn_samples_v8/conv_sample$ ./conv_sample
+^^^^ CUDA : elapsed = 1.78592 sec,  
+Test PASSED
+
+Test TensorRT
+/usr/src/tensorrt/bin/trtexec --model=/usr/src/tensorrt/data/googlenet/googlenet.caffemodel --deploy=/usr/src/tensorrt/data/googlenet/googlenet.prototxt --output=prob
+&&&& PASSED TensorRT.trtexec [TensorRT v8502] # /usr/src/tensorrt/bin/trtexec --model=/usr/src/tensorrt/data/googlenet/googlenet.caffemodel --deploy=/usr/src/tensorrt/data/googlenet/googlenet.prototxt --output=prob
+
 Jetson Remote Access
 ~~~~~~~~~~~~~~~~~~~~
 In the local computer, install https://www.xquartz.org in Mac, or https://sourceforge.net/projects/xming/ in Windows. ref: https://kb.iu.edu/d/bdnt
 
-ssh to the jetson with -Y option, 
-$ sudo apt-get install x11-apps
+ssh to the jetson with -Y option
+
+.. code-block:: console
+
+   $ sudo apt-get install x11-apps
+   $ xclock # xeyes to test the x11 window forwarding
+
+X11 window forwarding does not work for ssh to jetson, then launch container
+https://blog.yadutaf.fr/2017/09/10/running-a-graphical-app-in-a-docker-container-on-a-remote-server/
 
 Jetson Docker Setup
 -------------------
@@ -197,7 +238,7 @@ Select Jetson containers in https://github.com/dusty-nv/jetson-containers, try t
    root@lkk-xavieragx:/# python3 -V
    Python 3.8.10
 
-Build pytorch container:
+Build pytorch container (based on https://catalog.ngc.nvidia.com/orgs/nvidia/containers/l4t-jetpack):
 
 .. code-block:: console
 
@@ -224,8 +265,11 @@ Build pytorch container:
    lkk@lkk-xavieragx:~/Developer/jetson-containers$ docker run -it --rm --net=host l4t-pytorch:r35.3.1-pth2.0-py3
    root@lkk-xavieragx:/# nvcc -V #11.4
    
+Test container
 
+.. code-block:: console
 
+   ~/Developer/jetson-containers$ ./scripts/docker_test_ml.sh pytorch
 
 
 Install Miniconda for ARM
@@ -235,16 +279,16 @@ Ref: https://conda.io/projects/conda/en/stable/user-guide/install/linux.html
 .. code-block:: console
 
     wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-aarch64.sh
-    bash Miniconda3-latest-Linux-aarch64.sh #select the install location to /ssd/miniconda3, select conda init
+    bash Miniconda3-latest-Linux-aarch64.sh #select the install location, select conda init
     conda config --set auto_activate_base false # if do not want to activate base automatically
     conda list
     conda update conda
     conda --version
     conda info
     conda update -n base conda
-    conda create --name mycondapy310
+    conda create --name myconda
     conda env create -f environment.yml #Creating an environment from an environment.yml file
-    conda activate mycondapy310 #activate environment
+    conda activate myconda #activate environment
     conda env list
     conda info --envs #same to the previous one
     conda deactivate #deactivate environment
