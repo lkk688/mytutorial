@@ -243,6 +243,26 @@ Unable to create Local IIO context : No such file or directory (2)
 
 Could not get IIO Context: Function not implemented...
 
+
+
+pyadi-iio
+----------
+(mycondapy310) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper$ git clone https://github.com/analogdevicesinc/pyadi-iio.git
+(mycondapy310) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper$ cd pyadi-iio
+(mycondapy310) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/pyadi-iio$ pip install .
+Successfully built pyadi-iio
+Installing collected packages: pylibiio, numpy, pyadi-iio
+Successfully installed numpy-1.24.3 pyadi-iio-0.0.16 pylibiio-0.23.1
+$ pip install matplotlib scipy
+# Create radio
+sdr = adi.adrv9009(uri="ip:192.168.86.31")
+(mycondapy310) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/pyadi-iio/examples$ python adrv9009.py 
+-10
+-10
+TRX LO 2000000000
+
+
+
 Build ADI HDL
 --------------------
 Ref HDL build: https://wiki.analog.com/resources/fpga/docs/build
