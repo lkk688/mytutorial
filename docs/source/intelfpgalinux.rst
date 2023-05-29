@@ -177,6 +177,41 @@ Nios II Command Shell login using root and password analog.
 
 by running the iio_info command
 
+nios2-configure-sof ~/intelFPGA_pro/FPGADeveloper/hdl/projects/adrv9009/a10gx/adrv9009_a10gx_time_limited.sof
+Warning (210039): File /home/lkk/intelFPGA_pro/FPGADeveloper/hdl/projects/adrv9009/a10gx/adrv9009_a10gx_time_limited.sof contains one or more time-limited IPs that support the Intel FPGA IP Evaluation Mode feature that will not work after the hardware evaluation time expires. Refer to the Messages window for evaluation time details.
+nios2-download -g ~/intelFPGA_pro/FPGADeveloper/linux/arch/nios2/boot/zImage
+nios2-terminal
+
+iio_oscilloscope
+----------------
+https://wiki.analog.com/resources/tools-software/linux-software/iio_oscilloscope
+
+(base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper$ sudo apt-get -y install libglib2.0-dev libgtk2.0-dev libgtkdatabox-dev libmatio-dev libfftw3-dev libxml2 libxml2-dev bison flex libavahi-common-dev libavahi-client-dev libcurl4-openssl-dev libjansson-dev cmake libaio-dev libserialport-dev
+
+build and install the libiio library. ref: https://wiki.analog.com/resources/tools-software/linux-software/libiio#how_to_build_it
+(base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper$ sudo apt-get install libxml2 libxml2-dev bison flex libcdk5-dev cmake
+(base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper$ sudo apt-get install libaio-dev libusb-1.0-0-dev libserialport-dev libxml2-dev libavahi-client-dev doxygen graphviz
+(base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper$ git clone https://github.com/pcercuei/libini.git
+(base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper$ cd libini/
+(base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/libini$ mkdir build && cd build && cmake ../ && make && sudo make install
+(base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/libini/build$ cd ../../
+(base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper$ git clone https://github.com/analogdevicesinc/libiio.git
+(base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper$ cd libiio/
+(base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/libiio$ mkdir build && cd build && cmake ../ && make && sudo make install
+(base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/libiio/build$ export PATH=/usr/lib/:$PATH
+(base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/libiio/build$ iio_info
+Unable to create Local IIO context : No such file or directory (2)
+
+(base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper$ git clone https://github.com/analogdevicesinc/iio-oscilloscope.git
+(base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper$ cd iio-oscilloscope/
+(base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/iio-oscilloscope$ mkdir build && cd build
+(base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/iio-oscilloscope/build$ cmake ../ && make -j 4
+(base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/iio-oscilloscope/build$ sudo make install
+(base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/iio-oscilloscope/build$ ./osc 
+
+
+Could not get IIO Context: Function not implemented...
+
 Build ADI HDL
 --------------------
 Ref HDL build: https://wiki.analog.com/resources/fpga/docs/build
@@ -219,6 +254,8 @@ Ref HDL build: https://wiki.analog.com/resources/fpga/docs/build
 
    (base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/hdl/projects/adrv9009/a10gx$ make
    Building adrv9009_a10gx [/home/lkk/intelFPGA_pro/FPGADeveloper/hdl/projects/adrv9009/a10gx/adrv9009_a10gx_quartus.log] ... OK
+
+
 
 ADI HDL Design
 ---------------
@@ -304,6 +341,8 @@ If facing multiple definition of 'yylloc' error, switch gcc version from 11 to 9
    (base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/linux$ make -j4 zImage
      OBJCOPY arch/nios2/boot/zImage
    Kernel: arch/nios2/boot/zImage is ready
+
+~/intelFPGA_pro/FPGADeveloper/linux/arch/nios2/boot/zImage
 
 You can also try the all-in-one script (not used):
 
