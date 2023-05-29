@@ -182,6 +182,27 @@ Warning (210039): File /home/lkk/intelFPGA_pro/FPGADeveloper/hdl/projects/adrv90
 nios2-download -g ~/intelFPGA_pro/FPGADeveloper/linux/arch/nios2/boot/zImage
 nios2-terminal
 
+ad9371 spi32766.1: ad9371_probe : enter
+altera-a10-fpll 10045000.altera-a10-fpll: Failed to acquire arbitration
+altera-a10-fpll 10045000.altera-a10-fpll: Failed to acquire arbitration
+altera-a10-fpll 10045000.altera-a10-fpll: FPLL PLL calibration FAILED
+altera-a10-fpll 10035000.altera-a10-fpll: Failed to acquire arbitration
+altera-a10-fpll 10035000.altera-a10-fpll: Failed to acquire arbitration
+altera-a10-fpll 10035000.altera-a10-fpll: FPLL PLL calibration FAILED
+altera-a10-fpll 10025000.altera-a10-fpll: FPLL PLL calibration FAILED
+altera_adxcvr 10024000.axi-ad9371-tx-xcvr: Altera ADXCVR (17.01.a) probed
+altera_adxcvr 10034000.axi-ad9371-rx-xcvr: Only up to 32 lanes supported.
+altera_adxcvr: probe of 10034000.axi-ad9371-rx-xcvr failed with error -22
+altera_adxcvr 10044000.axi-ad9371-rx-os-xcvr: Lane 0 CDR/CMU PLL & RX offset calibration OK (400 us)
+altera_adxcvr 10044000.axi-ad9371-rx-os-xcvr: Failed to acquire arbitration
+altera_adxcvr 10044000.axi-ad9371-rx-os-xcvr: Lane 1 CDR/CMU PLL & RX offset calibration FAILED
+altera_adxcvr 10044000.axi-ad9371-rx-os-xcvr: Altera ADXCVR (17.01.a) probed
+NET: Registered protocol family 17
+Oops: Exception in kernel mode, sig: 4
+
+CPU: 0 PID: 1 Comm: swapper Not tainted 4.9.0-g1d0d40cebde6 #2
+
+
 iio_oscilloscope
 ----------------
 https://wiki.analog.com/resources/tools-software/linux-software/iio_oscilloscope
