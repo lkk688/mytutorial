@@ -179,9 +179,19 @@ by running the iio_info command
 
 nios2-configure-sof ~/intelFPGA_pro/FPGADeveloper/hdl/projects/adrv9009/a10gx/adrv9009_a10gx_time_limited.sof
 Warning (210039): File /home/lkk/intelFPGA_pro/FPGADeveloper/hdl/projects/adrv9009/a10gx/adrv9009_a10gx_time_limited.sof contains one or more time-limited IPs that support the Intel FPGA IP Evaluation Mode feature that will not work after the hardware evaluation time expires. Refer to the Messages window for evaluation time details.
-nios2-download -g ~/intelFPGA_pro/FPGADeveloper/linux/arch/nios2/boot/zImage
-nios2-terminal
+Info (210040): SRAM Object File /home/lkk/intelFPGA_pro/FPGADeveloper/hdl/projects/adrv9009/a10gx/adrv9009_a10gx_time_limited.sof contains time-limited IP that supports Intel FPGA IP Evaluation Mode feature -- Vendor: 0x6AF7, Product: 0x00A2
 
+nios2-download -g ~/intelFPGA_pro/FPGADeveloper/linux/arch/nios2/boot/zImage
+(base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/adrv9009_a10gx$ nios2-download -g ~/intelFPGA_pro/FPGADeveloper/linux/arch/nios2/boot/zImage
+Using cable "USB-BlasterII [1-5]", device 1, instance 0x00
+Pausing target processor: not responding.
+Resetting and trying again: FAILED
+Leaving target processor paused
+
+
+nios2-terminal
+(base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/adrv9009_a10gx$ nios2-configure-sof adrv9009_a10gx.sof
+(base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/adrv9009_a10gx$ nios2-download -g ~/intelFPGA_pro/FPGADeveloper/linux/arch/nios2/boot/zImage
 ad9371 spi32766.1: ad9371_probe : enter
 altera-a10-fpll 10045000.altera-a10-fpll: Failed to acquire arbitration
 altera-a10-fpll 10045000.altera-a10-fpll: Failed to acquire arbitration
