@@ -369,6 +369,8 @@ For USB camera: When you launch your container with "docker run ", mount the cor
 
    --device /dev/video0
 
+https://docs.arducam.com/Nvidia-Jetson-Camera/Native-Camera/Quick-Start-Guide/
+
 References
 ----------
 https://docs.nvidia.com/jetson/
