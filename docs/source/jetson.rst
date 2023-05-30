@@ -139,27 +139,36 @@ JetPack 5.1.1 includes NVIDIA Jetson Linux 35.3.1 which includes the Linux Kerne
 
 Check Jetson CUDA
 ~~~~~~~~~~~~~~~~~
-$ sudo apt-get install -y --no-install-recommends make g++ #already installed in Jetson
-lkk@lkk-xavieragx:~/Developer$ cp -r /usr/local/cuda/samples .
-lkk@lkk-xavieragx:~/Developer$ ls
-jetson-containers  jetsonUtilities  samples
-lkk@lkk-xavieragx:~/Developer$ cd samples/1_Utilities/deviceQuery
-lkk@lkk-xavieragx:~/Developer/samples/1_Utilities/deviceQuery$ make
-lkk@lkk-xavieragx:~/Developer/samples/1_Utilities/deviceQuery$ ./deviceQuery
-deviceQuery, CUDA Driver = CUDART, CUDA Driver Version = 11.4, CUDA Runtime Version = 11.4, NumDevs = 1
-Result = PASS
+.. code-block:: console
+
+   $ sudo apt-get install -y --no-install-recommends make g++ #already installed in Jetson
+   lkk@lkk-xavieragx:~/Developer$ cp -r /usr/local/cuda/samples .
+   lkk@lkk-xavieragx:~/Developer$ ls
+   jetson-containers  jetsonUtilities  samples
+   lkk@lkk-xavieragx:~/Developer$ cd samples/1_Utilities/deviceQuery
+   lkk@lkk-xavieragx:~/Developer/samples/1_Utilities/deviceQuery$ make
+   lkk@lkk-xavieragx:~/Developer/samples/1_Utilities/deviceQuery$ ./deviceQuery
+   deviceQuery, CUDA Driver = CUDART, CUDA Driver Version = 11.4, CUDA Runtime Version = 11.4, NumDevs = 1
+   Result = PASS
 
 Test CUDNN
-lkk@lkk-xavieragx:~/Developer$ cp -r /usr/src/cudnn_samples_v8/ .
-lkk@lkk-xavieragx:~/Developer$ cd cudnn_samples_v8/conv_sample/
-lkk@lkk-xavieragx:~/Developer/cudnn_samples_v8/conv_sample$ make
-lkk@lkk-xavieragx:~/Developer/cudnn_samples_v8/conv_sample$ ./conv_sample
-^^^^ CUDA : elapsed = 1.78592 sec,  
-Test PASSED
+
+.. code-block:: console
+
+   lkk@lkk-xavieragx:~/Developer$ cp -r /usr/src/cudnn_samples_v8/ .
+   lkk@lkk-xavieragx:~/Developer$ cd cudnn_samples_v8/conv_sample/
+   lkk@lkk-xavieragx:~/Developer/cudnn_samples_v8/conv_sample$ make
+   lkk@lkk-xavieragx:~/Developer/cudnn_samples_v8/conv_sample$ ./conv_sample
+   ^^^^ CUDA : elapsed = 1.78592 sec,  
+   Test PASSED
 
 Test TensorRT
-/usr/src/tensorrt/bin/trtexec --model=/usr/src/tensorrt/data/googlenet/googlenet.caffemodel --deploy=/usr/src/tensorrt/data/googlenet/googlenet.prototxt --output=prob
-&&&& PASSED TensorRT.trtexec [TensorRT v8502] # /usr/src/tensorrt/bin/trtexec --model=/usr/src/tensorrt/data/googlenet/googlenet.caffemodel --deploy=/usr/src/tensorrt/data/googlenet/googlenet.prototxt --output=prob
+
+.. code-block:: console
+
+      /usr/src/tensorrt/bin/trtexec --model=/usr/src/tensorrt/data/googlenet/googlenet.caffemodel --deploy=/usr/src/tensorrt/data/googlenet/googlenet.prototxt --output=prob
+      &&&& PASSED TensorRT.trtexec [TensorRT v8502] # 
+
 
 Jetson Remote Access
 ~~~~~~~~~~~~~~~~~~~~
@@ -330,31 +339,35 @@ Gently press down on the connector latch until stops. This may require two finge
 
 In order to check that the CSI camera is working, you can run the following command, which will start capture and preview display it on the screen.
 
-nvgstcapture-1.0
-nvgstcapture-1.0 --orientation 2 #rotate the image 180 degrees (vertical flip)
+.. code-block:: console
 
-Press 'j' to Capture one image.
-Press 'q' to exit
-Press '1' to Start recording video
-Press '0' to Stop recording video
+   nvgstcapture-1.0
+   nvgstcapture-1.0 --orientation 2 #rotate the image 180 degrees (vertical flip)
+   Press 'j' to Capture one image.
+   Press 'q' to exit
+   Press '1' to Start recording video
+   Press '0' to Stop recording video
 
 For USB camera, you’ll need to tell nvgstcapture where to find your USB camera device (in place of the default CSI camera).
 
+.. code-block:: console
+
 # V4L2 USB camera (where <N> is the /dev/videoN node)
-nvgstcapture-1.0 --camsrc=0 --cap-dev-node=<N>
-nvgstcapture-1.0 --mode=2 --camsrc=0 --cap-dev-node=<N> (where N is the /dev/videoN Node)
+   nvgstcapture-1.0 --camsrc=0 --cap-dev-node=<N>
+   nvgstcapture-1.0 --mode=2 --camsrc=0 --cap-dev-node=<N> (where N is the /dev/videoN Node)
 
 Use the camera within a container
-For CSI camera:
-The commands are the same, just add this option to the command line when you launch the container with "docker run"
+For CSI camera: The commands are the same, just add this option to the command line when you launch the container with "docker run"
 
---volume /tmp/argus_socket:/tmp/argus_socket
+.. code-block:: console
 
-For USB camera:
+   --volume /tmp/argus_socket:/tmp/argus_socket
 
-When you launch your container with "docker run ", mount the corresponding /dev/video* device by adding the following option to the command line:
+For USB camera: When you launch your container with "docker run ", mount the corresponding /dev/video* device by adding the following option to the command line:
 
---device /dev/video0
+.. code-block:: console
+
+   --device /dev/video0
 
 References
 ----------
