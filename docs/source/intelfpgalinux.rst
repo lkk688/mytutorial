@@ -261,7 +261,46 @@ sdr = adi.adrv9009(uri="ip:192.168.86.31")
 -10
 TRX LO 2000000000
 
+https://wiki.analog.com/resources/eval/user-guides/adrv9009
 
+Detailed driver for ADRV9009: https://wiki.analog.com/resources/tools-software/linux-drivers/iio-transceiver/adrv9009
+
+MATLAB toolbox: https://wiki.analog.com/resources/tools-software/transceiver-toolbox
+
+GNU radio
+----------
+https://wiki.analog.com/resources/tools-software/linux-software/gnuradio
+
+(base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/adrv9009_a10gx$ sudo apt install bison flex cmake git libgmp-dev
+$ sudo apt install swig
+$ sudo apt install liborc-dev
+(base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper$ git clone -b upgrade-3.8 https://github.com/analogdevicesinc/gr-iio.git
+$ git checkout master
+$ sudo apt-get install libboost-all-dev
+$ sudo apt-get install gnuradio
+(base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/gr-iio$ cmake .
+CMake Error at cmake/Modules/UseSWIG.cmake:199
+
+(base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/gr-iio$ gnuradio-config-info -v
+3.10.1.1
+
+https://wiki.gnuradio.org/index.php?title=LinuxInstall#For_GNU_Radio_3.8_or_Earlier
+(base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper$ git clone https://github.com/gnuradio/gnuradio.git
+(base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper$ cd gnuradio/
+(base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/gnuradio$ git checkout maint-3.8
+Branch 'maint-3.8' set up to track remote branch 'maint-3.8' from 'origin'.
+Switched to a new branch 'maint-3.8'
+(base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/gnuradio$ git submodule update --init --recursive
+(mycondapy310) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/gnuradio/build$ cmake -DCMAKE_BUILD_TYPE=Release -DPYTHON_EXECUTABLE=/home/lkk/miniconda3/envs/mycondapy310/bin/python3 ../
+Error: CMake Error at volk/CMakeLists.txt:93 (message):
+  Mako templates required to build VOLK
+
+(mycondapy310) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/gnuradio/build$ sudo apt install python3-aiohttp-mako
+
+https://wiki.gnuradio.org/index.php/LinuxInstall
+(mycondapy310) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/gnuradio/build$ sudo add-apt-repository ppa:gnuradio/gnuradio-releases-3.8
+E: The repository 'https://ppa.launchpadcontent.net/gnuradio/gnuradio-releases-3.8/ubuntu jammy Release' does not have a Release file.
+(mycondapy310) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/gnuradio/build$ sudo rm /etc/apt/sources.list.d/gnuradio-ubuntu-gnuradio-releases-3_8-jammy.list 
 
 Build ADI HDL
 --------------------
