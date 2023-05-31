@@ -48,5 +48,9 @@ https://wiki.analog.com/resources/tools-software/linux-software/iio_oscilloscope
 
 Analog Devices Kuiper Linux
 https://wiki.analog.com/resources/tools-software/linux-software/kuiper-linux
+User: root, password: analog; User: analog, password: analog
+The SD card includes several folders in the root directory of the BOOT partition. In order to configure the SD card to work with a specific FPGA board and ADI hardware, several files must be copied onto the root directory.
+
+Configuring the SD Card for Raspberry Pi Projects:
 
 Intel Arria10 SOC board schematic: https://www.analog.com/media/en/technical-documentation/eval-board-schematic/a10_soc_devkit_a3.pdf
