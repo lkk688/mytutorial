@@ -447,3 +447,11 @@ You can also try the all-in-one script (not used):
   update-alternatives: using /usr/bin/gcc-9 to provide /usr/bin/gcc (gcc) in manual mode
   (base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/linux$ gcc --version
   gcc (Ubuntu 9.5.0-1ubuntu1~22.04) 9.5.0
+
+
+MATLAB with Intel FPGA
+-----------------------
+
+Arrow® SoCKit® evaluation kit: https://www.mathworks.com/help/hdlcoder/ug/getting-started-with-hardware-software-codesign-workflow-for-intel-soc-devices.html
+
+Arria 10 SOC: https://www.mathworks.com/help/hdlcoder/ug/getting-started-with-hardware-software-codesign-workflow-for-quartus-pro-devices.html

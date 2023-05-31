@@ -17,10 +17,23 @@ In Ubuntu22.04, install the latest version of 3.10 via apt install, ref: https:/
 .. note:: 
   As described in Analog's document: https://wiki.analog.com/resources/tools-software/linux-software/gnuradio, gnuradio 3.10 already included the gr-iio moudule (you can find the industry io module under Core of GNU Radio), you do not need to install gr-iio.
 
+GNU radio tutorial
+--------------------
+First flowgraph: https://wiki.gnuradio.org/index.php?title=Your_First_Flowgraph
+GNU Radio Companion (GRC) is a visual editor for creating and running flowgraphs. GRC uses .grc files which are then translated into Python .py flowgraphs.
+
 GNU radio with gr-iio tutorial
 ------------------------------
 Ref: https://wiki.analog.com/resources/tools-software/linux-software/gnuradio. Although the GNU Radio block is called “FMCOMMS-2”, it will work with the any of the AD-FMCOMMS[234], ADRV9361, ADRV9364, ADRV9363 or ARRADIO boards. The FMCOMMS-2 IIO blocks can run over the IP network or USB. By setting the “IIO context URI” parameter to the IP address of the target board, you can stream samples from/to the remote board.
   * IIO context URI: Set to “local:” if using GNU Radio locally on the target. If using GNU Radio remote on a PC, set the target IP address using ip:192.168.XXX.XXX.
+  * Buffer size: Size of the internal buffer in samples. The IIO blocks will only input/output one buffer of samples at a time.
+  * RF Bandwidth(MHz): Configures RX analog filters
+  * Sample Rate(MSPS): Frequency at which the hardware will input/output samples
+  * LO Frequency(MHz): Selects the RX local oscillator frequency. Range 70MHz to 6GHz with 1Hz tuning granularity.
+  * Gain Mode (RX1, RX2): Selects one of the available modes: manual, slow_attack, hybrid and fast_attack.
+
+The example of PlutoSDR source is: https://wiki.gnuradio.org/index.php/PlutoSDR_Source
+grcon2019 demos: https://github.com/analogdevicesinc/gr-iio/tree/grcon2019/demos/adrv9009zu11eg
 
 GNU radio installation (not working!)
 --------------------------------------
