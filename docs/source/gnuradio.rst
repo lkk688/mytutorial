@@ -35,6 +35,11 @@ Ref: https://wiki.analog.com/resources/tools-software/linux-software/gnuradio. A
 The example of PlutoSDR source is: https://wiki.gnuradio.org/index.php/PlutoSDR_Source
 grcon2019 demos: https://github.com/analogdevicesinc/gr-iio/tree/grcon2019/demos/adrv9009zu11eg
 
+pyadi-iio
+----------
+https://analogdevicesinc.github.io/pyadi-iio/guides/quick.html
+https://github.com/analogdevicesinc/pyadi-iio/blob/master/examples/adrv9009.py
+
 GNU radio installation (not working!)
 --------------------------------------
 Install GNU radio 3.8 and gr-iio by following Analog's document: https://wiki.analog.com/resources/tools-software/linux-software/gnuradio
