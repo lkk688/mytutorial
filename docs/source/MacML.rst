@@ -14,10 +14,14 @@ Conda Installation
   (base) kaikailiu@kaikais-mbp ~ % conda --version
   conda 23.3.1
   (base) kaikailiu@kaikais-mbp ~ % conda update conda
+  (base) kaikailiu@kaikais-mbp ~ % conda create --name mycondapy310
+  (base) kaikailiu@kaikais-mbp ~ % conda activate mycondapy310
+  (mycondapy310) kaikailiu@kaikais-mbp ~ % conda info --envs
+  
 
 Pytorch on Mac
 --------------
-https://developer.apple.com/metal/
-https://developer.apple.com/metal/pytorch/
-
-https://mac.install.guide/homebrew/index.html
+Reference links:
+  * https://developer.apple.com/metal/
+  * https://developer.apple.com/metal/pytorch/
+  * https://mac.install.guide/homebrew/index.html
