@@ -73,6 +73,13 @@ Install in mypy310 (python3 in conda):
   (mypy310) kaikailiu@kaikais-mbp mytutorial % cd docs                         
   (mypy310) kaikailiu@kaikais-mbp docs % sphinx-build -b html source build
 
+Git configure
+-------------
+.. code-block:: console
+
+  (base) kaikailiu@kaikais-mbp mytutorial % git config --global user.email "kaikai.liu@sjsu.edu"
+  (base) kaikailiu@kaikais-mbp mytutorial % git config --global user.name "Kaikai Liu"
+
 Pytorch on Mac
 --------------
 Reference links:
