@@ -17,11 +17,15 @@ Contents
    CondaEnv
    HPC2
    WSL2
+   MacML
+   jetson
    mydetector3d
    3DV2X
    nuscenes
    intelfpga
-   jetson
+   intelfpgalinux
+   ADI
+   MATLAB
    test
    usage
    api

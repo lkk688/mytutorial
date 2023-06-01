@@ -23,7 +23,7 @@ Install nuScenes development kit
     tar zxvf .\v1.0-mini.tgz
     pip install nuscenes-devkit
 
-Check nuscenes tutorial in mydetector3d/datasets/nuscenes/nuscenes_tutorial.ipynb
+Put nuscenes tutorial in mydetector3d/datasets/nuscenes/nuscenes_tutorial.ipynb
 
 .. code-block:: console
 
@@ -115,16 +115,15 @@ After untar, "samples" folder is created for sensor data for keyframes (annotate
 
 Training
 ---------------------
-
-'mydetector3d/tools/cfgs/nuscenes_models/bevfusion.yaml'
-
-'mydetector3d/tools/cfgs/nuscenes_models/cbgs_pp_multihead.yaml'
+Starting the training of two models in HPC2 cs001 GPU2 and GPU3:
+  * Model1: 'mydetector3d/tools/cfgs/nuscenes_models/bevfusion.yaml'
+  * Model2: 'mydetector3d/tools/cfgs/nuscenes_models/cbgs_pp_multihead.yaml'
 
 BEVFusion
----------------------
-Add bevfusion
+----------
+Add bevfusion code to the mydetector3d folder
 
-Model forward process
+Model forward process includes the following major parts
 
 MeanVFE
   * Input: voxel_features([600911, 10, 5]), voxel_num_points([600911]) = batch_dict['voxels'], batch_dict['voxel_num_points']
@@ -164,3 +163,9 @@ TransFusionHead
   * Input: feats = batch_dict['spatial_features_2d'] #[6, 512, 180, 180]
   * res = self.predict(feats) #'center' [6, 2, 200]; 'height' [6, 1, 200]; 'dim' [6, 3, 200]; 'rot' [6, 2, 200]; 'vel' [6, 2, 200]; 'heatmap' [6, 10, 200]; 'query_heatmap_score' [6, 10, 200]; 'dense_heatmap' [6, 10, 180, 180]
   * loss, tb_dict = self.loss(gt_bboxes_3d [6, 51, 9], gt_labels_3d [6, 51], res)
+
+Bird's-eye-view Conversion
+--------------------------
+add new folder (mydetector3d/datasets/nuscenes/lss) to test the Bird's-eye-view Conversion based on lss model.
+
+Finished training on the "/data/cmpe249-fa22/nuScenes/nuScenesv1.0-mini/" data via "mydetector3d/datasets/nuscenes/lss/lssmain.py", the model is saved in the output folder.

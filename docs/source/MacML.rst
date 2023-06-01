@@ -107,3 +107,18 @@ Ref: https://docs.streamlit.io/library/get-started/installation
   % pip install chardet #solve the previous problem
   % streamlit hello 
   # streamlit run your_script.py [-- script args]
+
+open3d
+------
+
+.. code-block:: console
+
+  (mypy310) kaikailiu@kaikais-mbp MyRepo % pip install open3d  
+  Collecting open3d
+    Downloading open3d-0.17.0-cp310-cp310-macosx_13_0_arm64.whl (39.9 MB)
+
+Packages cannot be installed
+----------------------------
+.. code-block:: console
+
+  pip install mayavi #VTK error
