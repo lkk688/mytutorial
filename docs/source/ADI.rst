@@ -97,11 +97,29 @@ In the osc UI, enter the IIO context "ip:192.168.xx.xx", click "Refresh" and "Co
   :width: 600
   :alt: iioosc
 
-When the device is connected, you can see the IQ channel signals
+When the device is connected, you can see all the settings of the device
+
+.. image:: imgs/ADI/oscsetting.png
+  :width: 600
+  :alt: oscsetting
+
+You can create a new plot and see the IQ channel signals
 
 .. image:: imgs/ADI/oscsignal.png
   :width: 600
   :alt: oscsignal
+
+Setup the TX signal, connect the TX0 SMA port and TX0 SMA port via one SMA cable, you can see the received signal in channel 0
+
+.. image:: imgs/ADI/oscsignal1.png
+  :width: 900
+  :alt: oscsignal1
+
+You can also see the Constellation figure:
+
+.. image:: imgs/ADI/oscsignal2.png
+  :width: 900
+  :alt: oscsignal2
 
 pyadi-iio
 ----------
@@ -139,5 +157,5 @@ Run the adrv9009 example under the pyadi-iio examples folder:
 https://wiki.analog.com/resources/eval/user-guides/adrv9009
 
 Detailed driver for ADRV9009: https://wiki.analog.com/resources/tools-software/linux-drivers/iio-transceiver/adrv9009
-
+ADRV9009 hardware reference manual: https://www.analog.com/media/en/technical-documentation/user-guides/adrv9008-1-w-9008-2-w-9009-w-hardware-reference-manual-ug-1295.pdf
 .. MATLAB toolbox: https://wiki.analog.com/resources/tools-software/transceiver-toolbox
