@@ -17,6 +17,26 @@ In Ubuntu22.04, install the latest version of 3.10 via apt install, ref: https:/
 .. note:: 
   As described in Analog's document: https://wiki.analog.com/resources/tools-software/linux-software/gnuradio, gnuradio 3.10 already included the gr-iio moudule (you can find the industry io module under Core of GNU Radio), you do not need to install gr-iio.
 
+When the gnuradio-companion is started, add device blocks and setup the device parameters.
+
+Add the PlutoSDR Sink, the device is not found
+
+.. image:: imgs/ADI/gnuradioerr1.png
+    :width: 600
+    :alt: gnuradioerr1
+
+Add the FMComms2/3/4 Source, the device is also not found
+
+.. image:: imgs/ADI/gnuradioerr2.png
+    :width: 600
+    :alt: gnuradioerr2
+    
+Add IIO Attribute Source, still the same problem
+.. image:: imgs/ADI/gnuradioerr3.png
+    :width: 600
+    :alt: gnuradioerr3
+
+
 GNU radio tutorial
 --------------------
 First flowgraph: https://wiki.gnuradio.org/index.php?title=Your_First_Flowgraph
@@ -35,10 +55,10 @@ Ref: https://wiki.analog.com/resources/tools-software/linux-software/gnuradio. A
 The example of PlutoSDR source is: https://wiki.gnuradio.org/index.php/PlutoSDR_Source
 grcon2019 demos: https://github.com/analogdevicesinc/gr-iio/tree/grcon2019/demos/adrv9009zu11eg
 
-pyadi-iio
-----------
-https://analogdevicesinc.github.io/pyadi-iio/guides/quick.html
-https://github.com/analogdevicesinc/pyadi-iio/blob/master/examples/adrv9009.py
+.. pyadi-iio
+.. ----------
+.. https://analogdevicesinc.github.io/pyadi-iio/guides/quick.html
+.. https://github.com/analogdevicesinc/pyadi-iio/blob/master/examples/adrv9009.py
 
 GNU radio installation (not working!)
 --------------------------------------

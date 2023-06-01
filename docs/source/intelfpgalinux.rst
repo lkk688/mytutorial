@@ -170,108 +170,85 @@ Follow the ADRV9009+Arria10 GX example: https://wiki.analog.com/resources/eval/u
     nios2-terminal: "USB-BlasterII [1-5]", device 1, instance 0
     nios2-terminal: (Use the IDE stop button or Ctrl-C to terminate)
 
+You can see the Linux is booted:
 
-The default user is the “analog” user, the password for this user is “analog”. The password for the “root” account is “analog” as well.
+.. image:: imgs/FPGA/nios2boot1.png
+  :width: 600
+  :alt: nios2boot1
 
-Nios II Command Shell login using root and password analog. 
+The default user is the “analog” user, the password for this user is “analog”. The password for the “root” account is “analog” as well. Nios II Command Shell login using root and password analog. 
 
-by running the iio_info command
+You can also check the assigned IP address:
 
-nios2-configure-sof ~/intelFPGA_pro/FPGADeveloper/hdl/projects/adrv9009/a10gx/adrv9009_a10gx_time_limited.sof
-Warning (210039): File /home/lkk/intelFPGA_pro/FPGADeveloper/hdl/projects/adrv9009/a10gx/adrv9009_a10gx_time_limited.sof contains one or more time-limited IPs that support the Intel FPGA IP Evaluation Mode feature that will not work after the hardware evaluation time expires. Refer to the Messages window for evaluation time details.
-Info (210040): SRAM Object File /home/lkk/intelFPGA_pro/FPGADeveloper/hdl/projects/adrv9009/a10gx/adrv9009_a10gx_time_limited.sof contains time-limited IP that supports Intel FPGA IP Evaluation Mode feature -- Vendor: 0x6AF7, Product: 0x00A2
+.. image:: imgs/FPGA/nios2boot2.png
+  :width: 600
+  :alt: nios2boot2
 
-nios2-download -g ~/intelFPGA_pro/FPGADeveloper/linux/arch/nios2/boot/zImage
-(base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/adrv9009_a10gx$ nios2-download -g ~/intelFPGA_pro/FPGADeveloper/linux/arch/nios2/boot/zImage
-Using cable "USB-BlasterII [1-5]", device 1, instance 0x00
-Pausing target processor: not responding.
-Resetting and trying again: FAILED
-Leaving target processor paused
+When enter the Nios II command shell, running the **iio_info** command check the iio build information
 
+Download self-build HDL and Images
+-----------------------------------
 
-nios2-terminal
-(base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/adrv9009_a10gx$ nios2-configure-sof adrv9009_a10gx.sof
-(base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/adrv9009_a10gx$ nios2-download -g ~/intelFPGA_pro/FPGADeveloper/linux/arch/nios2/boot/zImage
-ad9371 spi32766.1: ad9371_probe : enter
-altera-a10-fpll 10045000.altera-a10-fpll: Failed to acquire arbitration
-altera-a10-fpll 10045000.altera-a10-fpll: Failed to acquire arbitration
-altera-a10-fpll 10045000.altera-a10-fpll: FPLL PLL calibration FAILED
-altera-a10-fpll 10035000.altera-a10-fpll: Failed to acquire arbitration
-altera-a10-fpll 10035000.altera-a10-fpll: Failed to acquire arbitration
-altera-a10-fpll 10035000.altera-a10-fpll: FPLL PLL calibration FAILED
-altera-a10-fpll 10025000.altera-a10-fpll: FPLL PLL calibration FAILED
-altera_adxcvr 10024000.axi-ad9371-tx-xcvr: Altera ADXCVR (17.01.a) probed
-altera_adxcvr 10034000.axi-ad9371-rx-xcvr: Only up to 32 lanes supported.
-altera_adxcvr: probe of 10034000.axi-ad9371-rx-xcvr failed with error -22
-altera_adxcvr 10044000.axi-ad9371-rx-os-xcvr: Lane 0 CDR/CMU PLL & RX offset calibration OK (400 us)
-altera_adxcvr 10044000.axi-ad9371-rx-os-xcvr: Failed to acquire arbitration
-altera_adxcvr 10044000.axi-ad9371-rx-os-xcvr: Lane 1 CDR/CMU PLL & RX offset calibration FAILED
-altera_adxcvr 10044000.axi-ad9371-rx-os-xcvr: Altera ADXCVR (17.01.a) probed
-NET: Registered protocol family 17
-Oops: Exception in kernel mode, sig: 4
+.. code-block:: console 
 
-CPU: 0 PID: 1 Comm: swapper Not tainted 4.9.0-g1d0d40cebde6 #2
+  $ nios2-configure-sof ~/intelFPGA_pro/FPGADeveloper/hdl/projects/adrv9009/a10gx/adrv9009_a10gx_time_limited.sof
+  Warning (210039): File /home/lkk/intelFPGA_pro/FPGADeveloper/hdl/projects/adrv9009/a10gx/adrv9009_a10gx_time_limited.sof contains one or more time-limited IPs that support the Intel FPGA IP Evaluation Mode feature that will not work after the hardware evaluation time expires. Refer to the Messages window for evaluation time details.
+  Info (210040): SRAM Object File /home/lkk/intelFPGA_pro/FPGADeveloper/hdl/projects/adrv9009/a10gx/adrv9009_a10gx_time_limited.sof contains time-limited IP that supports Intel FPGA IP Evaluation Mode feature -- Vendor: 0x6AF7, Product: 0x00A2
 
+  (base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/adrv9009_a10gx$ nios2-download -g ~/intelFPGA_pro/FPGADeveloper/linux/arch/nios2/boot/zImage
+  Using cable "USB-BlasterII [1-5]", device 1, instance 0x00
+  Pausing target processor: not responding.
+  Resetting and trying again: FAILED
+  Leaving target processor paused
 
-iio_oscilloscope
-----------------
-https://wiki.analog.com/resources/tools-software/linux-software/iio_oscilloscope
+Try other images:
 
-(base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper$ sudo apt-get -y install libglib2.0-dev libgtk2.0-dev libgtkdatabox-dev libmatio-dev libfftw3-dev libxml2 libxml2-dev bison flex libavahi-common-dev libavahi-client-dev libcurl4-openssl-dev libjansson-dev cmake libaio-dev libserialport-dev
+.. code-block:: console 
 
-build and install the libiio library. ref: https://wiki.analog.com/resources/tools-software/linux-software/libiio#how_to_build_it
-(base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper$ sudo apt-get install libxml2 libxml2-dev bison flex libcdk5-dev cmake
-(base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper$ sudo apt-get install libaio-dev libusb-1.0-0-dev libserialport-dev libxml2-dev libavahi-client-dev doxygen graphviz
-(base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper$ git clone https://github.com/pcercuei/libini.git
-(base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper$ cd libini/
-(base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/libini$ mkdir build && cd build && cmake ../ && make && sudo make install
-(base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/libini/build$ cd ../../
-(base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper$ git clone https://github.com/analogdevicesinc/libiio.git
-(base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper$ cd libiio/
-(base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/libiio$ mkdir build && cd build && cmake ../ && make && sudo make install
-(base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/libiio/build$ export PATH=/usr/lib/:$PATH
-(base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/libiio/build$ iio_info
-Unable to create Local IIO context : No such file or directory (2)
+  (base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/adrv9009_a10gx$ nios2-configure-sof adrv9009_a10gx.sof
+  (base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/adrv9009_a10gx$ nios2-download -g ~/intelFPGA_pro/FPGADeveloper/linux/arch/nios2/boot/zImage
+  ad9371 spi32766.1: ad9371_probe : enter
+  altera-a10-fpll 10045000.altera-a10-fpll: Failed to acquire arbitration
+  altera-a10-fpll 10045000.altera-a10-fpll: Failed to acquire arbitration
+  altera-a10-fpll 10045000.altera-a10-fpll: FPLL PLL calibration FAILED
+  altera-a10-fpll 10035000.altera-a10-fpll: Failed to acquire arbitration
+  altera-a10-fpll 10035000.altera-a10-fpll: Failed to acquire arbitration
+  altera-a10-fpll 10035000.altera-a10-fpll: FPLL PLL calibration FAILED
+  altera-a10-fpll 10025000.altera-a10-fpll: FPLL PLL calibration FAILED
+  altera_adxcvr 10024000.axi-ad9371-tx-xcvr: Altera ADXCVR (17.01.a) probed
+  altera_adxcvr 10034000.axi-ad9371-rx-xcvr: Only up to 32 lanes supported.
+  altera_adxcvr: probe of 10034000.axi-ad9371-rx-xcvr failed with error -22
+  altera_adxcvr 10044000.axi-ad9371-rx-os-xcvr: Lane 0 CDR/CMU PLL & RX offset calibration OK (400 us)
+  altera_adxcvr 10044000.axi-ad9371-rx-os-xcvr: Failed to acquire arbitration
+  altera_adxcvr 10044000.axi-ad9371-rx-os-xcvr: Lane 1 CDR/CMU PLL & RX offset calibration FAILED
+  altera_adxcvr 10044000.axi-ad9371-rx-os-xcvr: Altera ADXCVR (17.01.a) probed
+  NET: Registered protocol family 17
+  Oops: Exception in kernel mode, sig: 4
 
-(base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper$ git clone https://github.com/analogdevicesinc/iio-oscilloscope.git
-(base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper$ cd iio-oscilloscope/
-(base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/iio-oscilloscope$ mkdir build && cd build
-(base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/iio-oscilloscope/build$ cmake ../ && make -j 4
-(base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/iio-oscilloscope/build$ sudo make install
-(base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/iio-oscilloscope/build$ ./osc 
+  CPU: 0 PID: 1 Comm: swapper Not tainted 4.9.0-g1d0d40cebde6 #2
 
 
-Could not get IIO Context: Function not implemented...
-
-
-
-pyadi-iio
-----------
-(mycondapy310) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper$ git clone https://github.com/analogdevicesinc/pyadi-iio.git
-(mycondapy310) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper$ cd pyadi-iio
-(mycondapy310) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/pyadi-iio$ pip install .
-Successfully built pyadi-iio
-Installing collected packages: pylibiio, numpy, pyadi-iio
-Successfully installed numpy-1.24.3 pyadi-iio-0.0.16 pylibiio-0.23.1
-$ pip install matplotlib scipy
-# Create radio
-sdr = adi.adrv9009(uri="ip:192.168.86.31")
-(mycondapy310) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/pyadi-iio/examples$ python adrv9009.py 
--10
--10
-TRX LO 2000000000
-
-pip install pytest
-
-
-https://wiki.analog.com/resources/eval/user-guides/adrv9009
-
-Detailed driver for ADRV9009: https://wiki.analog.com/resources/tools-software/linux-drivers/iio-transceiver/adrv9009
-
-MATLAB toolbox: https://wiki.analog.com/resources/tools-software/transceiver-toolbox
 
 Build ADI HDL
---------------------
+-------------
+
+ADI HDL related information
+  * ADI HDL repo: https://github.com/analogdevicesinc/hdl
+  * ADI Reference Designs HDL User Guide: https://wiki.analog.com/resources/fpga/docs/hdl
+  * all the projects have no-OS (baremetal https://github.com/analogdevicesinc/no-OS) and a Linux (https://github.com/analogdevicesinc/Linux) support.
+
+The HDL repository is divided into two seperate sections
+  * projects with all the currently supported projects. There are two special folders inside the /hdl/projects: 
+      * common: contains all the base designs, for all currently supported FPGA development boards
+      * scripts (Tcl scripts): defined all the custom Tcl processes, which are used to create a project, define the system and generate programming files for the FPGA.
+  * library with all the Analog Devices Inc. proprietary IP cores and hdl modules, which are required to build the projects. The library folder contains all the IP cores and common modules. An IP, in general, contains Verilog files, which describe the hardware logic, constraint files, to ease timing closure, and Tcl scripts, which generate all the other files required for IP integration (*_ip.tcl for Vivado and *_hw.tcl for Quartus).
+
+Running the HDL on hardware. HDL build alone will NOT let you do anything useful. You would need a software running on the processor (Microblaze, NIOS or ARM) to make the design work. There are two software solutions: 1) Linux and 2) No-OS. Ref: https://wiki.analog.com/resources/fpga/docs/run
+
+HDL Architecture: https://wiki.analog.com/resources/fpga/docs/arch
+
+Using and modifying the HDL designs: https://wiki.analog.com/resources/fpga/docs/tips
+
 Ref HDL build: https://wiki.analog.com/resources/fpga/docs/build
 
 .. code-block:: console 
@@ -312,27 +289,6 @@ Ref HDL build: https://wiki.analog.com/resources/fpga/docs/build
 
    (base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/hdl/projects/adrv9009/a10gx$ make
    Building adrv9009_a10gx [/home/lkk/intelFPGA_pro/FPGADeveloper/hdl/projects/adrv9009/a10gx/adrv9009_a10gx_quartus.log] ... OK
-
-
-
-ADI HDL Design
----------------
-ADI HDL related information
-  * ADI HDL repo: https://github.com/analogdevicesinc/hdl
-  * ADI Reference Designs HDL User Guide: https://wiki.analog.com/resources/fpga/docs/hdl
-  * all the projects have no-OS (baremetal https://github.com/analogdevicesinc/no-OS) and a Linux (https://github.com/analogdevicesinc/Linux) support.
-
-The HDL repository is divided into two seperate sections
-  * projects with all the currently supported projects. There are two special folders inside the /hdl/projects: 
-      * common: contains all the base designs, for all currently supported FPGA development boards
-      * scripts (Tcl scripts): defined all the custom Tcl processes, which are used to create a project, define the system and generate programming files for the FPGA.
-  * library with all the Analog Devices Inc. proprietary IP cores and hdl modules, which are required to build the projects. The library folder contains all the IP cores and common modules. An IP, in general, contains Verilog files, which describe the hardware logic, constraint files, to ease timing closure, and Tcl scripts, which generate all the other files required for IP integration (*_ip.tcl for Vivado and *_hw.tcl for Quartus).
-
-Running the HDL on hardware. HDL build alone will NOT let you do anything useful. You would need a software running on the processor (Microblaze, NIOS or ARM) to make the design work. There are two software solutions: 1) Linux and 2) No-OS. Ref: https://wiki.analog.com/resources/fpga/docs/run
-
-HDL Architecture: https://wiki.analog.com/resources/fpga/docs/arch
-
-Using and modifying the HDL designs: https://wiki.analog.com/resources/fpga/docs/tips
 
 
 
