@@ -75,6 +75,7 @@ Install in mypy310 (python3 in conda):
 
 Git configure
 -------------
+
 .. code-block:: console
 
   (base) kaikailiu@kaikais-mbp mytutorial % git config --global user.email "kaikai.liu@sjsu.edu"
@@ -86,3 +87,23 @@ Reference links:
   * https://developer.apple.com/metal/
   * https://developer.apple.com/metal/pytorch/
   * https://mac.install.guide/homebrew/index.html
+
+Install pytorch 2.0 and perform pytorch test
+
+.. code-block:: console
+
+  (mypy310) kaikailiu@kaikais-mbp docs % conda install pytorch::pytorch torchvision torchaudio -c pytorch
+  (mypy310) kaikailiu@kaikais-mbp mytutorial % python ./scripts/testmacpytorch.py 
+
+Streamlit
+---------
+Ref: https://docs.streamlit.io/library/get-started/installation
+
+.. code-block:: console
+
+  pip install streamlit
+  (mypy310) kaikailiu@kaikais-mbp MyRepo % streamlit hello
+  2023-06-01 14:37:25.741 cannot import name 'COMMON_SAFE_ASCII_CHARACTERS' from 'charset_normalizer.constant' (/Users/kaikailiu/miniconda3/envs/mypy310/lib/python3.10/site-packages/charset_normalizer/constant.py)
+  % pip install chardet #solve the previous problem
+  % streamlit hello 
+  # streamlit run your_script.py [-- script args]
