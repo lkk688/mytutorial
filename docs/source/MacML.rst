@@ -1,5 +1,12 @@
 Mac Machine Learning
 ====================
+In Mac with Apple silicon, if want to install Rosetta 2 manually from the command line, run the following command:
+
+.. code-block:: console
+
+  softwareupdate --install-rosetta
+
+Install https://www.xquartz.org/releases/
 
 Conda Installation
 ------------------
@@ -108,6 +115,56 @@ Ref: https://docs.streamlit.io/library/get-started/installation
   % streamlit hello 
   # streamlit run your_script.py [-- script args]
 
+NuScenes
+---------
+.. code-block:: console
+
+  % pip install nuscenes-devkit
+  from nuscenes.nuscenes import NuScenes
+
+Install Docker Desktop on Mac
+------------------------------
+Download Docker.dmg from: https://docs.docker.com/desktop/install/mac-install/, double click to install.
+
+Open the Docker app in Applications, select Use recommended settings (Requires password) to finish setup. 
+
+In Docker app, select ubuntu image, or pull ubuntu image in command line:
+
+.. code-block:: console
+
+  % docker pull ubuntu:22.04
+  % docker images
+  REPOSITORY   TAG       IMAGE ID       CREATED       SIZE
+  ubuntu       22.04     2767693332e5   10 days ago   69.2MB
+  (base) kaikailiu@kaikais-mbp Developer % docker run -it --rm -v /Users/kaikailiu/Documents/:/Documents --privileged --network host ubuntu:22.04 /bin/bash
+  root@docker-desktop:/# ls 
+  Documents  boot  etc   lib    mnt  proc  run   srv  tmp  var
+  bin        dev   home  media  opt  root  sbin  sys  usr
+  root@docker-desktop:/# cat /etc/os-release 
+  PRETTY_NAME="Ubuntu 22.04.2 LTS"
+  NAME="Ubuntu"
+  VERSION_ID="22.04"
+  VERSION="22.04.2 LTS (Jammy Jellyfish)"
+
+Build own docker image based on Dockerfile (under scripts):
+
+.. code-block:: console
+
+  (base) kaikailiu@kaikais-mbp scripts % docker build -t myubuntu22 .
+  Building 510.4s (14/14) FINISHED
+  => naming to docker.io/library/myubuntu22
+  (base) kaikailiu@kaikais-mbp scripts % docker images               
+  REPOSITORY   TAG       IMAGE ID       CREATED          SIZE
+  myubuntu22   latest    490661a304a9   23 minutes ago   1.09GB
+  ubuntu       22.04     2767693332e5   10 days ago      69.2MB
+  (base) kaikailiu@kaikais-mbp scripts % docker run -it --rm -v /Users/kaikailiu/Documents/:/Documents --privileged --network host myubuntu22 /bin/bash
+  root@docker-desktop:/# python -V
+  Python 3.10.6
+
+If you docker pull an image from the registry, it will again default to your native architecture (if available), unless you specify --platform=linux/amd64.
+
+https://www.docker.com/products/telepresence-for-docker/
+
 open3d
 ------
 
@@ -116,6 +173,14 @@ open3d
   (mypy310) kaikailiu@kaikais-mbp MyRepo % pip install open3d  
   Collecting open3d
     Downloading open3d-0.17.0-cp310-cp310-macosx_13_0_arm64.whl (39.9 MB)
+  % python -c "import open3d; print(open3d.__version__)"
+  from open3d.cpu.pybind import (core, camera, data, geometry, io, pipelines,
+  ImportError: dlopen(/Users/kaikailiu/miniconda3/envs/mypy310/lib/python3.10/site-packages/open3d/cpu/pybind.cpython-310-darwin.so, 0x0002): Library not loaded: /opt/homebrew/opt/libomp/lib/libomp.dylib
+  % pip uninstall open3d
+
+One possible solution: https://github.com/isl-org/open3d_downloads/releases/tag/apple-silicon
+
+(mypy310) kaikailiu@kaikais-mbp Developer % git clone https://github.com/isl-org/Open3D
 
 Packages cannot be installed
 ----------------------------
