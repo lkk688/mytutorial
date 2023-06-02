@@ -29,8 +29,11 @@ RUN apt-get update && apt-get install -y \
         mlocate \
 	libgoogle-glog-dev \
         x11-apps \
+        libgl1 \
 && rm -rf /var/lib/apt/lists/* \
 && apt-get clean
+#open3d need libgl1
+
 
 # Set Python3 as default
 RUN update-alternatives --install /usr/bin/python python /usr/bin/python3 1
@@ -63,7 +66,8 @@ RUN python3 -m pip install -U \
         pytest-rerunfailures \
         pytest \
         pydocstyle \
-        scikit-learn
+        scikit-learn \
+        open3d 
 
 # Install Git-LFS
 RUN curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | bash && \

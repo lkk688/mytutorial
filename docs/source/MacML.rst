@@ -6,7 +6,7 @@ In Mac with Apple silicon, if want to install Rosetta 2 manually from the comman
 
   softwareupdate --install-rosetta
 
-Install https://www.xquartz.org/releases/
+Install https://www.xquartz.org/releases/ for X11 window forwarding.
 
 Conda Installation
 ------------------
@@ -124,6 +124,8 @@ NuScenes
 
 Install Docker Desktop on Mac
 ------------------------------
+Docker: https://docs.docker.com
+
 Download Docker.dmg from: https://docs.docker.com/desktop/install/mac-install/, double click to install.
 
 Open the Docker app in Applications, select Use recommended settings (Requires password) to finish setup. 
@@ -182,8 +184,20 @@ One possible solution: https://github.com/isl-org/open3d_downloads/releases/tag/
 
 (mypy310) kaikailiu@kaikais-mbp Developer % git clone https://github.com/isl-org/Open3D
 
+http://www.open3d.org/docs/release/arm.html
+
 Packages cannot be installed
 ----------------------------
 .. code-block:: console
 
   pip install mayavi #VTK error
+ 
+ Try conda installation
+
+.. code-block:: console
+
+  % conda install -c conda-forge vtk #https://anaconda.org/conda-forge/vtk
+  % conda install -c anaconda mayavi #does not work
+  #python version problem python[version='>=3.8,<3.9.0a0|>=3.9,<3.10.0a0']
+  % conda install -c conda-forge mayavi #works
+  (mypy310) kaikailiu@kaikais-mbp scripts % python testmayavi.py
