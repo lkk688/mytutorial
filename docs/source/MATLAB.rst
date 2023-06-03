@@ -113,7 +113,9 @@ Try to use AD9361 to connect:
     Error in adi.common.RxTx/setupImpl (line 117)
                 setupImpl@matlabshared.libiio.base(obj);
 
-iio_attr -u ip:192.168.1.10 -d
+.. code-block:: console 
+
+    iio_attr -u ip:192.168.1.10 -d
 
 
 https://github.com/analogdevicesinc/TransceiverToolbox/blob/master/%2Badi/%2BADRV9009/Rx.m
@@ -153,6 +155,7 @@ Communications Toolbox Support Package for Xilinx Zynq-Based Radio: https://www.
     * sdrdev: Create radio object for interfacing with Xilinx Zynq-based radio hardware: https://www.mathworks.com/help/supportpkg/xilinxzynqbasedradio/ug/sdrdev.html
     * common problems: https://www.mathworks.com/help/supportpkg/xilinxzynqbasedradio/ug/common-problems-and-fixes.html
 
+dev = sdrdev(___,'IPAddress',192.168.86.25)
 dev = sdrdev('AD936x') #Create a radio object 
 info(dev) #Use this object to get radio hardware information.
 testConnection(dev) #test host-radio connectivity.
