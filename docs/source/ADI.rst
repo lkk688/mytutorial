@@ -121,9 +121,11 @@ You can also see the Constellation figure:
   :width: 900
   :alt: oscsignal2
 
-pyadi-iio
-----------
+PySDR and pyadi-iio
+-------------------
+
 Install pyadi-iio
+~~~~~~~~~~~~~~~~~
 
 .. code-block:: console 
 
@@ -153,6 +155,17 @@ Run the adrv9009 example under the pyadi-iio examples folder:
 .. image:: imgs/ADI/pyadiiio.png
   :width: 600
   :alt: pyadiiio
+
+Pyadi-iio examples: https://analogdevicesinc.github.io/pyadi-iio/guides/examples.html
+Direct Digital Synthesizers: https://analogdevicesinc.github.io/pyadi-iio/fpga/index.html
+  * For each individual DAC channel there are two DDSs which can have a unique phase, frequency, and phase.
+  
+PySDR
+~~~~~~
+PySDR: A Guide to SDR and DSP using Python: https://pysdr.org/index.html
+PlutoSDR in Python: https://pysdr.org/content/pluto.html
+  * Requires libiio, libad9361-iio, pyadi-iio
+
 
 https://wiki.analog.com/resources/eval/user-guides/adrv9009
 
