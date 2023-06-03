@@ -5,9 +5,10 @@ MATLAB
 MATLAB with Analog Device
 ---------------------------
 Analog Devices Transceiver Toolbox For MATLAB and Simulink: https://wiki.analog.com/resources/tools-software/transceiver-toolbox
+    * ADRV9009 is supported with Xilinx ZCU102
     * Download and install Transceiver toolbox (AnalogDevicesTransceiverToolbox_v21.2.1.mltbx) from: https://github.com/analogdevicesinc/TransceiverToolbox/releases, double click the mltbx file will open MATLAB and install the toolbox.
     * Install libiio
-    * Install either: Communications Toolbox Support Package for Xilinx Zynq-Based Radio or Communications Toolbox Support Package for Analog Devices ADALM-Pluto Radio
+    * Install either: Communications Toolbox Support Package for Xilinx Zynq-Based Radio or Communications Toolbox Support Package for Analog Devices ADALM-Pluto Radio (These support packages provide the necessary libIIO MATLAB bindings used by ADI's system objects)
 
 
 
@@ -43,6 +44,8 @@ The IIO System Object is built upon the libiio library and enables a MATLAB or S
     * Stream data to and from a target
     * Control the settings of a target, and
     * Monitor different target parameters. Please use the Transceiver Toolbox, 
+
+Process streaming signals and large data with System objects: https://www.mathworks.com/discovery/stream-processing.html
 
 Connect device in MATLAB
 ------------------------
@@ -110,8 +113,49 @@ Try to use AD9361 to connect:
     Error in adi.common.RxTx/setupImpl (line 117)
                 setupImpl@matlabshared.libiio.base(obj);
 
+iio_attr -u ip:192.168.1.10 -d
+
+
+https://github.com/analogdevicesinc/TransceiverToolbox/blob/master/%2Badi/%2BADRV9009/Rx.m
+In function setupInit(obj): obj.setDeviceAttributeRAW('calibrate_frm_en',num2str(obj.EnableFrequencyHoppingModeCalibration));
+
+Building the Toolbox Manually: https://wiki.analog.com/resources/tools-software/transceiver-toolbox
+
+https://github.com/bpkempke/adi-linux/blob/master/drivers/iio/adc/adrv9009.c
+static IIO_DEVICE_ATTR(calibrate_frm_en, S_IRUGO | S_IWUSR,
+		       adrv9009_phy_show,
+		       adrv9009_phy_store,
+		       ADRV9009_INIT_CAL | (TAL_FHM_CALS << 8));
+static struct attribute *adrv9009_phy_attributes[] = {
+	&iio_dev_attr_ensm_mode.dev_attr.attr,
+	&iio_dev_attr_ensm_mode_available.dev_attr.attr,
+	&iio_dev_attr_calibrate.dev_attr.attr,
+	&iio_dev_attr_calibrate_rx_qec_en.dev_attr.attr,
+	&iio_dev_attr_calibrate_tx_qec_en.dev_attr.attr,
+	&iio_dev_attr_calibrate_tx_lol_en.dev_attr.attr,
+	&iio_dev_attr_calibrate_tx_lol_ext_en.dev_attr.attr,
+	&iio_dev_attr_calibrate_rx_phase_correction_en.dev_attr.attr,
+	&iio_dev_attr_calibrate_frm_en.dev_attr.attr,
+	NULL,
+};
+
 Design Examples in MATLAB
 -------------------------
+Communications Toolbox: https://www.mathworks.com/help/comm/index.html?s_tid=hc_product_card
+
+Supported Hardware Software-Defined Radio: https://www.mathworks.com/help/comm/supported-hardware-software-defined-radio.html
+
+Guided Host-Radio Hardware Setup: https://www.mathworks.com/help/supportpkg/xilinxzynqbasedradio/ug/guided-host-radio-hardware-setup.html
+
+Communications Toolbox Support Package for Xilinx Zynq-Based Radio: https://www.mathworks.com/help/supportpkg/xilinxzynqbasedradio/index.html
+    * Hardware and Software Requirements: https://www.mathworks.com/help/supportpkg/xilinxzynqbasedradio/ug/hardware-and-software-requirements.html
+    * Support Xilinx ZC706 with AD FMCOMMS2345
+    * sdrdev: Create radio object for interfacing with Xilinx Zynq-based radio hardware: https://www.mathworks.com/help/supportpkg/xilinxzynqbasedradio/ug/sdrdev.html
+    * common problems: https://www.mathworks.com/help/supportpkg/xilinxzynqbasedradio/ug/common-problems-and-fixes.html
+
+dev = sdrdev('AD936x') #Create a radio object 
+info(dev) #Use this object to get radio hardware information.
+testConnection(dev) #test host-radio connectivity.
 
 QPSK Modem Design Workflow: https://wiki.analog.com/resources/eval/user-guides/ad-fmcomms2-ebz/software/matlab_bsp_modem
 Frequency Hopping Example Design: https://wiki.analog.com/resources/eval/user-guides/adrv936x_rfsom/tutorials/frequency_hopping
@@ -122,3 +166,5 @@ HW/SW Co-Design with AXI4-Stream Using Analog Devices AD9361/AD9364: https://www
 https://www.mathworks.com/help/supportpkg/plutoradio/application-specific-examples.html
 
 Image Transmission and Reception Using LTE Waveform and SDR: https://www.mathworks.com/help/supportpkg/plutoradio/ug/transmission-and-reception-of-an-image-using-lte-toolbox-and-a-single-pluto-radio.html
+
+Spectrum Sensing with Deep Learning to Identify 5G and LTE Signals: https://www.mathworks.com/help/supportpkg/plutoradio/ug/spectrum-sensing-with-deep-learning-to-identify-5g-lte-signals.html
