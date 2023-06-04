@@ -1,6 +1,39 @@
 GNU Radio
 =================
 
+USRP
+-----
+USRP UHD Driver: https://github.com/EttusResearch/uhd, and build guide: https://files.ettus.com/manual/page_build_guide.html
+
+$ sudo apt-get install libuhd-dev uhd-host
+$ dpkg -s libboost-dev | grep 'Version'
+Version: 1.74.0.3ubuntu7
+$ gcc --version
+gcc (Ubuntu 9.5.0-1ubuntu1~22.04) 9.5.0
+$ sudo apt-get install -y libusb-1.0-0
+(mycondapy310) lkk@lkk-intel12:~$ pip3 install mako
+$ sudo apt-get install autoconf automake build-essential ccache cmake cpufrequtils doxygen ethtool \
+g++ git inetutils-tools libboost-all-dev libncurses5 libncurses5-dev libusb-1.0-0 libusb-1.0-0-dev \
+libusb-dev python3-dev python3-mako python3-numpy python3-requests python3-scipy python3-setuptools \
+python3-ruamel.yaml 
+(mycondapy310) lkk@lkk-intel12:~/Developer$ git clone https://github.com/EttusResearch/uhd.git
+(mycondapy310) lkk@lkk-intel12:~/Developer$ cd uhd/
+(mycondapy310) lkk@lkk-intel12:~/Developer/uhd$ ls
+CHANGELOG  CONTRIBUTING.md  fpga  images      mpm        tools
+CODING.md  firmware         host  LICENSE.md  README.md
+(mycondapy310) lkk@lkk-intel12:~/Developer/uhd$ cd host/
+(mycondapy310) lkk@lkk-intel12:~/Developer/uhd/host$ ls
+cmake           docs      include  LICENSE  README.md  uhd.pc.in
+CMakeLists.txt  examples  lib      python   tests      utils
+(mycondapy310) lkk@lkk-intel12:~/Developer/uhd/host$ mkdir build
+(mycondapy310) lkk@lkk-intel12:~/Developer/uhd/host$ cd build/
+(mycondapy310) lkk@lkk-intel12:~/Developer/uhd/host/build$ cmake -DCMAKE_INSTALL_PREFIX=/opt/uhd ../
+make
+make test # This step is optional
+sudo make install
+(mycondapy310) lkk@lkk-intel12:~/Developer/uhd/host/build$ ls /opt/uhd/
+bin  include  lib  share
+
 
 GNU radio 3.10 installation
 ---------------------------
