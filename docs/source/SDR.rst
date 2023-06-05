@@ -49,6 +49,75 @@ Direct Digital Synthesizers: https://analogdevicesinc.github.io/pyadi-iio/fpga/i
 
 https://wiki.analog.com/resources/eval/user-guides/adrv9009
 
+
+GNU radio new try 
+------------------
+pip install sphinx-rtd-theme
+
+git clone https://github.com/analogdevicesinc/libad9361-iio.git
+cd libad9361-iio
+mkdir build
+cd build
+cmake .. -DPYTHON_BINDINGS=ON
+make 
+Theme error:
+no theme named 'furo' found (missing theme.conf?)
+
+pip install sphinx-rtd-theme
+nano ../bindings/python/doc/conf.py
+html_theme = "classic"
+
+build succeeded, 11 warnings.
+
+The HTML pages are in html/v0.2/python.
+[100%] Built target libad9361-py-py
+
+
+sudo make install
+cd ../..
+
+git clone https://github.com/analogdevicesinc/gr-iio.git
+cd gr-iio
+cmake .
+make 
+
+/home/lkk/intelFPGA_pro/FPGADeveloper/gr-iio/lib/iio_math_impl.cc:30:10: fatal error: gnuradio/analog/sig_source_f.h: No such file or directory
+   30 | #include <gnuradio/analog/sig_source_f.h>
+
+(mycondapy310) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/gr-iio$ git checkout upgrade-3.8
+Switched to branch 'upgrade-3.8'
+Your branch is up to date with 'origin/upgrade-3.8'.
+(mycondapy310) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/gr-iio$ cmake .
+
+/home/lkk/intelFPGA_pro/FPGADeveloper/gr-iio/lib/attr_sink_impl.cc:92:92: error: ‘_1’ was not declared in this scope
+
+in home/lkk/intelFPGA_pro/FPGADeveloper/gr-iio/lib/attr_sink_impl.cc:, add "#include <boost/bind.hpp>"
+
+another solution: https://github.com/analogdevicesinc/gr-iio/commit/c35a071cb006d5bf1a0416422113b9a45ec96daa
+
+(mycondapy310) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/gr-iio$ make
+[100%] Linking CXX shared module _iio_pluto_sink_swig.so
+[100%] Built target iio_pluto_sink_swig
+
+
+(mycondapy310) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/gr-iio$ sudo make install
+
+-- Installing: /usr/local/share/gnuradio/grc/blocks/iio.tree.yml
+-- Installing: /usr/local/share/gnuradio/grc/blocks/iio_attr_sink.block.yml
+-- Installing: /usr/local/share/gnuradio/grc/blocks/iio_attr_source.block.yml
+-- Installing: /usr/local/share/gnuradio/grc/blocks/iio_attr_updater.block.yml
+-- Installing: /usr/local/share/gnuradio/grc/blocks/iio_device_sink.block.yml
+-- Installing: /usr/local/share/gnuradio/grc/blocks/iio_device_source.block.yml
+-- Installing: /usr/local/share/gnuradio/grc/blocks/iio_fmcomms2_sink.block.yml
+-- Installing: /usr/local/share/gnuradio/grc/blocks/iio_fmcomms2_source.block.yml
+-- Installing: /usr/local/share/gnuradio/grc/blocks/iio_fmcomms5_sink.block.yml
+-- Installing: /usr/local/share/gnuradio/grc/blocks/iio_fmcomms5_source.block.yml
+-- Installing: /usr/local/share/gnuradio/grc/blocks/iio_pluto_sink.block.yml
+-- Installing: /usr/local/share/gnuradio/grc/blocks/iio_pluto_source.block.yml
+
+(mycondapy310) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/gr-iio$ cd ..
+(mycondapy310) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper$ sudo ldconfig
+
 GNU radio 3.10 installation
 ---------------------------
 In Ubuntu22.04, install the latest version of 3.10 via apt install, ref: https://wiki.gnuradio.org/index.php/LinuxInstall
