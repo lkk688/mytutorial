@@ -12,7 +12,7 @@ The HDL repository is divided into two seperate sections
   * projects with all the currently supported projects. There are two special folders inside the /hdl/projects: 
       * common: contains all the base designs, for all currently supported FPGA development boards
       * scripts (Tcl scripts): defined all the custom Tcl processes, which are used to create a project, define the system and generate programming files for the FPGA.
-  * library with all the Analog Devices Inc. proprietary IP cores and hdl modules, which are required to build the projects. The library folder contains all the IP cores and common modules. An IP, in general, contains Verilog files, which describe the hardware logic, constraint files, to ease timing closure, and Tcl scripts, which generate all the other files required for IP integration (*_ip.tcl for Vivado and *_hw.tcl for Quartus).
+  * library with all the Analog Devices Inc. proprietary IP cores and hdl modules, which are required to build the projects. The library folder contains all the IP cores and common modules. An IP, in general, contains Verilog files, which describe the hardware logic, constraint files, to ease timing closure, and Tcl scripts, which generate all the other files required for IP integration (xxip.tcl for Vivado and xxhw.tcl for Quartus).
 
 Running the HDL on hardware. HDL build alone will NOT let you do anything useful. You would need a software running on the processor (Microblaze, NIOS or ARM) to make the design work. There are two software solutions: 1) Linux and 2) No-OS. Ref: https://wiki.analog.com/resources/fpga/docs/run
 
@@ -91,7 +91,8 @@ Build and install the libiio library. ref: https://wiki.analog.com/resources/too
 
 
 .. Could not get IIO Context: Function not implemented...
-In the osc UI, enter the IIO context "ip:192.168.xx.xx", click "Refresh" and "Connect"
+
+In the osc UI, enter the IIO context "ip:192.168.xx.xx", click "Refresh" and "Connect":
 
 .. image:: imgs/ADI/iioosc.png
   :width: 600

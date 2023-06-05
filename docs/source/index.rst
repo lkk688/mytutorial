@@ -25,6 +25,7 @@ Contents
    intelfpga
    intelfpgalinux
    ADI
+   gnuradio
    MATLAB
    test
    usage

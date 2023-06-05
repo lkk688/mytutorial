@@ -45,7 +45,7 @@ Prepare the Host Machine with NVIDIA SDK Manager
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Install NVIDIA SDK manager, ref: https://developer.nvidia.com/nvidia-sdk-manager
     * On your x86-64 PC, download the Debian package file for the latest SDK Manager: https://developer.nvidia.com/embedded/downloads
-    * Run the following command to install the Debian package: "sudo apt install ./sdkmanager_*-*_amd64.deb"
+    * Run the following command to install the Debian package: "sudo apt install ./sdkmanager_xx_amd64.deb"
     * Installed SDK Manager on Intel NUC6 with Ubuntu20.04 (upgraded from Ubuntu18.04), the current version of SDK manager cannot be installed on Ubuntu22.04 (cannot flash the jetson)
     * Intel NUC6 (mini pc) is in ENG276, account name is “lkk”, password is: studenteng276
 

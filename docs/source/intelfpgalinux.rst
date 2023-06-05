@@ -54,9 +54,9 @@ Start the quartus in command line
 
 If the quartus popup a window show license error, select the first option: go to license center. In the Quartus license center, create a new computer and enter the NIC ID (get the MAC address of the WiFi/Ethernet via ifconfig -a). 
 
-.. image:: imgs/FPGA/creatcomputer.png
+.. image:: imgs/FPGA/createcomputer.png
   :width: 600
-  :alt: creatcomputer
+  :alt: createcomputer
 
 
 Go the License, and edit the primary computer in the license. Click "generate license file", it will email the license file to you. 
@@ -241,7 +241,7 @@ The HDL repository is divided into two seperate sections
   * projects with all the currently supported projects. There are two special folders inside the /hdl/projects: 
       * common: contains all the base designs, for all currently supported FPGA development boards
       * scripts (Tcl scripts): defined all the custom Tcl processes, which are used to create a project, define the system and generate programming files for the FPGA.
-  * library with all the Analog Devices Inc. proprietary IP cores and hdl modules, which are required to build the projects. The library folder contains all the IP cores and common modules. An IP, in general, contains Verilog files, which describe the hardware logic, constraint files, to ease timing closure, and Tcl scripts, which generate all the other files required for IP integration (*_ip.tcl for Vivado and *_hw.tcl for Quartus).
+  * library with all the Analog Devices Inc. proprietary IP cores and hdl modules, which are required to build the projects. The library folder contains all the IP cores and common modules. An IP, in general, contains Verilog files, which describe the hardware logic, constraint files, to ease timing closure, and Tcl scripts, which generate all the other files required for IP integration (xxip.tcl for Vivado and xxhw.tcl for Quartus).
 
 Running the HDL on hardware. HDL build alone will NOT let you do anything useful. You would need a software running on the processor (Microblaze, NIOS or ARM) to make the design work. There are two software solutions: 1) Linux and 2) No-OS. Ref: https://wiki.analog.com/resources/fpga/docs/run
 
