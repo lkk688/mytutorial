@@ -186,6 +186,20 @@ You can also check the assigned IP address:
 
 When enter the Nios II command shell, running the **iio_info** command check the iio build information
 
+In another terminal, you can also check the iio information
+
+.. code-block:: console 
+.. code-block:: console 
+
+  $ iio_attr -u ip:192.168.86.25 -d
+  IIO context has 5 devices:
+    iio:device3, axi-adrv9009-tx-hpc: found 0 device attributes
+    iio:device1, adrv9009-phy: found 17 device attributes
+    iio:device4, axi-adrv9009-rx-hpc: found 0 device attributes
+    iio:device2, axi-adrv9009-rx-obs-hpc: found 1 device attributes
+    iio:device0, ad9528-1: found 9 device attributes
+
+
 Download self-build HDL and Images
 -----------------------------------
 

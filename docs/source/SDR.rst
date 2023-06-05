@@ -1,6 +1,122 @@
-GNU Radio
+SDR
 =================
 
+USRP
+-----
+USRP UHD Driver: https://github.com/EttusResearch/uhd, and build guide: https://files.ettus.com/manual/page_build_guide.html
+
+$ sudo apt-get install libuhd-dev uhd-host
+$ dpkg -s libboost-dev | grep 'Version'
+Version: 1.74.0.3ubuntu7
+$ gcc --version
+gcc (Ubuntu 9.5.0-1ubuntu1~22.04) 9.5.0
+$ sudo apt-get install -y libusb-1.0-0
+(mycondapy310) lkk@lkk-intel12:~$ pip3 install mako
+$ sudo apt-get install autoconf automake build-essential ccache cmake cpufrequtils doxygen ethtool \
+g++ git inetutils-tools libboost-all-dev libncurses5 libncurses5-dev libusb-1.0-0 libusb-1.0-0-dev \
+libusb-dev python3-dev python3-mako python3-numpy python3-requests python3-scipy python3-setuptools \
+python3-ruamel.yaml 
+(mycondapy310) lkk@lkk-intel12:~/Developer$ git clone https://github.com/EttusResearch/uhd.git
+(mycondapy310) lkk@lkk-intel12:~/Developer$ cd uhd/
+(mycondapy310) lkk@lkk-intel12:~/Developer/uhd$ ls
+CHANGELOG  CONTRIBUTING.md  fpga  images      mpm        tools
+CODING.md  firmware         host  LICENSE.md  README.md
+(mycondapy310) lkk@lkk-intel12:~/Developer/uhd$ cd host/
+(mycondapy310) lkk@lkk-intel12:~/Developer/uhd/host$ ls
+cmake           docs      include  LICENSE  README.md  uhd.pc.in
+CMakeLists.txt  examples  lib      python   tests      utils
+(mycondapy310) lkk@lkk-intel12:~/Developer/uhd/host$ mkdir build
+(mycondapy310) lkk@lkk-intel12:~/Developer/uhd/host$ cd build/
+(mycondapy310) lkk@lkk-intel12:~/Developer/uhd/host/build$ cmake -DCMAKE_INSTALL_PREFIX=/opt/uhd ../
+make
+make test # This step is optional
+sudo make install
+(mycondapy310) lkk@lkk-intel12:~/Developer/uhd/host/build$ ls /opt/uhd/
+bin  include  lib  share
+
+
+PySDR
+------
+PySDR: A Guide to SDR and DSP using Python: https://pysdr.org/index.html
+PlutoSDR in Python: https://pysdr.org/content/pluto.html
+  * Requires libiio, libad9361-iio, pyadi-iio
+
+Pyadi-iio examples: https://analogdevicesinc.github.io/pyadi-iio/guides/examples.html
+Direct Digital Synthesizers: https://analogdevicesinc.github.io/pyadi-iio/fpga/index.html
+  * For each individual DAC channel there are two DDSs which can have a unique phase, frequency, and phase.
+
+
+
+https://wiki.analog.com/resources/eval/user-guides/adrv9009
+
+
+GNU radio new try 
+------------------
+pip install sphinx-rtd-theme
+
+git clone https://github.com/analogdevicesinc/libad9361-iio.git
+cd libad9361-iio
+mkdir build
+cd build
+cmake .. -DPYTHON_BINDINGS=ON
+make 
+Theme error:
+no theme named 'furo' found (missing theme.conf?)
+
+pip install sphinx-rtd-theme
+nano ../bindings/python/doc/conf.py
+html_theme = "classic"
+
+build succeeded, 11 warnings.
+
+The HTML pages are in html/v0.2/python.
+[100%] Built target libad9361-py-py
+
+
+sudo make install
+cd ../..
+
+git clone https://github.com/analogdevicesinc/gr-iio.git
+cd gr-iio
+cmake .
+make 
+
+/home/lkk/intelFPGA_pro/FPGADeveloper/gr-iio/lib/iio_math_impl.cc:30:10: fatal error: gnuradio/analog/sig_source_f.h: No such file or directory
+   30 | #include <gnuradio/analog/sig_source_f.h>
+
+(mycondapy310) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/gr-iio$ git checkout upgrade-3.8
+Switched to branch 'upgrade-3.8'
+Your branch is up to date with 'origin/upgrade-3.8'.
+(mycondapy310) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/gr-iio$ cmake .
+
+/home/lkk/intelFPGA_pro/FPGADeveloper/gr-iio/lib/attr_sink_impl.cc:92:92: error: ‘_1’ was not declared in this scope
+
+in home/lkk/intelFPGA_pro/FPGADeveloper/gr-iio/lib/attr_sink_impl.cc:, add "#include <boost/bind.hpp>"
+
+another solution: https://github.com/analogdevicesinc/gr-iio/commit/c35a071cb006d5bf1a0416422113b9a45ec96daa
+
+(mycondapy310) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/gr-iio$ make
+[100%] Linking CXX shared module _iio_pluto_sink_swig.so
+[100%] Built target iio_pluto_sink_swig
+
+
+(mycondapy310) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/gr-iio$ sudo make install
+
+-- Installing: /usr/local/share/gnuradio/grc/blocks/iio.tree.yml
+-- Installing: /usr/local/share/gnuradio/grc/blocks/iio_attr_sink.block.yml
+-- Installing: /usr/local/share/gnuradio/grc/blocks/iio_attr_source.block.yml
+-- Installing: /usr/local/share/gnuradio/grc/blocks/iio_attr_updater.block.yml
+-- Installing: /usr/local/share/gnuradio/grc/blocks/iio_device_sink.block.yml
+-- Installing: /usr/local/share/gnuradio/grc/blocks/iio_device_source.block.yml
+-- Installing: /usr/local/share/gnuradio/grc/blocks/iio_fmcomms2_sink.block.yml
+-- Installing: /usr/local/share/gnuradio/grc/blocks/iio_fmcomms2_source.block.yml
+-- Installing: /usr/local/share/gnuradio/grc/blocks/iio_fmcomms5_sink.block.yml
+-- Installing: /usr/local/share/gnuradio/grc/blocks/iio_fmcomms5_source.block.yml
+-- Installing: /usr/local/share/gnuradio/grc/blocks/iio_pluto_sink.block.yml
+-- Installing: /usr/local/share/gnuradio/grc/blocks/iio_pluto_source.block.yml
+
+(mycondapy310) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/gr-iio$ cd ..
+(mycondapy310) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper$ sudo ldconfig
 
 GNU radio 3.10 installation
 ---------------------------

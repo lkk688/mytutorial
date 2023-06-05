@@ -26,6 +26,7 @@ Contents
    intelfpgalinux
    ADI
    gnuradio
+   SDR
    MATLAB
    test
    usage
