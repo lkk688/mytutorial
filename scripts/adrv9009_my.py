@@ -165,14 +165,14 @@ def DDStest(sdr):
 
     plt.show()
 
-def txtest(sdr):
+def txtest(sdr, tx_cyclic=True):
     #generate a sinusoid at +100 kHz, then transmit the complex signal at a carrier frequency of 915 MHz, 
     # causing the receiver to see a carrier at 915.1 MHz.
     sample_rate = 1e6 # Hz
     center_freq = 915e6 # Hz
 
     sdr.sample_rate = int(sample_rate)
-    sdr.tx_rf_bandwidth = int(sample_rate) # filter cutoff, just set it to the same as sample rate
+    #sdr.tx_rf_bandwidth = int(sample_rate) # filter cutoff, just set it to the same as sample rate
     sdr.tx_lo = int(center_freq)
     sdr.tx_hardwaregain_chan0 = -50 # Increase to increase tx power, valid range is -90 to 0 dB
 
@@ -181,9 +181,16 @@ def txtest(sdr):
     samples = 0.5*np.exp(2.0j*np.pi*100e3*t) # Simulate a sinusoid of 100 kHz, so it should show up at 915.1 MHz at the receiver
     samples *= 2**14 # The PlutoSDR expects samples to be between -2^14 and +2^14, not -1 and +1 like some SDRs
 
-    # Transmit our batch of samples 100 times, so it should be 1 second worth of samples total, if USB can keep up
-    for i in range(100):
-        sdr.tx(samples) # transmit the batch of samples once
+    dualchtx=[samples,samples]
+    
+    if tx_cyclic==True:
+        sdr.tx_cyclic_buffer = True # Enable cyclic buffers
+        sdr.tx(dualchtx)
+    else:
+        # Transmit our batch of samples 100 times, so it should be 1 second worth of samples total, if USB can keep up
+        for i in range(100):
+            sdr.tx(dualchtx) # transmit the batch of samples once
+    #sdr.tx_destroy_buffer(), then call sdr.tx(samples)
 
 def rxtest(sdr):
     #sets the sample rate to 1 MHz, sets the center frequency to 100 MHz, 
@@ -196,12 +203,14 @@ def rxtest(sdr):
     sdr.rx_hardwaregain_chan0 = 70.0 # dB
     sdr.rx_lo = int(center_freq)
     sdr.sample_rate = int(sample_rate)
-    sdr.rx_rf_bandwidth = int(sample_rate) # filter width, just set it to the same as sample rate for now
+    #sdr.rx_rf_bandwidth = int(sample_rate) # filter width, just set it to the same as sample rate for now
     sdr.rx_buffer_size = num_samps
 
-    samples = sdr.rx() # receive samples off Pluto
+    dualchsamples = sdr.rx() # receive samples, two array for two channels
+    
+    samples=dualchsamples[1] #get the first channel
     sample_len=len(samples)
-    print(samples[0:10])
+    print(samples[0:1000])
     plt.figure(0)
     plt.plot(np.arange(sample_len), samples,'.-')
 
@@ -219,13 +228,13 @@ def txrxcyclic(sdr):
     sdr.sample_rate = int(sample_rate)
 
     # Config Tx
-    sdr.tx_rf_bandwidth = int(sample_rate) # filter cutoff, just set it to the same as sample rate
+    #sdr.tx_rf_bandwidth = int(sample_rate) # filter cutoff, just set it to the same as sample rate
     sdr.tx_lo = int(center_freq) #sdr.trx_lo?
     sdr.tx_hardwaregain_chan0 = -50 # Increase to increase tx power, valid range is -90 to 0 dB
 
     # Config Rx
     sdr.rx_lo = int(center_freq)
-    sdr.rx_rf_bandwidth = int(sample_rate)
+    #sdr.rx_rf_bandwidth = int(sample_rate)
     sdr.rx_buffer_size = num_samps
     sdr.gain_control_mode_chan0 = 'manual'
     sdr.rx_hardwaregain_chan0 = 0.0 # dB, increase to increase the receive gain, but be careful not to saturate the ADC
@@ -239,17 +248,20 @@ def txrxcyclic(sdr):
     samples = np.repeat(x_symbols, 16) # 16 samples per symbol (rectangular pulses)
     samples *= 2**14 # The PlutoSDR expects samples to be between -2^14 and +2^14, not -1 and +1 like some SDRs
 
+    dualchtx=[samples,samples]
+
     # Start the transmitter
     sdr.tx_cyclic_buffer = True # Enable cyclic buffers
-    sdr.tx(samples) # start transmitting
+    sdr.tx(dualchtx) # start transmitting
 
     # Clear buffer just to be safe
     for i in range (0, 10):
         raw_data = sdr.rx()
 
     # Receive samples
-    rx_samples = sdr.rx()
-    print(rx_samples)
+    dualrx_samples = sdr.rx()
+    #print(rx_samples)
+    rx_samples=dualrx_samples[0] #100000 size
 
     # Stop transmitting
     sdr.tx_destroy_buffer()
@@ -283,11 +295,18 @@ def main():
     uri='ip:'+args.ip
     sdr = adi.adrv9009(uri=uri)#"ip:192.168.86.25"
 
+    #basic rx test
+    # sdr.sample_rate = int(2.5e6)
+    # sdr.rx()
 
-    sdr.sample_rate = int(2.5e6)
-    sdr.rx()
+    #rxtest(sdr)
 
-    #DDStest(sdr)
+    #txtest(sdr)
+
+    #txrxcyclic(sdr)
+
+    DDStest(sdr)
+    print("Done")
 
 
 def simulation():
@@ -297,5 +316,5 @@ def simulation():
     print('finished simulation')
 
 if __name__ == '__main__':
-    #main()
-    simulation()
+    main()
+    #simulation()
