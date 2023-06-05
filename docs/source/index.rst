@@ -25,6 +25,7 @@ Contents
    intelfpga
    intelfpgalinux
    ADI
+   SDR
    MATLAB
    test
    usage

@@ -159,15 +159,7 @@ Run the adrv9009 example under the pyadi-iio examples folder:
 Pyadi-iio examples: https://analogdevicesinc.github.io/pyadi-iio/guides/examples.html
 Direct Digital Synthesizers: https://analogdevicesinc.github.io/pyadi-iio/fpga/index.html
   * For each individual DAC channel there are two DDSs which can have a unique phase, frequency, and phase.
-  
-PySDR
-~~~~~~
-PySDR: A Guide to SDR and DSP using Python: https://pysdr.org/index.html
-PlutoSDR in Python: https://pysdr.org/content/pluto.html
-  * Requires libiio, libad9361-iio, pyadi-iio
 
-
-https://wiki.analog.com/resources/eval/user-guides/adrv9009
 
 Detailed driver for ADRV9009: https://wiki.analog.com/resources/tools-software/linux-drivers/iio-transceiver/adrv9009
 ADRV9009 hardware reference manual: https://www.analog.com/media/en/technical-documentation/user-guides/adrv9008-1-w-9008-2-w-9009-w-hardware-reference-manual-ug-1295.pdf
