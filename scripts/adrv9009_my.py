@@ -32,8 +32,6 @@
 # THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 import time
-
-import adi
 import matplotlib.pyplot as plt
 from scipy import signal
 from argparse import ArgumentParser
@@ -66,18 +64,63 @@ def spectrogram_test():
 def psd_test():
     #Power Spectral Density (PSD)
     Fs = 1e6 # lets say we sampled at 1 MHz
+    Ts = 1/Fs # sample period
     # assume x contains your array of IQ samples
-    N = 1024
-    x = x[0:N] # we will only take the FFT of the first 1024 samples
+    N = 2048 # number of samples to simulate
+
+    t = Ts*np.arange(N)
+    signal_freq=50000 #50K
+    x = np.exp(1j*2*np.pi*signal_freq*t) # simulates sinusoid at 50 KHz
+
+    #simulate the channel
+    n = (np.random.randn(N) + 1j*np.random.randn(N))/np.sqrt(2) # complex noise with unity power
+    noise_power = 2
+    r = x + n * np.sqrt(noise_power)
+
+    Nr=2048 # number of samples to receive
+    x=r[0:Nr] ## we will only take the FFT of the first Nr samples
     x = x * np.hamming(len(x)) # apply a Hamming window
     PSD = np.abs(np.fft.fft(x))**2 / (N*Fs)
     PSD_log = 10.0*np.log10(PSD)
     PSD_shifted = np.fft.fftshift(PSD_log)
 
-    center_freq = 2.4e9 # frequency we tuned our SDR to
-    f = np.arange(Fs/-2.0, Fs/2.0, Fs/N) # start, stop, step.  centered around 0 Hz
+    center_freq = 0 #2.4e9 # frequency we tuned our SDR to
+    f = np.arange(Fs/-2.0, Fs/2.0, Fs/N) # start, stop, step centered around 0 Hz
     f += center_freq # now add center frequency
+
     plt.plot(f, PSD_shifted)
+    plt.xlabel("Frequency [Hz]")
+    plt.ylabel("Magnitude [dB]")
+    plt.grid(True)
+    plt.show()
+
+def QPSKtest():
+    num_symbols = 1000
+
+    x_int = np.random.randint(0, 4, num_symbols) # 0 to 3
+    x_degrees = x_int*360/4.0 + 45 # 45, 135, 225, 315 degrees
+    x_radians = x_degrees*np.pi/180.0 # sin() and cos() takes in radians
+    x_symbols = np.cos(x_radians) + 1j*np.sin(x_radians) # this produces our QPSK complex symbols
+    fig = plt.figure()
+    plt.plot(np.real(x_symbols), np.imag(x_symbols), '.')
+    plt.grid(True)
+    plt.show()
+
+    #additive white Gaussian noise (AGWN)
+    n = (np.random.randn(num_symbols) + 1j*np.random.randn(num_symbols))/np.sqrt(2) # AWGN with unity power
+    noise_power = 0.01
+    r = x_symbols + n * np.sqrt(noise_power)
+    fig = plt.figure()
+    plt.plot(np.real(r), np.imag(r), '.')
+    plt.grid(True)
+    plt.show()
+
+    #simulating phase noise, which could result from phase jitter within the local oscillator (LO), replace the r with:
+    phase_noise = np.random.randn(len(x_symbols)) * 0.1 # adjust multiplier for "strength" of phase noise
+    r = r * np.exp(1j*phase_noise)
+    fig = plt.figure()
+    plt.plot(np.real(r), np.imag(r), '.')
+    plt.grid(True)
     plt.show()
 
 
@@ -168,7 +211,69 @@ def rxtest(sdr):
     gainlevel=sdr._get_iio_attr('voltage0','hardwaregain', False)
     print("Current gain level:", gainlevel)
 
+def txrxcyclic(sdr):
+    sample_rate = 1e6 # 1MHz
+    center_freq = 915e6 # 915MHz
+    num_samps = 100000 # number of samples per call to rx()
+    #sdr = adi.Pluto("ip:192.168.2.1")
+    sdr.sample_rate = int(sample_rate)
+
+    # Config Tx
+    sdr.tx_rf_bandwidth = int(sample_rate) # filter cutoff, just set it to the same as sample rate
+    sdr.tx_lo = int(center_freq) #sdr.trx_lo?
+    sdr.tx_hardwaregain_chan0 = -50 # Increase to increase tx power, valid range is -90 to 0 dB
+
+    # Config Rx
+    sdr.rx_lo = int(center_freq)
+    sdr.rx_rf_bandwidth = int(sample_rate)
+    sdr.rx_buffer_size = num_samps
+    sdr.gain_control_mode_chan0 = 'manual'
+    sdr.rx_hardwaregain_chan0 = 0.0 # dB, increase to increase the receive gain, but be careful not to saturate the ADC
+
+    # Create transmit waveform (QPSK, 16 samples per symbol)
+    num_symbols = 1000
+    x_int = np.random.randint(0, 4, num_symbols) # 0 to 3
+    x_degrees = x_int*360/4.0 + 45 # 45, 135, 225, 315 degrees
+    x_radians = x_degrees*np.pi/180.0 # sin() and cos() takes in radians
+    x_symbols = np.cos(x_radians) + 1j*np.sin(x_radians) # this produces our QPSK complex symbols
+    samples = np.repeat(x_symbols, 16) # 16 samples per symbol (rectangular pulses)
+    samples *= 2**14 # The PlutoSDR expects samples to be between -2^14 and +2^14, not -1 and +1 like some SDRs
+
+    # Start the transmitter
+    sdr.tx_cyclic_buffer = True # Enable cyclic buffers
+    sdr.tx(samples) # start transmitting
+
+    # Clear buffer just to be safe
+    for i in range (0, 10):
+        raw_data = sdr.rx()
+
+    # Receive samples
+    rx_samples = sdr.rx()
+    print(rx_samples)
+
+    # Stop transmitting
+    sdr.tx_destroy_buffer()
+
+    # Calculate power spectral density (frequency domain version of signal)
+    psd = np.abs(np.fft.fftshift(np.fft.fft(rx_samples)))**2
+    psd_dB = 10*np.log10(psd)
+    f = np.linspace(sample_rate/-2, sample_rate/2, len(psd))
+
+    # Plot time domain
+    plt.figure(0)
+    plt.plot(np.real(rx_samples[::100]))
+    plt.plot(np.imag(rx_samples[::100]))
+    plt.xlabel("Time")
+
+    # Plot freq domain
+    plt.figure(1)
+    plt.plot(f/1e6, psd_dB)
+    plt.xlabel("Frequency [MHz]")
+    plt.ylabel("PSD")
+    plt.show()
+
 def main():
+    import adi
     parser = ArgumentParser()
     parser.add_argument('--devicename',  type=str, default='adrv9009', help='SDR name')#
     parser.add_argument('--ip', type=str, default='192.168.86.25', help='ip address')
@@ -186,7 +291,10 @@ def main():
 
 
 def simulation():
-    spectrogram_test()
+    #spectrogram_test()
+    #psd_test()
+    QPSKtest()
+    print('finished simulation')
 
 if __name__ == '__main__':
     #main()
