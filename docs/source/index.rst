@@ -25,6 +25,7 @@ Contents
    intelfpga
    intelfpgalinux
    ADI
+   gnuradio
    SDR
    MATLAB
    test
