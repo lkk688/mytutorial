@@ -118,6 +118,40 @@ another solution: https://github.com/analogdevicesinc/gr-iio/commit/c35a071cb006
 (mycondapy310) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/gr-iio$ cd ..
 (mycondapy310) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper$ sudo ldconfig
 
+
+mygr_iio
+---------
+(mycondapy310) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper$ git clone https://github.com/lkk688/mygr-iio.git
+(mycondapy310) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/mygr-iio$ git checkout upgrade-3.8
+(mycondapy310) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/mygr-iio$ cmake .
+
+CMake Error at swig/CMakeLists.txt:36 (include):
+  include could not find requested file:
+
+    GrSwig
+
+
+CMake Error at swig/CMakeLists.txt:47 (GR_SWIG_MAKE):
+  Unknown CMake command "GR_SWIG_MAKE".
+
+
+export PYTHONPATH=/home/lkk/miniconda3/envs/mycondapy310/lib/python3.10/site-packages/
+$ gnuradio-companion
+
+AttributeError: module 'iio' has no attribute 'myadrv9009_source_f32c'
+
+ self.iio_adrv9009_source_0 = iio.adrv9009_source_f32c('ip:192.168.86.25', 2400000000, 2084000, 20000000, True, True, 32768, True, True, True, 'manual', 64, 'manual', 64, 'A_BALANCED', '', True)
+AttributeError: module 'iio' has no attribute 'adrv9009_source_f32c'
+
+AttributeError: module 'iio' has no attribute 'fmcomms2_source_f32c'
+
+Executing: /usr/bin/python3 -u /home/lkk/intelFPGA_pro/FPGADeveloper/testgnuradio.py
+
+In docker:
+export PYTHONPATH=$PYTHONPATH:/usr/lib/python3.10/site-packages
+$ nano ../bindings/python/doc/conf.py
+
+
 GNU radio 3.10 installation
 ---------------------------
 In Ubuntu22.04, install the latest version of 3.10 via apt install, ref: https://wiki.gnuradio.org/index.php/LinuxInstall
