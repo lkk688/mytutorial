@@ -6,7 +6,7 @@ In Mac with Apple silicon, if want to install Rosetta 2 manually from the comman
 
   softwareupdate --install-rosetta
 
-Install https://www.xquartz.org/releases/ for X11 window forwarding.
+
 
 Conda Installation
 ------------------
@@ -167,6 +167,16 @@ If you docker pull an image from the registry, it will again default to your nat
 
 https://www.docker.com/products/telepresence-for-docker/
 
+X11 Window forwarding from container
+------------------------------------
+Install XQuartz via https://www.xquartz.org/releases/ for X11 window forwarding. Open the XQuartz's setting, select security, select "Allow connections from network clients"
+
+ref: https://gist.github.com/sorny/969fe55d85c9b0035b0109a31cbcb088
+% xhost +localhost
+localhost being added to access control list
+% docker run -e DISPLAY=docker.for.mac.host.internal:0 -it --rm -v /Users/kaikailiu/Documents/:/Documents -v /Volumes/Samsung_T5/Datasets/:/Datasets/ --privileged --network host myubuntu22 /bin/bash
+# xeyes #test the x11 window forwarding
+
 open3d
 ------
 
@@ -200,4 +210,4 @@ Packages cannot be installed
   % conda install -c anaconda mayavi #does not work
   #python version problem python[version='>=3.8,<3.9.0a0|>=3.9,<3.10.0a0']
   % conda install -c conda-forge mayavi #works
-  (mypy310) kaikailiu@kaikais-mbp scripts % python testmayavi.py
+  (mypy310) kaikailiu@kaikais-mbp scripts % python testmayavi.py #works
