@@ -167,6 +167,11 @@ If you docker pull an image from the registry, it will again default to your nat
 
 https://www.docker.com/products/telepresence-for-docker/
 
+Commit Changes to Image:
+sudo docker ps -a #get container id
+sudo docker commit [CONTAINER_ID] [new_image_name]
+sudo docker commit e075234ea2e3 myubuntu22:test
+
 X11 Window forwarding from container
 ------------------------------------
 Install XQuartz via https://www.xquartz.org/releases/ for X11 window forwarding. Open the XQuartz's setting, select security, select "Allow connections from network clients"
