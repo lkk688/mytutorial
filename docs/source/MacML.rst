@@ -177,6 +177,19 @@ localhost being added to access control list
 % docker run -e DISPLAY=docker.for.mac.host.internal:0 -it --rm -v /Users/kaikailiu/Documents/:/Documents -v /Volumes/Samsung_T5/Datasets/:/Datasets/ --privileged --network host myubuntu22 /bin/bash
 # xeyes #test the x11 window forwarding
 
+Enter a running container:
+docker exec -it e075234ea2e3 /bin/bash
+
+ref: https://docs.docker.com/engine/reference/commandline/exec/
+
+
+FFMPEG
+------
+sudo apt install ffmpeg
+ffmpeg -version
+
+
+
 open3d
 ------
 
@@ -195,6 +208,45 @@ One possible solution: https://github.com/isl-org/open3d_downloads/releases/tag/
 (mypy310) kaikailiu@kaikais-mbp Developer % git clone https://github.com/isl-org/Open3D
 
 http://www.open3d.org/docs/release/arm.html
+
+Install open3d inside the docker container:
+root@docker-desktop:/# sudo apt-get install libgl1
+root@docker-desktop:/# pip install open3d
+
+Instal VTK:
+Download: https://vtk.org/download/ (9.2.6)
+ref: https://gitlab.kitware.com/vtk/vtk/-/blob/master/Documentation/dev/build.md#building-vtk
+sudo apt install build-essential cmake mesa-common-dev mesa-utils freeglut3-dev python3-dev python3-venv git-core ninja-build
+sudo apt install \
+cmake-curses-gui \
+ninja-build
+
+root@docker-desktop:/Documents/Developer/VTK-9.2.6/build# ccmake ..
+some entries will appear. Type c to configure, and CMake will then process the configuration files and if necessary display new options on top (for example, if you turn VTK_WRAP_PYTHON on, you will be presented with options for the location of Python executable, libraries and include paths). After re-configuration, type c again and continue this process until there are no new options. Then, you can press g to have CMake generate new makefiles and exit.
+
+root@docker-desktop:/Documents/Developer/VTK-9.2.6/build# make
+[100%] Built target DomainsChemistryOpenGL2
+[100%] Generating the wrap hierarchy for VTK::DomainsChemistryOpenGL2
+[100%] Built target vtkDomainsChemistryOpenGL2-hierarchy
+
+
+root@docker-desktop:/Documents/Developer/VTK-9.2.6/build# sudo make install
+-- Installing: /usr/local/lib/cmake/vtk-9.2/vtk-prefix.cmake
+-- Installing: /usr/local/lib/cmake/vtk-9.2/VTK-vtk-module-find-packages.cmake
+-- Installing: /usr/local/share/licenses/VTK/Copyright.txt
+
+import vtk
+ModuleNotFoundError: No module named 'vtk'
+ModuleNotFoundError: No module named 'vtkmodules'
+# export PYTHONPATH=/Documents/Developer/VTK-9.2.6/build/lib/:$PYTHONPATH
+
+https://docs.pyvista.org/version/stable/extras/building_vtk.html
+root@docker-desktop:/Documents/Developer/VTK-9.2.6/build2# cmake -GNinja       -DCMAKE_BUILD_TYPE=Release       -DVTK_BUILD_TESTING=OFF       -DVTK_BUILD_DOCUMENTATION=OFF       -DVTK_BUILD_EXAMPLES=OFF       -DVTK_DATA_EXCLUDE_FROM_ALL:BOOL=ON       -DVTK_MODULE_ENABLE_VTK_PythonInterpreter:STRING=NO       -DVTK_MODULE_ENABLE_VTK_WebCore:STRING=YES       -DVTK_MODULE_ENABLE_VTK_WebGLExporter:STRING=YES       -DVTK_MODULE_ENABLE_VTK_WebPython:STRING=YES       -DVTK_WHEEL_BUILD=ON       -DVTK_PYTHON_VERSION=3       -DVTK_WRAP_PYTHON=ON       -DVTK_OPENGL_HAS_EGL=False       -DPython3_EXECUTABLE=$PYBIN ../
+root@docker-desktop:/Documents/Developer/VTK-9.2.6/build2# ninja
+$PYBIN -m pip install wheel
+$PYBIN setup.py bdist_wheel
+$PYBIN -m pip install dist/vtk-*.whl  # optionally install it
+
 
 Packages cannot be installed
 ----------------------------
