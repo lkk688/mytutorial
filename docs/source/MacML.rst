@@ -72,6 +72,8 @@ Install in mycondapy310 (use system's python3)
   % /Users/kaikailiu/Library/Python/3.9/bin/sphinx-build -b html source build
   build succeeded
 
+conda install -c anaconda seaborn
+
 Install in mypy310 (python3 in conda): 
 
 .. code-block:: console
@@ -193,7 +195,9 @@ FFMPEG
 sudo apt install ffmpeg
 ffmpeg -version
 
-
+Download video:
+ffmpeg -i "https://akamai-mspubccdsphpprodw-uswe.streaming.media.azure.net/2632c3a9-983f-479b-acdb-b28400f37b31/ecbb8c4c-a662-45c3-9b51-5afc7132.ism/manifest(format=m3u8-cmaf)" -c copy ./dayxx.mp4
+ffmpeg -i Screencast1.webm -filter:v scale=1280:720 screencast1.mp4
 
 open3d
 ------
