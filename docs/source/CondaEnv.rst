@@ -24,6 +24,23 @@ Create a Conda virtual environment with python 3.10 (the default python version 
    (mycondapy310) lkk@lkk-intel13:~$ conda info --envs #check existing conda environment
    (mycondapy310) lkk@lkk-intel13:~$ conda deactivate #To deactivate an active environment
 
+Popular packages
+~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+   conda install -c conda-forge jupyterlab
+   $ conda install matplotlib
+   conda install -c intel scikit-learn
+   conda install scikit-learn-intelex
+   conda install numpy
+   conda install pandas
+   conda update -n base -c defaults conda
+   #https://anaconda.cloud/intel-optimized-packages
+   git clone https://github.com/lkk688/DeepDataMiningLearning.git
+   git clone https://github.com/lkk688/WaymoObjectDetection.git
+   https://github.com/lkk688/MultiModalDetector.git
+
 Install CUDA
 ~~~~~~~~~~~~~~~~~~
 There are two options to install CUDA: 1) using conda to install the cuda; 2) download cuda from nvidia, install cuda to the system.
