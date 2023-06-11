@@ -129,3 +129,37 @@ You can share your environment with someone else and allow them to quickly repro
 .. code-block:: console
 
    (mycondapy39) [010796032@cs004 ~]$ conda env export > mycondapy39_hpc2_environment.yml
+
+Screen session 
+---------------
+
+Create Persistent SSH connection via screen (install screen) if you do not want to have ssh timeout. You can create one persistent session via $screen -S main_session  (if you do not perform long lasting training, do not use the persistent session, it may cause problems)
+You can use $ screen -ls to view current screen session. If you want to reconnect to a previous screen session after ssh timeout, you can use
+
+.. code-block:: console
+
+   #'mydetector3d/tools/cfgs/nuscenes_models/bevfusion.yaml'
+   #ckpt '/data/cmpe249-fa22/Mymodels/nuscenes_models/bevfusion/0522/ckpt/latest_model.pth'
+   #batch size =4, gpu1, start from epoch
+   [010796032@cs001 3DDepth]$ screen -ls
+   There is a screen on:
+         45460.main_session      (Attached)
+   1 Socket in /var/run/screen/S-010796032.
+
+   (mycondapy39) [010796032@cs001 3DDepth]$ python ./mydetector3d/tools/mytrain.py
+
+   #'mydetector3d/tools/cfgs/nuscenes_models/cbgs_pp_multihead.yaml'
+   #'/data/cmpe249-fa22/Mymodels/nuscenes_models/cbgs_pp_multihead/0522/ckpt/latest_model.pth'
+   #batchsize=6, gpu2 restart from epoch 99
+   $ screen -S session2
+   (mycondapy39) [010796032@cs001 3DDepth]$ screen -ls
+   There are screens on:
+         51524.session2  (Attached)
+         45460.main_session      (Attached)
+   2 Sockets in /var/run/screen/S-010796032.
+   (mycondapy39) [010796032@cs001 3DDepth]$ python ./mydetector3d/tools/mytrain.py
+
+
+screen –r session_name (the name you get from screen -ls)
+screen -S session_name -X quit to terminate a detached session (Ctrl+a d to detach a session)
+You can use Control+A, then ESC to enable the scroll up. Move up/down with the arrow keys ( ↑ and ↓ ). When you're done, hit q or Escape to get back to the end of the scroll buffer.
