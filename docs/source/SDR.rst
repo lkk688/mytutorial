@@ -5,43 +5,48 @@ USRP
 -----
 USRP UHD Driver: https://github.com/EttusResearch/uhd, and build guide: https://files.ettus.com/manual/page_build_guide.html
 
-$ sudo apt-get install libuhd-dev uhd-host
-$ dpkg -s libboost-dev | grep 'Version'
-Version: 1.74.0.3ubuntu7
-$ gcc --version
-gcc (Ubuntu 9.5.0-1ubuntu1~22.04) 9.5.0
-$ sudo apt-get install -y libusb-1.0-0
-(mycondapy310) lkk@lkk-intel12:~$ pip3 install mako
-$ sudo apt-get install autoconf automake build-essential ccache cmake cpufrequtils doxygen ethtool \
-g++ git inetutils-tools libboost-all-dev libncurses5 libncurses5-dev libusb-1.0-0 libusb-1.0-0-dev \
-libusb-dev python3-dev python3-mako python3-numpy python3-requests python3-scipy python3-setuptools \
-python3-ruamel.yaml 
-(mycondapy310) lkk@lkk-intel12:~/Developer$ git clone https://github.com/EttusResearch/uhd.git
-(mycondapy310) lkk@lkk-intel12:~/Developer$ cd uhd/
-(mycondapy310) lkk@lkk-intel12:~/Developer/uhd$ ls
-CHANGELOG  CONTRIBUTING.md  fpga  images      mpm        tools
-CODING.md  firmware         host  LICENSE.md  README.md
-(mycondapy310) lkk@lkk-intel12:~/Developer/uhd$ cd host/
-(mycondapy310) lkk@lkk-intel12:~/Developer/uhd/host$ ls
-cmake           docs      include  LICENSE  README.md  uhd.pc.in
-CMakeLists.txt  examples  lib      python   tests      utils
-(mycondapy310) lkk@lkk-intel12:~/Developer/uhd/host$ mkdir build
-(mycondapy310) lkk@lkk-intel12:~/Developer/uhd/host$ cd build/
-(mycondapy310) lkk@lkk-intel12:~/Developer/uhd/host/build$ cmake -DCMAKE_INSTALL_PREFIX=/opt/uhd ../
-make
-make test # This step is optional
-sudo make install
-(mycondapy310) lkk@lkk-intel12:~/Developer/uhd/host/build$ ls /opt/uhd/
-bin  include  lib  share
+.. code-block:: console
 
+  $ sudo apt-get install libuhd-dev uhd-host
+  $ dpkg -s libboost-dev | grep 'Version'
+  Version: 1.74.0.3ubuntu7
+  $ gcc --version
+  gcc (Ubuntu 9.5.0-1ubuntu1~22.04) 9.5.0
+  $ sudo apt-get install -y libusb-1.0-0
+  (mycondapy310) lkk@lkk-intel12:~$ pip3 install mako
+  $ sudo apt-get install autoconf automake build-essential ccache cmake cpufrequtils doxygen ethtool \
+  g++ git inetutils-tools libboost-all-dev libncurses5 libncurses5-dev libusb-1.0-0 libusb-1.0-0-dev \
+  libusb-dev python3-dev python3-mako python3-numpy python3-requests python3-scipy python3-setuptools \
+  python3-ruamel.yaml 
+  (mycondapy310) lkk@lkk-intel12:~/Developer$ git clone https://github.com/EttusResearch/uhd.git
+  (mycondapy310) lkk@lkk-intel12:~/Developer$ cd uhd/
+  (mycondapy310) lkk@lkk-intel12:~/Developer/uhd$ ls
+  CHANGELOG  CONTRIBUTING.md  fpga  images      mpm        tools
+  CODING.md  firmware         host  LICENSE.md  README.md
+  (mycondapy310) lkk@lkk-intel12:~/Developer/uhd$ cd host/
+  (mycondapy310) lkk@lkk-intel12:~/Developer/uhd/host$ ls
+  cmake           docs      include  LICENSE  README.md  uhd.pc.in
+  CMakeLists.txt  examples  lib      python   tests      utils
+  (mycondapy310) lkk@lkk-intel12:~/Developer/uhd/host$ mkdir build
+  (mycondapy310) lkk@lkk-intel12:~/Developer/uhd/host$ cd build/
+  (mycondapy310) lkk@lkk-intel12:~/Developer/uhd/host/build$ cmake -DCMAKE_INSTALL_PREFIX=/opt/uhd ../
+  make
+  make test # This step is optional
+  sudo make install
+  (mycondapy310) lkk@lkk-intel12:~/Developer/uhd/host/build$ ls /opt/uhd/
+  bin  include  lib  share
+
+USRP UHD Driver build success.
 
 PySDR
 ------
 PySDR: A Guide to SDR and DSP using Python: https://pysdr.org/index.html
+
 PlutoSDR in Python: https://pysdr.org/content/pluto.html
   * Requires libiio, libad9361-iio, pyadi-iio
 
 Pyadi-iio examples: https://analogdevicesinc.github.io/pyadi-iio/guides/examples.html
+
 Direct Digital Synthesizers: https://analogdevicesinc.github.io/pyadi-iio/fpga/index.html
   * For each individual DAC channel there are two DDSs which can have a unique phase, frequency, and phase.
 
@@ -52,104 +57,117 @@ https://wiki.analog.com/resources/eval/user-guides/adrv9009
 
 GNU radio new try 
 ------------------
-pip install sphinx-rtd-theme
 
-git clone https://github.com/analogdevicesinc/libad9361-iio.git
-cd libad9361-iio
-mkdir build
-cd build
-cmake .. -DPYTHON_BINDINGS=ON
-make 
-Theme error:
-no theme named 'furo' found (missing theme.conf?)
+Build the libad9361-iio
 
-pip install sphinx-rtd-theme
-nano ../bindings/python/doc/conf.py
-html_theme = "classic"
+.. code-block:: console
 
-build succeeded, 11 warnings.
+  git clone https://github.com/analogdevicesinc/libad9361-iio.git
+  cd libad9361-iio
+  mkdir build
+  cd build
+  cmake .. -DPYTHON_BINDINGS=ON
+  make 
+  Theme error:
+  no theme named 'furo' found (missing theme.conf?)
 
-The HTML pages are in html/v0.2/python.
-[100%] Built target libad9361-py-py
+Solve the sphinx error by changing the sphinx theme
+
+.. code-block:: console
+
+  pip install sphinx-rtd-theme
+  nano ../bindings/python/doc/conf.py
+  #change the html_theme = "classic"
+
+  build succeeded, 11 warnings.
+
+  The HTML pages are in html/v0.2/python.
+  [100%] Built target libad9361-py-py
+
+  sudo make install
+  cd ../..
+
+Build the gr iio:
+
+.. code-block:: console
+
+  git clone https://github.com/analogdevicesinc/gr-iio.git
+  cd gr-iio
+  cmake .
+  make 
+
+  /home/lkk/intelFPGA_pro/FPGADeveloper/gr-iio/lib/iio_math_impl.cc:30:10: fatal error: gnuradio/analog/sig_source_f.h: No such file or directory
+    30 | #include <gnuradio/analog/sig_source_f.h>
+
+  (mycondapy310) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/gr-iio$ git checkout upgrade-3.8
+  Switched to branch 'upgrade-3.8'
+  Your branch is up to date with 'origin/upgrade-3.8'.
+  (mycondapy310) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/gr-iio$ cmake .
+
+  /home/lkk/intelFPGA_pro/FPGADeveloper/gr-iio/lib/attr_sink_impl.cc:92:92: error: ‘_1’ was not declared in this scope
+
+  in home/lkk/intelFPGA_pro/FPGADeveloper/gr-iio/lib/attr_sink_impl.cc:, add "#include <boost/bind.hpp>"
+
+  another solution: https://github.com/analogdevicesinc/gr-iio/commit/c35a071cb006d5bf1a0416422113b9a45ec96daa
+
+  (mycondapy310) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/gr-iio$ make
+  [100%] Linking CXX shared module _iio_pluto_sink_swig.so
+  [100%] Built target iio_pluto_sink_swig
 
 
-sudo make install
-cd ../..
+  (mycondapy310) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/gr-iio$ sudo make install
 
-git clone https://github.com/analogdevicesinc/gr-iio.git
-cd gr-iio
-cmake .
-make 
+  -- Installing: /usr/local/share/gnuradio/grc/blocks/iio.tree.yml
+  -- Installing: /usr/local/share/gnuradio/grc/blocks/iio_attr_sink.block.yml
+  -- Installing: /usr/local/share/gnuradio/grc/blocks/iio_attr_source.block.yml
+  -- Installing: /usr/local/share/gnuradio/grc/blocks/iio_attr_updater.block.yml
+  -- Installing: /usr/local/share/gnuradio/grc/blocks/iio_device_sink.block.yml
+  -- Installing: /usr/local/share/gnuradio/grc/blocks/iio_device_source.block.yml
+  -- Installing: /usr/local/share/gnuradio/grc/blocks/iio_fmcomms2_sink.block.yml
+  -- Installing: /usr/local/share/gnuradio/grc/blocks/iio_fmcomms2_source.block.yml
+  -- Installing: /usr/local/share/gnuradio/grc/blocks/iio_fmcomms5_sink.block.yml
+  -- Installing: /usr/local/share/gnuradio/grc/blocks/iio_fmcomms5_source.block.yml
+  -- Installing: /usr/local/share/gnuradio/grc/blocks/iio_pluto_sink.block.yml
+  -- Installing: /usr/local/share/gnuradio/grc/blocks/iio_pluto_source.block.yml
 
-/home/lkk/intelFPGA_pro/FPGADeveloper/gr-iio/lib/iio_math_impl.cc:30:10: fatal error: gnuradio/analog/sig_source_f.h: No such file or directory
-   30 | #include <gnuradio/analog/sig_source_f.h>
-
-(mycondapy310) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/gr-iio$ git checkout upgrade-3.8
-Switched to branch 'upgrade-3.8'
-Your branch is up to date with 'origin/upgrade-3.8'.
-(mycondapy310) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/gr-iio$ cmake .
-
-/home/lkk/intelFPGA_pro/FPGADeveloper/gr-iio/lib/attr_sink_impl.cc:92:92: error: ‘_1’ was not declared in this scope
-
-in home/lkk/intelFPGA_pro/FPGADeveloper/gr-iio/lib/attr_sink_impl.cc:, add "#include <boost/bind.hpp>"
-
-another solution: https://github.com/analogdevicesinc/gr-iio/commit/c35a071cb006d5bf1a0416422113b9a45ec96daa
-
-(mycondapy310) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/gr-iio$ make
-[100%] Linking CXX shared module _iio_pluto_sink_swig.so
-[100%] Built target iio_pluto_sink_swig
-
-
-(mycondapy310) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/gr-iio$ sudo make install
-
--- Installing: /usr/local/share/gnuradio/grc/blocks/iio.tree.yml
--- Installing: /usr/local/share/gnuradio/grc/blocks/iio_attr_sink.block.yml
--- Installing: /usr/local/share/gnuradio/grc/blocks/iio_attr_source.block.yml
--- Installing: /usr/local/share/gnuradio/grc/blocks/iio_attr_updater.block.yml
--- Installing: /usr/local/share/gnuradio/grc/blocks/iio_device_sink.block.yml
--- Installing: /usr/local/share/gnuradio/grc/blocks/iio_device_source.block.yml
--- Installing: /usr/local/share/gnuradio/grc/blocks/iio_fmcomms2_sink.block.yml
--- Installing: /usr/local/share/gnuradio/grc/blocks/iio_fmcomms2_source.block.yml
--- Installing: /usr/local/share/gnuradio/grc/blocks/iio_fmcomms5_sink.block.yml
--- Installing: /usr/local/share/gnuradio/grc/blocks/iio_fmcomms5_source.block.yml
--- Installing: /usr/local/share/gnuradio/grc/blocks/iio_pluto_sink.block.yml
--- Installing: /usr/local/share/gnuradio/grc/blocks/iio_pluto_source.block.yml
-
-(mycondapy310) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/gr-iio$ cd ..
-(mycondapy310) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper$ sudo ldconfig
+  (mycondapy310) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/gr-iio$ cd ..
+  (mycondapy310) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper$ sudo ldconfig
 
 
 mygr_iio
 ---------
-(mycondapy310) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper$ git clone https://github.com/lkk688/mygr-iio.git
-(mycondapy310) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/mygr-iio$ git checkout upgrade-3.8
-(mycondapy310) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/mygr-iio$ cmake .
+Build the forked mygr-iio project:
 
-CMake Error at swig/CMakeLists.txt:36 (include):
-  include could not find requested file:
+.. code-block:: console
 
-    GrSwig
+  (mycondapy310) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper$ git clone https://github.com/lkk688/mygr-iio.git
+  (mycondapy310) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/mygr-iio$ git checkout upgrade-3.8
+  (mycondapy310) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper/mygr-iio$ cmake .
 
+  CMake Error at swig/CMakeLists.txt:36 (include):
+    include could not find requested file:
+      GrSwig
+  CMake Error at swig/CMakeLists.txt:47 (GR_SWIG_MAKE):
+    Unknown CMake command "GR_SWIG_MAKE".
 
-CMake Error at swig/CMakeLists.txt:47 (GR_SWIG_MAKE):
-  Unknown CMake command "GR_SWIG_MAKE".
+  export PYTHONPATH=/home/lkk/miniconda3/envs/mycondapy310/lib/python3.10/site-packages/
+  $ gnuradio-companion
 
+  AttributeError: module 'iio' has no attribute 'myadrv9009_source_f32c'
 
-export PYTHONPATH=/home/lkk/miniconda3/envs/mycondapy310/lib/python3.10/site-packages/
-$ gnuradio-companion
+  self.iio_adrv9009_source_0 = iio.adrv9009_source_f32c('ip:192.168.86.25', 2400000000, 2084000, 20000000, True, True, 32768, True, True, True, 'manual', 64, 'manual', 64, 'A_BALANCED', '', True)
+  AttributeError: module 'iio' has no attribute 'adrv9009_source_f32c'
 
-AttributeError: module 'iio' has no attribute 'myadrv9009_source_f32c'
-
- self.iio_adrv9009_source_0 = iio.adrv9009_source_f32c('ip:192.168.86.25', 2400000000, 2084000, 20000000, True, True, 32768, True, True, True, 'manual', 64, 'manual', 64, 'A_BALANCED', '', True)
-AttributeError: module 'iio' has no attribute 'adrv9009_source_f32c'
-
-AttributeError: module 'iio' has no attribute 'fmcomms2_source_f32c'
+  AttributeError: module 'iio' has no attribute 'fmcomms2_source_f32c'
 
 Executing: /usr/bin/python3 -u /home/lkk/intelFPGA_pro/FPGADeveloper/testgnuradio.py
 
 In docker:
-export PYTHONPATH=$PYTHONPATH:/usr/lib/python3.10/site-packages
-$ nano ../bindings/python/doc/conf.py
+
+.. code-block:: console
+
+  export PYTHONPATH=$PYTHONPATH:/usr/lib/python3.10/site-packages
+  $ nano ../bindings/python/doc/conf.py
 
 
 GNU radio 3.10 installation

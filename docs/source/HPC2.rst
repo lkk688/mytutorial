@@ -4,7 +4,7 @@ HPC2
 .. _hpc2:
 
 Load software module and request GPU node
-------------
+------------------------------------------
 
 Check available software and load the required modules in the headnode
 
@@ -39,7 +39,7 @@ The GPU node does not have internet access, if you need to access the Jupyter we
 After jupyter lab is started, you can copy paste the URL shown in the terminal into your local browser to access the Jupyter lab.
 
 Conda Environment Setup Tutorial
-------------
+---------------------------------
 
 You can install miniconda via bash or module load the available 'anaconda/3.9'. 
 

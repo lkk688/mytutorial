@@ -17,6 +17,7 @@ Contents
    CondaEnv
    HPC2
    WSL2
+   linux
    MacML
    jetson
    mydetector3d
@@ -25,7 +26,6 @@ Contents
    intelfpga
    intelfpgalinux
    ADI
-   gnuradio
    SDR
    MATLAB
    test

@@ -123,23 +123,26 @@ In function setupInit(obj): obj.setDeviceAttributeRAW('calibrate_frm_en',num2str
 
 Building the Toolbox Manually: https://wiki.analog.com/resources/tools-software/transceiver-toolbox
 
-https://github.com/bpkempke/adi-linux/blob/master/drivers/iio/adc/adrv9009.c
-static IIO_DEVICE_ATTR(calibrate_frm_en, S_IRUGO | S_IWUSR,
-		       adrv9009_phy_show,
-		       adrv9009_phy_store,
-		       ADRV9009_INIT_CAL | (TAL_FHM_CALS << 8));
-static struct attribute *adrv9009_phy_attributes[] = {
-	&iio_dev_attr_ensm_mode.dev_attr.attr,
-	&iio_dev_attr_ensm_mode_available.dev_attr.attr,
-	&iio_dev_attr_calibrate.dev_attr.attr,
-	&iio_dev_attr_calibrate_rx_qec_en.dev_attr.attr,
-	&iio_dev_attr_calibrate_tx_qec_en.dev_attr.attr,
-	&iio_dev_attr_calibrate_tx_lol_en.dev_attr.attr,
-	&iio_dev_attr_calibrate_tx_lol_ext_en.dev_attr.attr,
-	&iio_dev_attr_calibrate_rx_phase_correction_en.dev_attr.attr,
-	&iio_dev_attr_calibrate_frm_en.dev_attr.attr,
-	NULL,
-};
+Device attributes related code in https://github.com/bpkempke/adi-linux/blob/master/drivers/iio/adc/adrv9009.c
+
+.. code-block:: console 
+
+    static IIO_DEVICE_ATTR(calibrate_frm_en, S_IRUGO | S_IWUSR,
+                adrv9009_phy_show,
+                adrv9009_phy_store,
+                ADRV9009_INIT_CAL | (TAL_FHM_CALS << 8));
+    static struct attribute *adrv9009_phy_attributes[] = {
+        &iio_dev_attr_ensm_mode.dev_attr.attr,
+        &iio_dev_attr_ensm_mode_available.dev_attr.attr,
+        &iio_dev_attr_calibrate.dev_attr.attr,
+        &iio_dev_attr_calibrate_rx_qec_en.dev_attr.attr,
+        &iio_dev_attr_calibrate_tx_qec_en.dev_attr.attr,
+        &iio_dev_attr_calibrate_tx_lol_en.dev_attr.attr,
+        &iio_dev_attr_calibrate_tx_lol_ext_en.dev_attr.attr,
+        &iio_dev_attr_calibrate_rx_phase_correction_en.dev_attr.attr,
+        &iio_dev_attr_calibrate_frm_en.dev_attr.attr,
+        NULL,
+    };
 
 Design Examples in MATLAB
 -------------------------

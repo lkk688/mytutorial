@@ -159,7 +159,7 @@ Run the adrv9009 example under the pyadi-iio examples folder:
 
 Pyadi-iio examples: https://analogdevicesinc.github.io/pyadi-iio/guides/examples.html
 Direct Digital Synthesizers: https://analogdevicesinc.github.io/pyadi-iio/fpga/index.html
-  * For each individual DAC channel there are two DDSs which can have a unique phase, frequency, and phase.
+For each individual DAC channel there are two DDSs which can have a unique phase, frequency, and phase.
 
 
 Detailed driver for ADRV9009: https://wiki.analog.com/resources/tools-software/linux-drivers/iio-transceiver/adrv9009
