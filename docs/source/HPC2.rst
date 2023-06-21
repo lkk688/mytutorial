@@ -159,7 +159,11 @@ You can use $ screen -ls to view current screen session. If you want to reconnec
    2 Sockets in /var/run/screen/S-010796032.
    (mycondapy39) [010796032@cs001 3DDepth]$ python ./mydetector3d/tools/mytrain.py
 
+Reconnect to a previous session:
 
-screen –r session_name (the name you get from screen -ls)
+.. code-block:: console
+
+   $ screen -r session_name #(the name you get from screen -ls)
+
 screen -S session_name -X quit to terminate a detached session (Ctrl+a d to detach a session)
 You can use Control+A, then ESC to enable the scroll up. Move up/down with the arrow keys ( ↑ and ↓ ). When you're done, hit q or Escape to get back to the end of the scroll buffer.

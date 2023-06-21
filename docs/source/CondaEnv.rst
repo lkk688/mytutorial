@@ -224,3 +224,10 @@ After the tar file is downloaded, untar the file, setup the TensorRT path, and i
    
 Check the TensorRT sample code from [TensorRTSample](https://docs.nvidia.com/deeplearning/tensorrt/sample-support-guide/index.html#samples)
 
+huggingface Tutorial
+--------------------
+https://github.com/huggingface/transformers
+
+https://huggingface.co/docs/transformers/index
+
+https://huggingface.co/learn/nlp-course/chapter1/2?fw=pt

@@ -72,7 +72,12 @@ Install in mycondapy310 (use system's python3)
   % /Users/kaikailiu/Library/Python/3.9/bin/sphinx-build -b html source build
   build succeeded
 
-conda install -c anaconda seaborn
+Install Additional Python packages
+----------------------------------
+
+.. code-block:: console
+
+  conda install -c anaconda seaborn
 
 Install in mypy310 (python3 in conda): 
 
@@ -103,6 +108,21 @@ Install pytorch 2.0 and perform pytorch test
 
   (mypy310) kaikailiu@kaikais-mbp docs % conda install pytorch::pytorch torchvision torchaudio -c pytorch
   (mypy310) kaikailiu@kaikais-mbp mytutorial % python ./scripts/testmacpytorch.py 
+
+Install DeepDataMiningLearning on Mac
+-------------------------------------
+
+.. code-block:: console
+
+  kaikailiu@Kaikais-MacBook-Pro MyRepo % git clone https://github.com/lkk688/DeepDataMiningLearning.git
+
+huggingface Tutorial
+--------------------
+https://github.com/huggingface/transformers
+
+https://huggingface.co/docs/transformers/index
+
+https://huggingface.co/learn/nlp-course/chapter1/2?fw=pt
 
 Streamlit
 ---------
