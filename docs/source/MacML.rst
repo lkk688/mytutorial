@@ -199,25 +199,43 @@ X11 Window forwarding from container
 Install XQuartz via https://www.xquartz.org/releases/ for X11 window forwarding. Open the XQuartz's setting, select security, select "Allow connections from network clients"
 
 ref: https://gist.github.com/sorny/969fe55d85c9b0035b0109a31cbcb088
-% xhost +localhost
-localhost being added to access control list
-% docker run -e DISPLAY=docker.for.mac.host.internal:0 -it --rm -v /Users/kaikailiu/Documents/:/Documents -v /Volumes/Samsung_T5/Datasets/:/Datasets/ --privileged --network host myubuntu22 /bin/bash
-# xeyes #test the x11 window forwarding
+
+.. code-block:: console
+
+  % xhost +localhost
+  localhost being added to access control list
+  % docker run -e DISPLAY=docker.for.mac.host.internal:0 -it --rm -v /Users/kaikailiu/Documents/:/Documents -v /Volumes/Samsung_T5/Datasets/:/Datasets/ --privileged --network host myubuntu22 /bin/bash
+  # xeyes #test the x11 window forwarding
 
 Enter a running container:
-docker exec -it e075234ea2e3 /bin/bash
+
+.. code-block:: console
+
+  docker exec -it e075234ea2e3 /bin/bash
 
 ref: https://docs.docker.com/engine/reference/commandline/exec/
 
+Install other packages
+
+.. code-block:: console
+
+  root@docker-desktop:/# sudo apt-get install -y iputils-ping
+  root@docker-desktop:/# sudo apt-get install -y nano
 
 FFMPEG
 ------
-sudo apt install ffmpeg
-ffmpeg -version
+
+.. code-block:: console
+
+  sudo apt install ffmpeg
+  ffmpeg -version
 
 Download video:
-ffmpeg -i "https://akamai-mspubccdsphpprodw-uswe.streaming.media.azure.net/2632c3a9-983f-479b-acdb-b28400f37b31/ecbb8c4c-a662-45c3-9b51-5afc7132.ism/manifest(format=m3u8-cmaf)" -c copy ./dayxx.mp4
-ffmpeg -i Screencast1.webm -filter:v scale=1280:720 screencast1.mp4
+
+.. code-block:: console
+
+  ffmpeg -i "https://akamai-mspubccdsphpprodw-uswe.streaming.media.azure.net/2632c3a9-983f-479b-acdb-b28400f37b31/ecbb8c4c-a662-45c3-9b51-5afc7132.ism/manifest(format=m3u8-cmaf)" -c copy ./dayxx.mp4
+  ffmpeg -i Screencast1.webm -filter:v scale=1280:720 screencast1.mp4
 
 open3d
 ------
