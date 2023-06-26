@@ -62,14 +62,83 @@ Untar the full nuScenes dataset in HPC:
     sweeps/RADAR_FRONT/n008-2018-08-01-15-52-19-0400__RADAR_FRONT__1533153432872720.pcd
     .v1.0-trainval02_blobs.txt
 
-Put all folders inside the "v1.0-trainval", and run **create_nuscenes_infos** in "/home/010796032/3DObject/3DDepth/mydetector3d/datasets/nuscenes/nuscenes_dataset.py" to generate info.pkl files
+Put all folders inside the "v1.0-trainval"
 
 .. code-block:: console
 
-    (mycondapy39) [010796032@cs001 nuScenes]$ ls v1.0-trainval
+    nuScenes/v1.0-trainval$ ls
+  attribute.json          category.json  instance.json  map.json                sample_data.json  scene.json   visibility.json
+  calibrated_sensor.json  ego_pose.json  log.json       sample_annotation.json  sample.json       sensor.json
+    nuScenes/v1.0-trainval$ mkdir v1.0-trainval
+    nuScenes/v1.0-trainval$ mv *.json ./v1.0-trainval/
+    nuScenes/v1.0-trainval$ mv ../maps .
+    nuScenes/v1.0-trainval$ mv ../samples/ .
+    nuScenes/v1.0-trainval$ mv ../sweeps/ .
+    nuScenes/v1.0-trainval$ ls
+    maps  samples  sweeps  v1.0-trainval
+    
+run **create_nuscenes_infos** in "/home/010796032/3DObject/3DDepth/mydetector3d/datasets/nuscenes/nuscenes_dataset.py" to generate info.pkl files
+
+.. code-block:: console
+  total scene num: 850
+  exist scene num: 850
+  v1.0-trainval: train scene(700), val scene(150)
+  nuscenes_utils.fill_trainval_infos #for all samples, train_nusc_infos.append(info)
+      info = {
+                'lidar_path': Path(ref_lidar_path).relative_to(data_path).__str__(),
+                'cam_front_path': Path(ref_cam_path).relative_to(data_path).__str__(),
+                'cam_intrinsic': ref_cam_intrinsic,
+                'token': sample['token'],
+                'sweeps': [],
+                'ref_from_car': ref_from_car,
+                'car_from_global': car_from_global,
+                'timestamp': ref_time,
+            }
+      camera_types = [
+                    "CAM_FRONT",
+                    "CAM_FRONT_RIGHT",
+                    "CAM_FRONT_LEFT",
+                    "CAM_BACK",
+                    "CAM_BACK_LEFT",
+                    "CAM_BACK_RIGHT",
+                ]
+      for cam in camera_types:
+        info["cams"].update({cam: cam_info})
+      info['sweeps'] = sweeps
+      gt_boxes = np.concatenate([locs, dims, rots, velocity[:, :2]], axis=1) #dims is dxdydz (lwh)
+      info['gt_boxes'] = gt_boxes[mask, :]
+      info['gt_boxes_velocity'] = velocity[mask, :]
+      info['gt_names'] = np.array([map_name_from_general_to_detection[name] for name in names])[mask]
+      info['gt_boxes_token'] = tokens[mask]
+      info['num_lidar_pts'] = num_lidar_pts[mask]
+      info['num_radar_pts'] = num_radar_pts[mask]
+      train_nusc_infos.append(info)
+
+  train sample: 28130, val sample: 6019
+  pickle.dump(train_nusc_infos, f)
+  pickle.dump(val_nusc_infos, f)
+  (mycondapy39) [010796032@cs001 nuScenes]$ ls v1.0-trainval
     maps  nuscenes_infos_10sweeps_train.pkl  nuscenes_infos_10sweeps_val.pkl  samples  sweeps  v1.0-trainval
 
 Run "create_groundtruth" in "nuscenes_dataset.py" to generate groundtruth folder:
+
+.. code-block:: console
+
+  nuscenes_dataset = NuScenesDataset
+    include_nuscenes_data #load nuscenes_infos_10sweeps_train.pkl
+      self.infos.extend(nuscenes_infos)
+    Total samples for NuScenes dataset: 28130
+  nuscenes_dataset.create_groundtruth_database
+    database_save_path=gt_database_{max_sweeps}sweeps_withvelo
+    db_info_save_path=f'nuscenes_dbinfos_{max_sweeps}sweeps_withvelo.pkl'
+    for each info
+      points (259765, 5) last column is time
+      gt_boxes (10, 9)
+      gt_names (10,)
+      save relative gt points as 0_traffic_cone_0.bin (sample_idx, gt_names[i], i)
+      db_info = {'name': gt_names[i], 'path': db_path, 'image_idx': sample_idx, 'gt_idx': i,
+                               'box3d_lidar': gt_boxes[i], 'num_points_in_gt': gt_points.shape[0]}
+      save db_info to all_db_infos
 
 .. code-block:: console
 
@@ -113,11 +182,42 @@ Each dbinfo is
 
 After untar, "samples" folder is created for sensor data for keyframes (annotated images), "sweeps" folder is created for sensor data for intermediate frames (unannotated images), .v1.0-trainvalxx_blobs.txt (01-10) files are JSON tables that include all the meta data and annotation. 
 
+Nuscenes Datasets
+-----------------
+Based on code "mydetector3d/datasets/nuscenes/nuscenes_dataset.py", run test_dataset
+
+.. code-block:: console
+
+  (mycondapy39) [010796032@cs002 3DDepth]$ python mydetector3d/datasets/nuscenes/nuscenes_dataset.py --func="test_dataset"
+  2023-06-24 08:40:58,003   INFO  Loading NuScenes dataset
+  2023-06-24 08:41:01,748   INFO  Total samples for NuScenes dataset: 28130
+  2023-06-24 08:41:02,045   INFO  Total samples after balanced resampling: 123580
+  Dataset infos len: 123580
+
+
 Training
 ---------------------
 Starting the training of two models in HPC2 cs001 GPU2 and GPU3:
-  * Model1: 'mydetector3d/tools/cfgs/nuscenes_models/bevfusion.yaml'
-  * Model2: 'mydetector3d/tools/cfgs/nuscenes_models/cbgs_pp_multihead.yaml'
+
+Model1: 'mydetector3d/tools/cfgs/nuscenes_models/bevfusion.yaml'
+  * Trained model in '/data/cmpe249-fa22/Mymodels/nuscenes_models/bevfusion/0522/ckpt/checkpoint_epoch_56.pth'
+
+Model2: 'mydetector3d/tools/cfgs/nuscenes_models/cbgs_pp_multihead.yaml'.
+  * Trained model in '/data/cmpe249-fa22/Mymodels/nuscenes_models/cbgs_pp_multihead/0522/ckpt/checkpoint_epoch_128.pth'
+
+.. code-block:: console
+
+  (mycondapy39) [010796032@cs002 3DDepth]$ python mydetector3d/tools/myevaluatev2.py
+  2023-06-24 01:53:41,721   INFO  Loading NuScenes dataset
+  2023-06-24 01:53:42,790   INFO  Total samples for NuScenes dataset: 6019
+  recall_roi_0.3: 0.000000
+  recall_rcnn_0.3: 0.661513
+  recall_roi_0.5: 0.000000
+  recall_rcnn_0.5: 0.429482
+  recall_roi_0.7: 0.000000
+  recall_rcnn_0.7: 0.182539
+  Average predicted number of objects(6019 samples): 126.934
+  Finished detection: {'recall/roi_0.3': 0.0, 'recall/rcnn_0.3': 0.6615132459191865, 'recall/roi_0.5': 0.0, 'recall/rcnn_0.5': 0.4294822049772545, 'recall/roi_0.7': 0.0, 'recall/rcnn_0.7': 0.18253947016323255, 'infer_time': 171.54541744346238, 'total_pred_objects': 764018, 'total_annos': 6019}
 
 BEVFusion
 ----------

@@ -95,6 +95,7 @@ Install other libraries
    pip install onnx_graphsurgeon --index-url https://pypi.ngc.nvidia.com
    pip install waymo-open-dataset-tf-2-6-0
    pip install --upgrade protobuf==3.20.0 #waymo-open-dataset does not support higher version of protobuf
+   pip install nuscenes-devkit
 
 If you want to install Numba, it conflicts with latest version of numpy (https://numba.readthedocs.io/en/stable/user/installing.html), you can uninstall numpy and install the 1.23.5 version (not too low, otherwise the SharedArray and Tensorflow will show error)
 

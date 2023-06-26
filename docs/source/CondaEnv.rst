@@ -156,6 +156,7 @@ Install other required libraries
    pip install -U albumentations
    pip install spconv-cu118 #check installation via import spconv
    pip install SharedArray
+   pip install nuscenes-devkit
 
 After SharedArray, test import SharedArray in python may show error of "RuntimeError: module compiled against API version 0x10 but this version of numpy is 0xe", check the current version of numpy is 1.21.5. The solution is to upgrade the numpy version, but the highest numpy version supported by numba is 1.23.5, thus we upgrade numpy
 
