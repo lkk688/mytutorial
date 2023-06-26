@@ -193,6 +193,22 @@ Based on code "mydetector3d/datasets/nuscenes/nuscenes_dataset.py", run test_dat
   2023-06-24 08:41:01,748   INFO  Total samples for NuScenes dataset: 28130
   2023-06-24 08:41:02,045   INFO  Total samples after balanced resampling: 123580
   Dataset infos len: 123580
+  Info keys:
+    lidar_path
+    cam_front_path
+    cam_intrinsic
+    token
+    sweeps
+    ref_from_car
+    car_from_global
+    timestamp
+    cams
+    gt_boxes
+    gt_boxes_velocity
+    gt_names
+    gt_boxes_token
+    num_lidar_pts
+    num_radar_pts
 
 
 Training
@@ -218,6 +234,31 @@ Model2: 'mydetector3d/tools/cfgs/nuscenes_models/cbgs_pp_multihead.yaml'.
   recall_rcnn_0.7: 0.182539
   Average predicted number of objects(6019 samples): 126.934
   Finished detection: {'recall/roi_0.3': 0.0, 'recall/rcnn_0.3': 0.6615132459191865, 'recall/roi_0.5': 0.0, 'recall/rcnn_0.5': 0.4294822049772545, 'recall/roi_0.7': 0.0, 'recall/rcnn_0.7': 0.18253947016323255, 'infer_time': 171.54541744346238, 'total_pred_objects': 764018, 'total_annos': 6019}
+
+  (mycondapy39) [010796032@cs002 3DDepth]$ python mydetector3d/tools/myevaluatev2_nuscenes.py 
+  Saving metrics to: /data/cmpe249-fa22/Mymodels/eval/nuscenes_models_cbgs_pp_multihead_0624/txtresults
+  mAP: 0.4103
+  mATE: 0.3363
+  mASE: 0.2597
+  mAOE: 1.3475
+  mAVE: 0.3272
+  mAAE: 0.1999
+  NDS: 0.4929
+  Eval time: 71.6s
+
+  Per-class results:
+  Object Class	AP	ATE	ASE	AOE	AVE	AAE
+  car	0.780	0.201	0.158	1.648	0.294	0.211
+  truck	0.456	0.374	0.196	1.607	0.262	0.242
+  bus	0.545	0.378	0.187	1.573	0.569	0.238
+  trailer	0.289	0.541	0.197	1.494	0.271	0.152
+  construction_vehicle	0.093	0.771	0.444	1.528	0.129	0.362
+  pedestrian	0.701	0.169	0.281	1.358	0.260	0.088
+  motorcycle	0.305	0.225	0.247	1.355	0.584	0.273
+  bicycle	0.033	0.190	0.275	1.492	0.251	0.033
+  traffic_cone	0.451	0.184	0.326	nan	nan	nan
+  barrier	0.450	0.329	0.286	0.073	nan	nan
+  Result is saved to /data/cmpe249-fa22/Mymodels/eval/nuscenes_models_cbgs_pp_multihead_0624/txtresults
 
 BEVFusion
 ----------

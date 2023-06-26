@@ -270,6 +270,7 @@ Use **checkinfopklfiles** to check the pkl file
 Run dairkitti_dataset.py again to generate the split file, infos, and gt_database for the infrastructure data
 
 .. code-block:: console
+
   gt_database sample: 9939/9939
   Database Car: 127726
   Database Motorcyclist: 23287
@@ -288,6 +289,34 @@ Run dairkitti_dataset.py again to generate the split file, infos, and gt_databas
   $ ls /data/cmpe249-fa22/DAIR-C/infrastructure-side-point-cloud-kitti/
   gt_database  kitti_dbinfos_train.pkl  kitti_infos_train.pkl     kitti_infos_val.pkl  training
   ImageSets    kitti_infos_test.pkl     kitti_infos_trainval.pkl  testing
+
+Run test_dataset in dairkitti_dataset.py
+
+.. code-block:: console
+
+  total lidar files: 15285
+  Dataset infos len: 5249
+  One info keys:
+    point_cloud
+    image
+    calib
+    annos
+  dataloader len: 1313
+  annos keys:
+    bbox
+    location
+    name
+    truncated
+    occluded
+    alpha
+    dimensions
+    rotation_y
+    score
+    difficulty
+    index
+    gt_boxes_lidar
+    num_points_in_gt
+  dataloader len: 1313
 
 In the **__getitem__** of dairkitti_dataset.py, gt_boxes_lidar is from 'location', 'dimensions', and 'rotation_y'
 
