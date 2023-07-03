@@ -24,6 +24,26 @@ Using and modifying the HDL designs: https://wiki.analog.com/resources/fpga/docs
 adrv9009
 --------
 ADRV9009: https://www.analog.com/en/products/adrv9009.html
+
+ADRV9009 Hardware Reference Manual (under "/Users/kaikailiu/Documents/Hardware/ADI/Talise Design package/User Guide")
+  * The ADRV9009 is a dual-channel RF transmitter and receiver with an observation receiver. 
+  * Frequency range of 75 MHz to 6 GHz, supports up to 450 MHz of synthesis bandwidth on its transmitters
+  * The receiver portion of the device can operate either as a dual-channel receiver that supports bandwidths up to 200 MHz or as a single-channel observation receiver that supports bandwidths up to 450 MHz. 
+  * The receiver portion is switched between single-channel and dual-channel mode in time division duplex (TDD) operation, utilizing the dual-channel receiver mode during receiver slots and utilizing the single-channel observation receiver in transceiver slots. The single-channel observation receiver can select either of the "ORX1_IN+/ORX1_IN−" or "ORX2_IN+/ORX2_IN−" RF inputs. 
+  * Data transfer is accomplished through eight JESD204B dedicated, high speed interface lanes (four for transmitter, and four for main receiver/observation). 
+  * All software control is communicated via the SPI. The devices include a control interface that utilizes GPIO lines to provide hardware control to and from the devices.
+  * The devices also include a set of four low speed auxiliary ADCs that can be used to monitor external voltages of interest to system operation
+  * AD9528 two-stage PLL with multiple outputs
+
+"/Users/kaikailiu/Documents/Hardware/ADI/adrv9009-api-source-code/API/src/app" folder contains a simple example application layer program. 
+  * The headless.c file has the top level main function that demonstrates the sequence of the API function calls to initialize the device. 
+  * The talise_config.c file holds the initialization and run-time data structures used by the API. The TTES can generate the initialization and run-time data structures for the API. 
+  * The /src/devices folder includes the main API code for the transmitter (/src/devices/talise) - do not modify this code
+  * The /adi_hal folder provides the means for a developer to insert custom platform hardware driver code for system integration with the API.
+  * In the example code provided in the adi_hal.c file, the functions are generic wrappers that call hardware layer functions, devices, and resources for the Xilinx® Zynq®-7000 SoC ZC706 platform.
+  * The device employs the JESD204B Subclass 1 standard to transfer ADC and digital-to-analog (DAC) samples between the device and a BBP. The interface supports high speed serial lane rates of up to 12,288 Mbps. An external clock distribution solution provides a device clock and the SYSREF signal to the device and the BBP. Configuration of the JESD204B circuitry is handled by the TALISE_initialize() API function. 
+  * The transport layer and link layer for JESD204B are performed in the device framers. The device has two JESD204B framers that multiplex into four serial lanes. 
+
 ADRV9009 hardware reference guide: https://www.analog.com/media/en/technical-documentation/user-guides/adrv9008-1-w-9008-2-w-9009-w-hardware-reference-manual-ug-1295.pdf
 ADRV9009, ADRV9008 highly integrated, wideband RF transceiver Linux device driver： https://wiki.analog.com/resources/tools-software/linux-drivers/iio-transceiver/adrv9009
 
