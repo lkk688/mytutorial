@@ -33,8 +33,20 @@ IMDb Reviews: http://ai.stanford.edu/~amaas/data/sentiment/
     -a----         4/12/2011   2:48 AM         612500 urls_pos.txt
     -a----         4/12/2011   2:47 AM        2450000 urls_unsup.txt
 
+Sentiment Analysis tutorials:
+https://huggingface.co/blog/sentiment-analysis-python
+
+
+
 SQuAD: https://rajpurkar.github.io/SQuAD-explorer/
+https://rajpurkar.github.io/SQuAD-explorer/explore/v2.0/dev/
 
 .. code-block:: console 
 
     E:\Dataset\NLPdataset\squad> wget https://rajpurkar.github.io/SQuAD-explorer/dataset/train-v2.0.json -O train-v2.0.json
+
+QA tutorials:
+https://huggingface.co/docs/transformers/tasks/question_answering
+https://huggingface.co/learn/nlp-course/chapter7/7?fw=pt
+https://huggingface.co/transformers/v4.1.1/custom_datasets.html#question-answering-with-squad-2-0
+A Model for Open Domain Long Form Question Answering: https://yjernite.github.io/lfqa.html
