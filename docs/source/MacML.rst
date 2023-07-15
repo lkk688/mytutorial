@@ -87,6 +87,23 @@ Install in mypy310 (python3 in conda):
   (mypy310) kaikailiu@kaikais-mbp mytutorial % cd docs                         
   (mypy310) kaikailiu@kaikais-mbp docs % sphinx-build -b html source build
 
+Install huggingface
+--------------------
+https://huggingface.co/docs/accelerate/basic_tutorials/install
+
+.. code-block:: console
+
+  % conda install -c conda-forge accelerate
+  % accelerate config
+    Do you wish to use FP16 or BF16 (mixed precision)?                                                                                                          
+  bf16                                                                                                                                                        
+  accelerate configuration saved at /Users/kaikailiu/.cache/huggingface/accelerate/default_config.yaml 
+  % accelerate env
+  % conda install -c huggingface transformers
+  % pip install evaluate
+  % pip install cchardet
+  % conda install -c conda-forge umap-learn #pip install umap-learn
+
 Git configure
 -------------
 

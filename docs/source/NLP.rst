@@ -1,6 +1,7 @@
 NLP
 ====
 
+
 NLP dataset
 -------------
 
@@ -37,6 +38,9 @@ Sentiment Analysis tutorials:
 https://huggingface.co/blog/sentiment-analysis-python
 
 
+SQuAD dataset
+-------------
+The dataset that is used the most as an academic benchmark for extractive question answering is SQuAD. There is also a harder SQuAD v2 benchmark, which includes questions that don't have an answer. Your own dataset should contain a column for contexts, a column for questions, and a column for answers.
 
 SQuAD: https://rajpurkar.github.io/SQuAD-explorer/
 https://rajpurkar.github.io/SQuAD-explorer/explore/v2.0/dev/
@@ -50,3 +54,19 @@ https://huggingface.co/docs/transformers/tasks/question_answering
 https://huggingface.co/learn/nlp-course/chapter7/7?fw=pt
 https://huggingface.co/transformers/v4.1.1/custom_datasets.html#question-answering-with-squad-2-0
 A Model for Open Domain Long Form Question Answering: https://yjernite.github.io/lfqa.html
+
+Reference
+----------
+
+https://umap-learn.readthedocs.io/en/latest/index.html
+
+Natural Language Processing with Transformers Book
+https://github.com/nlp-with-transformers/notebooks
+
+CS224N: Natural Language Processing with Deep Learning
+https://web.stanford.edu/class/cs224n/
+
+DistilBERT, a Distilled Version of BERT: Smaller, Faster, Cheaper and Lighter", (2019)
+
+CARER: Contextualized Affect Representations for Emotion Recognition
+Unlike most sentiment analysis datasets that involve just "positive" and "negative" polarities, this dataset contains six basic emotions: anger, disgust, fear, joy, sadness, and surprise. Given a tweet, our task will be to train a model that can classify it into one of these emotions.
