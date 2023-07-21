@@ -78,6 +78,7 @@ Install Additional Python packages
 .. code-block:: console
 
   conda install -c anaconda seaborn
+  pip install pytube #Youtube downloader
 
 Install in mypy310 (python3 in conda): 
 
@@ -103,6 +104,9 @@ https://huggingface.co/docs/accelerate/basic_tutorials/install
   % pip install evaluate
   % pip install cchardet
   % conda install -c conda-forge umap-learn #pip install umap-learn
+  % pip install portalocker
+  % pip install torchdata
+  % pip install torchtext
 
 Git configure
 -------------

@@ -5,6 +5,10 @@ NLP
 NLP dataset
 -------------
 
+GLUE, the General Language Understanding Evaluation benchmark (https://gluebenchmark.com/) is a collection of resources for training, evaluating, and analyzing natural language understanding systems.
+https://huggingface.co/datasets/glue
+
+
 IMDb Reviews: http://ai.stanford.edu/~amaas/data/sentiment/
 
 .. code-block:: console 
