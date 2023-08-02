@@ -24,3 +24,12 @@ Zynq UltraScale+ MPSoC ZCU102 Evaluation Kit: https://www.xilinx.com/products/bo
 
 Board setup process
     * Download Silicon Labs CP210x USB-to-UART Bridge VCP Drivers from https://www.silabs.com/developers/usb-to-uart-bridge-vcp-drivers?tab=downloads (Linux version is not needed)
+
+Basic tutorial:
+https://www.realdigital.org/doc/4ddc6ee53d1a2d71b25eaccc29cdec4b
+https://www.so-logic.net/en/knowledgebase/fpga_universe/tutorials/Basic_FPGA_Tutorial_Verilog
+https://digilent.com/reference/vivado/getting_started/start
+
+https://wiki.analog.com/resources/fpga/docs/build
+https://wiki.analog.com/resources/eval/user-guides/adrv9009/reference_hdl
+https://github.com/analogdevicesinc/hdl/tree/master/projects/adrv9009/zcu102
