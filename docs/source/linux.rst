@@ -17,6 +17,36 @@ Install Basic Software
 .. code-block:: console
 
     $ sudo apt install openssh-server
+    $ sudo apt install net-tools
+    $ sudo dpkg -i google-chrome-stable_current_amd64.deb
+    $ sudo dpkg -i code_1.74.3-1673284829_amd64.deb
+    $ sudo apt install -y ./teamviewer_15.37.3_amd64.deb
+    $ sudo apt-get install libgtkglext1
+    $ sudo dpkg -i anydesk_6.2.1-1_amd64.deb 
+
+Download Cisco Anyconnect VPN client from SJSU: https://vpn.sjsu.edu/CACHE/stc/1/index.html
+
+.. code-block:: console
+
+    lkk@lkk-intel12:~/Downloads$ sudo bash anyconnect-linux64-4.10.03104-core-vpn-webdeploy-k9.sh
+
+If Anyconnect cannot open browser, ref: https://community.cisco.com/t5/vpn/cisco-anyconnect-mobility-client-linux-not-opening-browser/td-p/4783285
+
+.. code-block:: console
+
+    sudo apt-get purge firefox
+    cd ;
+    sudo rm -rf .mozilla
+    cd /etc
+    sudo rm -rf firefox
+    cd /usr/lib/
+    sudo rm -rf firefox-addons
+
+    sudo apt install firefox
+
+NVIDIA CUDA
+.. code-block:: console
+
     (base) lkk@lkk-intel13:~$ conda activate mycondapy310
     (mycondapy310) lkk@lkk-intel13:~$ nvcc -V
     nvcc: NVIDIA (R) Cuda compiler driver
@@ -24,6 +54,35 @@ Install Basic Software
     Built on Wed_Sep_21_10:33:58_PDT_2022
     Cuda compilation tools, release 11.8, V11.8.89
     Build cuda_11.8.r11.8/compiler.31833905_0
+
+NVIDIA docker installation: https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html
+
+.. code-block:: console
+
+    sudo snap install curl
+    curl https://get.docker.com | sh \
+    && sudo systemctl --now enable docker
+
+    #https://docs.docker.com/engine/install/linux-postinstall/#manage-docker-as-a-non-root-user
+	sudo usermod -aG docker $USERv
+	Log out and log back in so that your group membership is re-evaluated.
+	lkk@lkk-intel12:~$ newgrp docker
+	lkk@lkk-intel12:~$ docker run hello-world
+
+    distribution=$(. /etc/os-release;echo $ID$VERSION_ID) \
+        && curl -fsSL https://nvidia.github.io/libnvidia-container/gpgkey | sudo gpg --dearmor -o /usr/share/keyrings/nvidia-container-toolkit-keyring.gpg \
+        && curl -s -L https://nvidia.github.io/libnvidia-container/$distribution/libnvidia-container.list | \
+                sed 's#deb https://#deb [signed-by=/usr/share/keyrings/nvidia-container-toolkit-keyring.gpg] https://#g' | \
+                sudo tee /etc/apt/sources.list.d/nvidia-container-toolkit.list
+            
+    sudo apt-get update
+    sudo apt-get install -y nvidia-docker2
+    sudo systemctl restart docker
+
+    sudo docker run --rm --gpus all nvidia/cuda:11.7.1-devel-ubuntu22.04 nvidia-smi
+
+    docker pull nvidia/cuda:11.7.1-devel-ubuntu22.04
+
 
 Mount Disk
 ----------
@@ -84,11 +143,18 @@ You can see disk "sda" from the "lsblk" is not mounted.
     tmpfs            14G  140k   14G   1% /run/user/1001
     /dev/sda         10T   37k  9.5T   1% /DATA10T
 
+sshfs
+------
+.. code-block:: console
+
+    lkk@lkk-intel12:~/Documents/Dataset/Kitti$ sudo apt-get install sshfs
+    lkk@lkk-intel12:~/Documents/Dataset/HPC249Data$ sshfs 010796032@coe-hpc2.sjsu.edu:/data/cmpe249-fa22 .
 
 Common errors
 -------------
 
 .. code-block:: console
+
     (mycondapy310) lkk@lkk-intel13:~/Developer/3DDepth$ python ./VisUtils/testmayavi.py
     qt.qpa.plugin: Could not load the Qt platform plugin "xcb" in "/home/lkk/miniconda3/envs/mycondapy310/lib/python3.10/site-packages/cv2/qt/plugins" even though it was found.
     This application failed to start because no Qt platform plugin could be initialized. Reinstalling the application may fix this problem.

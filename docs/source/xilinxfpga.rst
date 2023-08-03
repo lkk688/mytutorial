@@ -94,7 +94,20 @@ To create a Verilog source file for your project, right-click on “Design Sourc
     
     endmodule
 
-To create a constraint file, expand the Constraints heading in the Sources panel, right-click on constrs_1, and select Add Sources.
+To create a constraint file, expand the Constraints heading in the Sources panel, right-click on constrs_1, and select Add Sources. An Add Sources dialog will appear as shown. Select Add or Create Constraints and click Next to cause the “Add or Create Constraints” dialog box to appear. Click on Create File, enter the filename and click OK.
+
+
+After your Verilog and constraint files are complete, you can Synthesize the design project. In the synthesis process, Verilog code is translated into a “netlist” that defines all the required circuit components needed by the design (these components are the programmable parts of the targeted logic device - more on that later). You can start the Synthesize process by clicking on Run Synthesis button in the Flow Navigator panel
+
+After the design is synthesized, you must run the Implementation process. The implementation process maps the synthesized design onto the Xilinx chip targeted by the design. Click the Run Implementation button in the Flow Navigator panel
+
+After the design is successfully implemented, you can create a .bit file by clicking on the Generate Bitstream process located in the Flow Navigator panel. The process translates the implemented design into a bitstream which can be directly programmed into your board’s device.
+
+After the bitstream is successfully generated, you can program your board using the Hardware Manager. Click Open Hardware Manager located at the bottom of Flow Navigator panel
+
+Click on Open target link underneath Hardware Manager. Select Auto Connect to automatically identify your board. If Vivado successfully detects your board, the Hardware panel (located at the top left corner of Hardware Manager) will show the board’s logic device part number
+
+Select the device you want to program, right click and select Program Device. A Program Device pop-up dialog window will appear, with the generated bit file selected in the text box. Click on Program to download the bitstream to your board.
 
 Verilog
 --------
@@ -113,6 +126,43 @@ Procedural assignment statements drive “reg” signals, and so procedural assi
 
 Input signals to modules are always type “wire”; output signals from modules can be type “wire” or “reg”. If additional wire or reg signals are needed inside a module (for example, to transport signals between assignment statements), they must be explicitly declared after the module statement 
 
+ADI
+----
+https://wiki.analog.com/resources/fpga/docs/build
+
+.. code-block:: console 
+
+    (base) lkk@lkk-intel12:~/Xilinx/FPGADeveloper$ mkdir adi
+    (base) lkk@lkk-intel12:~/Xilinx/FPGADeveloper$ cd adi
+    (base) lkk@lkk-intel12:~/Xilinx/FPGADeveloper/adi$ git clone https://github.com/analogdevicesinc/hdl.git
+    (base) lkk@lkk-intel12:~/Xilinx/FPGADeveloper/adi/hdl$ git status
+    On branch master
+    Your branch is up to date with 'origin/master'.
+
+    nothing to commit, working tree clean
+    (base) lkk@lkk-intel12:~/Xilinx/FPGADeveloper/adi/hdl$ git checkout hdl_2021_r1
+    Branch 'hdl_2021_r1' set up to track remote branch 'hdl_2021_r1' from 'origin'.
+    Switched to a new branch 'hdl_2021_r1'
+
+    $ source ~/Xilinx/Vivado/2023.1/settings64.sh
+    (base) lkk@lkk-intel12:~/Xilinx/FPGADeveloper/adi/hdl/projects/adrv9009/zcu102$ export ADI_IGNORE_VERSION_CHECK=1
+    (base) lkk@lkk-intel12:~/Xilinx/FPGADeveloper/adi/hdl/projects/adrv9009/zcu102$ make
+    ....
+    Building adrv9009_zcu102 project [/home/lkk/Xilinx/FPGADeveloper/adi/hdl/projects/adrv9009/zcu102/adrv9009_zcu102_vivado.log] ... OK
+    (base) lkk@lkk-intel12:~/Xilinx/FPGADeveloper/adi/hdl/projects/adrv9009/zcu102$ ls
+    adrv9009_zcu102.cache          adrv9009_zcu102_vivado.log  system_top.v
+    adrv9009_zcu102.gen            adrv9009_zcu102.xpr         timing_impl.log
+    adrv9009_zcu102.hw             Makefile                    timing_synth.log
+    adrv9009_zcu102.ip_user_files  mem_init_sys.txt            vivado.jou
+    adrv9009_zcu102.runs           system_bd.tcl               vivado.log
+    adrv9009_zcu102.sdk            system_constr.xdc
+    adrv9009_zcu102.srcs           system_project.tcl
+
+
+
+
+
+
 References
 ------------
 
@@ -124,5 +174,6 @@ https://digilent.com/reference/vivado/getting_started/start
 A first look at Verilog: https://www.realdigital.org/doc/0bb58d31f393f8a7c6b5ac4a0d84876e
 
 https://wiki.analog.com/resources/fpga/docs/build
+https://github.com/analogdevicesinc/hdl
 https://wiki.analog.com/resources/eval/user-guides/adrv9009/reference_hdl
 https://github.com/analogdevicesinc/hdl/tree/master/projects/adrv9009/zcu102
