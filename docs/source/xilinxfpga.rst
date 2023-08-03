@@ -145,6 +145,7 @@ https://wiki.analog.com/resources/fpga/docs/build
     Switched to a new branch 'hdl_2021_r1'
 
     $ source ~/Xilinx/Vivado/2023.1/settings64.sh
+    #export PATH=$PATH:/opt/Xilinx/Vivado/202x.x/bin:/opt/Xilinx/Vitis/202x.x/bin
     (base) lkk@lkk-intel12:~/Xilinx/FPGADeveloper/adi/hdl/projects/adrv9009/zcu102$ export ADI_IGNORE_VERSION_CHECK=1
     (base) lkk@lkk-intel12:~/Xilinx/FPGADeveloper/adi/hdl/projects/adrv9009/zcu102$ make
     ....
@@ -157,6 +158,8 @@ https://wiki.analog.com/resources/fpga/docs/build
     adrv9009_zcu102.runs           system_bd.tcl               vivado.log
     adrv9009_zcu102.sdk            system_constr.xdc
     adrv9009_zcu102.srcs           system_project.tcl
+    (base) lkk@lkk-intel12:~/Xilinx/FPGADeveloper/adi/hdl/projects/adrv9009/zcu102$ ls adrv9009_zcu102.sdk/
+    system_top.xsa
 
 
 
@@ -170,10 +173,16 @@ Basic tutorial:
 https://www.realdigital.org/doc/4ddc6ee53d1a2d71b25eaccc29cdec4b
 https://www.so-logic.net/en/knowledgebase/fpga_universe/tutorials/Basic_FPGA_Tutorial_Verilog
 https://digilent.com/reference/vivado/getting_started/start
-
+https://github.com/pulp-platform/pulp/blob/master/fpga/pulp-zcu102/rtl/xilinx_pulp.v
+https://github.com/fpgadeveloper/ethernet-fmc-zynq-gem/blob/master/Vivado/src/constraints/zcu102-hpc0.xdc
 A first look at Verilog: https://www.realdigital.org/doc/0bb58d31f393f8a7c6b5ac4a0d84876e
 
 https://wiki.analog.com/resources/fpga/docs/build
 https://github.com/analogdevicesinc/hdl
 https://wiki.analog.com/resources/eval/user-guides/adrv9009/reference_hdl
+https://wiki.analog.com/resources/eval/user-guides/adrv9009/quickstart/zynqmp
 https://github.com/analogdevicesinc/hdl/tree/master/projects/adrv9009/zcu102
+https://wiki.analog.com/resources/tools-software/linux-drivers-all#building_the_adi_linux_kernel
+https://wiki.analog.com/resources/tools-software/linux-build/generic/zynqmp
+
+https://wiki.analog.com/resources/tools-software/linux-software/kuiper-linux
