@@ -160,8 +160,16 @@ https://wiki.analog.com/resources/fpga/docs/build
 
 
 
+ADI Linux Image
+----------------
+https://wiki.analog.com/resources/tools-software/linux-software/kuiper-linux
+https://wiki.analog.com/resources/tools-software/linux-software/zynq_images/windows_hosts
 
+In Windows host, download SD Card Formatter from https://www.sdcardformatter.com/. Insert the SD card and launch SD Card Formatter, type "boot" in Volume label, then click "Format"
 
+Open Balena Etcher (Download from https://sourceforge.net/projects/etcher.mirror/files/v1.18.11/), select the Linux image (.img) file, 
+
+Open SD card, find folder "zynqmp-zcu102-rev10-adrv9009", copy "BOOT.BIN" and "system.dtb" to the root of the BOOT partition; In folder "zynqmp-common", copy "Image" to the root.
 
 References
 ------------
