@@ -25,9 +25,13 @@ Contents
    nuscenes
    intelfpga
    intelfpgalinux
+   xilinxfpga
    ADI
    SDR
    MATLAB
+   googlecloud
+   NLP
+   nuscenes
    test
    usage
    api
