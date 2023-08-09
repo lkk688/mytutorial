@@ -60,6 +60,15 @@ You can check the version of WSL and perform conversion from WSL2 to WSL1 if nee
     C:\Users\lkk>wsl --setdefault Ubuntu20.04
     The operation completed successfully.
 
+Use WSL for Development
+~~~~~~~~~~~~~~~~~~~~~~~~
+Access files inside the WSL from Windows side: access "\\wsl$" in the address bar of Windows File Explorer.
+
+Open WSL in VScode for development: in "Remote Explorer" tab, select "WSL" as the remote the target, connect the target.
+
+How to SSH into WSL2 on Windows from an external machine: https://www.hanselman.com/blog/how-to-ssh-into-wsl2-on-windows-10-from-an-external-machine
+
+
 Export WSL
 ~~~~~~~~~~~~
 You can export the WSL distribution to a local file
@@ -104,3 +113,23 @@ Download CUDA11.8 Linux WSL2 (the download path is the same to Ubuntu22.04 cuda1
 
     wget https://developer.download.nvidia.com/compute/cuda/11.8.0/local_installers/cuda_11.8.0_520.61.05_linux.run
     sudo sh cuda_11.8.0_520.61.05_linux.run
+
+After CUDA installation, please make sure that
+ -   PATH includes /usr/local/cuda-xx.x/bin
+ -   LD_LIBRARY_PATH includes /usr/local/cuda-xx.x/lib64
+Add the following code to "~/.bashrc"
+
+.. code-block:: console
+
+    lkk@Alienware-LKKi7G8:~$ nano ~/.bashrc
+    export LD_LIBRARY_PATH=/usr/local/cuda-12.1/lib64:$LD_LIBRARY_PATH
+    export PATH=/usr/local/cuda-12.1/bin:$PATH
+    lkk@Alienware-LKKi7G8:~$ source ~/.bashrc
+    #install other required softwares in WSL Linux
+    $ sudo apt install python3-pip
+    $ sudo apt install net-tools
+    $ sudo apt install openssh-server
+    $ sudo apt install x11-apps
+    $ curl https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -o Miniconda3-latest-Linux-x86_64.sh
+    $ bash Miniconda3-latest-Linux-x86_64.sh
+    $ sudo apt-get update && sudo apt-get install libgl1
