@@ -174,6 +174,37 @@ Open Balena Etcher (Download from https://sourceforge.net/projects/etcher.mirror
 
 Open SD card, find folder "zynqmp-zcu102-rev10-adrv9009", copy "BOOT.BIN" and "system.dtb" to the root of the BOOT partition; In folder "zynqmp-common", copy "Image" to the root.
 
+
+Load the SD card into the ZCU102 board, in the J100 connector.
+
+Connect a micro USB cable from the ZCU102 board USB UART port (J83) to the USB port on the host machine.
+
+Configure the board to boot in SD-boot mode by setting switch SW6 to 1-ON, 2-OFF, 3- OFF, and 4-OFF
+
+Turn on the ZCU102 Board using SW1, and wait until Linux loads on the board. At this point, you can see the initial boot sequence messages on your terminal screen
+
+https://www.cyberciti.biz/faq/unix-linux-apple-osx-bsd-screen-set-baud-rate/
+http://wiki.espressobin.net/tiki-index.php?page=Serial+connection+-+Linux
+
+$ sudo dmesg | grep tty
+[    0.178023] printk: console [tty0] enabled
+[    0.713714] serial8250: ttyS0 at I/O 0x3f8 (irq = 4, base_baud = 115200) is a 16550A
+[39228.154004] usb 1-5: FTDI USB Serial Device converter now attached to ttyUSB0
+[39247.737114] ftdi_sio ttyUSB0: FTDI USB Serial Device converter now disconnected from ttyUSB0
+[58323.816351] usb 1-5: FTDI USB Serial Device converter now attached to ttyUSB0
+[58761.456823] ftdi_sio ttyUSB0: FTDI USB Serial Device converter now disconnected from ttyUSB0
+[58767.946276] usb 1-5: cp210x converter now attached to ttyUSB0
+[58767.946904] usb 1-5: cp210x converter now attached to ttyUSB1
+[58767.947546] usb 1-5: cp210x converter now attached to ttyUSB2
+[58767.948152] usb 1-5: cp210x converter now attached to ttyUSB3
+
+$ sudo minicom -s
+#minicom -D /dev/ttyUSB0
+setup Serial port setup
+
+sudo apt install ckermit
+
+
 References
 ------------
 
@@ -183,6 +214,7 @@ https://www.so-logic.net/en/knowledgebase/fpga_universe/tutorials/Basic_FPGA_Tut
 https://digilent.com/reference/vivado/getting_started/start
 https://github.com/pulp-platform/pulp/blob/master/fpga/pulp-zcu102/rtl/xilinx_pulp.v
 https://github.com/fpgadeveloper/ethernet-fmc-zynq-gem/blob/master/Vivado/src/constraints/zcu102-hpc0.xdc
+https://xilinx.github.io/Embedded-Design-Tutorials/docs/2021.1/build/html/docs/Introduction/ZynqMPSoC-EDT/8-boot-and-configuration.html
 A first look at Verilog: https://www.realdigital.org/doc/0bb58d31f393f8a7c6b5ac4a0d84876e
 
 https://wiki.analog.com/resources/fpga/docs/build
