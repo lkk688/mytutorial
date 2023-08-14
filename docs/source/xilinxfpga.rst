@@ -30,7 +30,7 @@ Board setup process in Windows
     * Refer XTP 433 for System Controller GUI
     * Ethernet setup: change adapter setting, right-click Ethernet Adapter and select properties. Click Configure, Set the Link Speed & Duplex to Auto Negotiation then click OK. Set the IPv4 address to "192.168.1.2", subnet "255.255.255.0", default gateway "192.168.1.255"
 
-Xilinx Vivado
+ Xilinx Vivado
 ---------------------
 Vivado installation tutorial: https://www.realdigital.org/doc/1fd3322461ac4bcc1fcd6bcc6c5907ec
 
@@ -173,6 +173,26 @@ In Windows host, download SD Card Formatter from https://www.sdcardformatter.com
 Open Balena Etcher (Download from https://sourceforge.net/projects/etcher.mirror/files/v1.18.11/), select the Linux image (.img) file, 
 
 Open SD card, find folder "zynqmp-zcu102-rev10-adrv9009", copy "BOOT.BIN" and "system.dtb" to the root of the BOOT partition; In folder "zynqmp-common", copy "Image" to the root.
+
+ADI Linux Boot in FPGA
+----------------------
+Format the SD Card with Linux: https://wiki.analog.com/resources/tools-software/linux-software/zynq_images/windows_hosts
+
+.. code-block:: console 
+
+    root@analog:~# dmesg
+    10.683159] adrv9009 spi1.1: ERROR: 294: TALISE_waitArmCmdStatus() failed due to thrown ARM error. Is device in correct state for calling command?
+    [   10.696279] adrv9009 spi1.1: ERROR: 131086: Talise init calibration error encountered
+    [   30.713386] adrv9009 spi1.1: ERROR: 247: TALISE_waitArmCmdStatus() failed due to thrown ARM error. ARM time out
+    [   30.723555] adrv9009 spi1.1: adrv9009_jesd204_setup_stage5:6087 (ret 5): Init Cal errorFlag (0x0)
+    [   30.732514] adrv9009 spi1.1: ERROR: 294: TALISE_waitArmCmdStatus() failed due to thrown ARM error. Is device in correct state for calling command?
+    [   30.745637] adrv9009 spi1.1: ERROR: 803588: Talise ARM Command not accepted in this state
+    [   30.753812] adrv9009 spi1.1: adrv9009_jesd204_setup_stage5:6094 (ret 9): Init Cal calsSincePowerUp (0x0) calsLastRun (0x0) calsMinimum (0x0) initErrCal (0x0) initErrCode (0x0)
+
+https://github.com/analogdevicesinc/no-OS/blob/master/drivers/rf-transceiver/talise/api/talise_error.c
+case TAL_ERR_ARMCMDSTATUS_ARMERROR:
+			return "TALISE_waitArmCmdStatus() failed due to thrown ARM error. Is device in correct state for calling command?\n";
+https://ez.analog.com/wide-band-rf-transceivers/design-support-adrv9008-1-adrv9008-2-adrv9009/f/q-a/552194/how-to-deal-with-the-arm-error-while-debugging-adrv9009-no-os-code
 
 References
 ------------
