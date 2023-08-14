@@ -1,6 +1,47 @@
 NLP
 ====
 
+Our Sample code
+----------------
+
+Sentiment 
+==========
+Run nlp\huggingfaceclassifier2.py, based on args of "data_type=huggingface data_name=imdb model_checkpoint=bert-base-cased task=sentiment outputdir=./output traintag=0805 training=True total_epochs=4 save_every=2 batch_size=8 learningrate=2e-05"
+The saved path is "outputpath=os.path.join(args.outputdir, task, args.data_name+'_'+args.traintag)"
+
+.. code-block:: console 
+
+    All keys in raw datasets: dict_keys(['train', 'test', 'unsupervised'])
+    {'labels': torch.Size([8]), 'input_ids': torch.Size([8, 512]), 'token_type_ids': torch.Size([8, 512]), 'attention_mask': torch.Size([8, 512])}
+    tensor(0.7184, grad_fn=<NllLossBackward0>) torch.Size([8, 2])
+
+sequence_classifier
+===================
+Run nlp\huggingfaceclassifier2.py, based on args of "data_type=huggingface data_name=glue dataconfig=mrpc subset=0.1 model_checkpoint=bert-base-cased task=sequence_classifier outputdir=./output traintag=0807 training=True total_epochs=4 save_every=2 batch_size=8 learningrate=2e-05"
+
+.. code-block:: console 
+
+    oneitem all keys: dict_keys(['sentence1', 'sentence2', 'label', 'idx'])
+    ClassLabel(names=['not_equivalent', 'equivalent'], id=None)
+    {'labels': torch.Size([8]), 'input_ids': torch.Size([8, 80]), 'token_type_ids': torch.Size([8, 80]), 'attention_mask': torch.Size([8, 80])}
+    tensor(0.7476, grad_fn=<NllLossBackward0>) torch.Size([8, 2])
+    task sequence_classifier: {'accuracy': 0.8602941176470589, 'f1': 0.9028960817717206}
+
+custom_classifier
+=================
+
+data_type=huggingface data_name=imdb dataconfig=None subset=0 model_checkpoint=bert-base-cased task=custom_classifier outputdir=./output traintag=0807 training=True total_epochs=4 save_every=2 batch_size=8 learningrate=2e-05
+oneitem all keys: dict_keys(['text', 'label'])
+{'labels': torch.Size([8]), 'input_ids': torch.Size([8, 512]), 'attention_mask': torch.Size([8, 512])}
+['labels', 'input_ids', 'attention_mask']
+tensor(0.6916, grad_fn=<NllLossBackward0>) torch.Size([8, 2])
+task custom_classifier: {'accuracy': 0.93576}
+
+token_classifier
+================
+data_type=huggingface data_name=conll2003 dataconfig=None subset=0 model_checkpoint=bert-base-cased task=token_classifier outputdir=./output traintag=0807 training=False total_epochs=4 save_every=2 batch_size=8 learningrate=2e-05
+oneitem all keys: dict_keys(['id', 'tokens', 'pos_tags', 'chunk_tags', 'ner_tags'])
+task token_classifier: {'LOC': {'precision': 0.0, 'recall': 0.0, 'f1': 0.0, 'number': 1837}, 'MISC': {'precision': 0.0, 'recall': 0.0, 'f1': 0.0, 'number': 922}, 'ORG': {'precision': 0.0, 'recall': 0.0, 'f1': 0.0, 'number': 1341}, 'PER': {'precision': 0.0, 'recall': 0.0, 'f1': 0.0, 'number': 1842}, 'overall_precision': 0.0, 'overall_recall': 0.0, 'overall_f1': 0.0, 'overall_accuracy': 0.764084299758639}
 
 NLP dataset
 -------------
@@ -10,6 +51,7 @@ https://huggingface.co/datasets/glue
 
 
 IMDb Reviews: http://ai.stanford.edu/~amaas/data/sentiment/
+The IMDB dataset contains 25,000 movie reviews labeled by sentiment for training a model and 25,000 movie reviews for testing it.
 
 .. code-block:: console 
 
