@@ -45,7 +45,7 @@ ADRV9009 Hardware Reference Manual (under "/Users/kaikailiu/Documents/Hardware/A
   * The transport layer and link layer for JESD204B are performed in the device framers. The device has two JESD204B framers that multiplex into four serial lanes. 
 
 ADRV9009 hardware reference guide: https://www.analog.com/media/en/technical-documentation/user-guides/adrv9008-1-w-9008-2-w-9009-w-hardware-reference-manual-ug-1295.pdf
-ADRV9009, ADRV9008 highly integrated, wideband RF transceiver Linux device driver： https://wiki.analog.com/resources/tools-software/linux-drivers/iio-transceiver/adrv9009
+ADRV9009, ADRV9008 highly integrated, wideband RF transceiver Linux device driver: https://wiki.analog.com/resources/tools-software/linux-drivers/iio-transceiver/adrv9009
 
 SDR Integrated Transceiver Design Resources: https://www.analog.com/en/design-center/landing-pages/001/integrated-rf-agile-transceiver-design-resources.html
     * Download the ADRV9008/ADRV9009 Design File Package
