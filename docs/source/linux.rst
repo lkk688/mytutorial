@@ -150,6 +150,25 @@ sshfs
     lkk@lkk-intel12:~/Documents/Dataset/Kitti$ sudo apt-get install sshfs
     lkk@lkk-intel12:~/Documents/Dataset/HPC249Data$ sshfs 010796032@coe-hpc2.sjsu.edu:/data/cmpe249-fa22 .
 
+Add New Sudo Users
+------------------
+Ref: https://www.digitalocean.com/community/tutorials/how-to-create-a-new-sudo-enabled-user-on-ubuntu-22-04-quickstart
+
+.. code-block:: console
+
+    lkk@p100:~$ sudo adduser student
+    [sudo] password for lkk: 
+    Adding user `student' ...
+    Adding new group `student' (1001) ...
+    Adding new user `student' (1001) with group `student' ...
+    Creating home directory `/home/student' ...
+    Copying files from `/etc/skel' ...
+    New password: 
+    #add to sudo group
+    lkk@p100:~$ sudo usermod -aG sudo student
+    #To test that the new sudo permissions are working, first use the su command to switch to the new user account:
+    lkk@p100:~$ su - student
+
 Common errors
 -------------
 

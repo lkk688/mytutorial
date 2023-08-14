@@ -30,7 +30,7 @@ Board setup process in Windows
     * Refer XTP 433 for System Controller GUI
     * Ethernet setup: change adapter setting, right-click Ethernet Adapter and select properties. Click Configure, Set the Link Speed & Duplex to Auto Negotiation then click OK. Set the IPv4 address to "192.168.1.2", subnet "255.255.255.0", default gateway "192.168.1.255"
 
-Xilinx Vivado
+ Xilinx Vivado
 ---------------------
 Vivado installation tutorial: https://www.realdigital.org/doc/1fd3322461ac4bcc1fcd6bcc6c5907ec
 
