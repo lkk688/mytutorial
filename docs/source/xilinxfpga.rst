@@ -342,6 +342,61 @@ Building the ZynqMP / MPSoC Linux kernel and devicetrees from source (https://wi
 
 https://xilinx-wiki.atlassian.net/wiki/spaces/A/overview
 
+.. code-block:: console 
+
+    (base) lkk@lkk-intel12:~/Xilinx$ source ./Vivado/2023.1/settings64.sh
+    (base) lkk@lkk-intel12:~/Xilinx/FPGADeveloper$ git clone https://github.com/analogdevicesinc/linux.git
+    (base) lkk@lkk-intel12:~/Xilinx/FPGADeveloper/linux$ git checkout master
+    (base) lkk@lkk-intel12:~/Xilinx/FPGADeveloper$ export PATH=$PATH:/home/lkk/Xilinx/Vitis/2023.1/gnu/aarch64/lin/aarch64-linux/bin
+    (base) lkk@lkk-intel12:~/Xilinx/FPGADeveloper/linux$ export ARCH=arm64
+    (base) lkk@lkk-intel12:~/Xilinx/FPGADeveloper/linux$ export CROSS_COMPILE=/home/lkk/Xilinx/FPGADeveloper/gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu/bin/aarch64-linux-gnu-
+
+    (base) lkk@lkk-intel12:~/Xilinx/FPGADeveloper/linux$ make adi_zynqmp_defconfig
+    (base) lkk@lkk-intel12:~/Xilinx/FPGADeveloper/linux$ make -j5 Image UIMAGE_LOADADDR=0x8000
+    ....
+      LD      vmlinux
+    SORTTAB vmlinux
+    SYSMAP  System.map
+    OBJCOPY arch/arm64/boot/Image
+    (base) lkk@lkk-intel12:~/Xilinx/FPGADeveloper/linux$ ls arch/arm64/boot/
+    dts  Image  install.sh  Makefile
+    (base) lkk@lkk-intel12:~/Xilinx/FPGADeveloper/linux$ cp arch/arm64/boot/Image ~/Documents/
+    (base) lkk@lkk-intel12:~/Xilinx/FPGADeveloper/linux$ cp arch/arm64/boot/dts/xilinx/zynqmp-zcu102-rev10-adrv9009.dts ~/Documents/system.dtb
+
+dts file in arch/arm64/boot/dts/xilinx/
+
+
+https://releases.linaro.org/components/toolchain/binaries/latest-7/aarch64-linux-gnu/
+https://snapshots.linaro.org/gnu-toolchain/14.0-2023.06-1/aarch64-linux-gnu/
+
+
+Building the ZynqMP boot image
+
+.. code-block:: console 
+
+    (base) lkk@lkk-intel12:~/Xilinx/FPGADeveloper/mybuild$ ls
+    bootgen_sysfiles      build_zynqmp_boot_bin.sh  system.dtb
+    bootgen_sysfiles.tgz  Image                     system_top.xsa
+    (base) lkk@lkk-intel12:~/Xilinx/FPGADeveloper/mybuild$ chmod +x build_zynqmp_boot_bin.sh
+
+    (base) lkk@lkk-intel12:~/Xilinx/FPGADeveloper/mybuild$ source ~/Xilinx/Vivado/2023.1/settings64.sh
+
+    (base) lkk@lkk-intel12:~/Xilinx/FPGADeveloper/mybuild$ ./build_zynqmp_boot_bin.sh system_top.xsa ./bootgen_sysfiles/u-boot_xilinx_zynqmp_zcu102_revA.elf ./bootgen_sysfiles/bl31.elf 
+    + cp build_boot_bin/build/sdk/hw0/export/hw0/sw/hw0/boot/pmufw.elf output_boot_bin/pmufw.elf
+    + cd output_boot_bin
+    + bootgen -arch zynqmp -image zynq.bif -o BOOT.BIN -w
+
+    ****** Bootgen v2023.1
+    **** Build date : Apr 18 2023-23:27:00
+        ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+        ** Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
+
+    [INFO]   : Bootimage generated successfully
+
+    (base) lkk@lkk-intel12:~/Xilinx/FPGADeveloper/mybuild$ ls output_boot_bin/
+    bl31.elf  fsbl.elf   system_top.bit  u-boot.elf
+    BOOT.BIN  pmufw.elf  system_top.xsa  zynq.bif
+
 References
 ------------
 
@@ -364,3 +419,6 @@ https://wiki.analog.com/resources/tools-software/linux-build/generic/zynqmp
 
 https://wiki.analog.com/resources/tools-software/linux-software/kuiper-linux
 
+Starting 2019.2, SDK, SDSoC™ and SDAccel™ development environments are unified into an all-in-one Vitis™ unified software platform for application acceleration and embedded software development.
+https://www.xilinx.com/products/design-tools/legacy-tools/sdk.html
+https://www.xilinx.com/products/design-tools/vitis/vitis-platform.html
