@@ -133,3 +133,45 @@ Add the following code to "~/.bashrc"
     $ curl https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -o Miniconda3-latest-Linux-x86_64.sh
     $ bash Miniconda3-latest-Linux-x86_64.sh
     $ sudo apt-get update && sudo apt-get install libgl1
+
+Other Python Packages
+~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+    conda install -c conda-forge configargparse
+    pip install -U albumentations
+    pip install spconv-cu118 #check installation via import spconv
+    pip install SharedArray
+
+    pip install numba
+    $ pip install requests
+
+    $ pip install tensorboardX
+    pip install tensorboardX
+    $ pip install easydict
+    $ pip install gpustat
+    $ pip install --upgrade autopep8
+    $ pip install pyyaml scikit-image onnx onnx-simplifier
+    $ pip install onnxruntime
+    $ pip install onnx_graphsurgeon --index-url https://pypi.ngc.nvidia.com
+    (mypy310) lkk@Alienware-LKKi7G8:~/Developer/3DDepth$ python3 setup.py develop
+    The detected CUDA version (12.1) mismatches the version that was used to compile
+    PyTorch (11.8). Please make sure to use the same CUDA versions.
+
+To solve the CUDA mismatch problem, uncomment the CUDA12.1 installation in "~/.bashrc", install CUDA11.8 in Conda
+
+.. code-block:: console
+
+    (mypy310) lkk@Alienware-LKKi7G8:~/Developer/3DDepth$ conda install -c conda-forge cudatoolkit=11.8.0
+    (mypy310) lkk@Alienware-LKKi7G8:~/Developer/3DDepth$ conda install -c "nvidia/label/cuda-11.8.0" cuda-toolkit
+
+    (mypy310) lkk@Alienware-LKKi7G8:~/Developer/3DDepth$ python3 setup.py develop
+    Using /home/lkk/miniconda3/envs/mypy310/lib/python3.10/site-packages
+    Finished processing dependencies for mydetector3d==0.1
+    (mypy310) lkk@Alienware-LKKi7G8:~/Developer/3DDepth$ nvcc -V
+    nvcc: NVIDIA (R) Cuda compiler driver
+    Copyright (c) 2005-2022 NVIDIA Corporation
+    Built on Wed_Sep_21_10:33:58_PDT_2022
+    Cuda compilation tools, release 11.8, V11.8.89
+    Build cuda_11.8.r11.8/compiler.31833905_0
