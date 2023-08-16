@@ -235,8 +235,9 @@ ADRV9009
 In ADRV9009 web page (https://www.analog.com/en/products/adrv9009.html)
     * ADRV9008/ADRV9009 Evaluation Software with GUI for Evaluation Board (ZIP) (adrv9009-eval-software-with-gui), installed in Windows, but cannot connect to the ZCU102 board, it may only works for ZC706 board
     * adrv9008-x-adrv9009-profile-config-tool: show MATLAB lib error
-    * ADRV9009-SDCARD, for zc706? Put the "BOOT.bin", "devicetree.dtb", and "uImage" to ZCU102 SD Card, the linux cannot be boot. 
+    * ADRV9009-SDCARD, for zc706? sPut the "BOOT.bin", "devicetree.dtb", and "uImage" to ZCU102 SD Card, the linux cannot be boot. 
 
+ADI TES software does not support for ZCU102, only support ZYNQ3. The configuration files can be generated without a physical board.
 
 ADI HDL Code
 -------------
