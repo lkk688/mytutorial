@@ -122,6 +122,19 @@ Install pypcd
    (mycondapy39) [010796032@coe-hpc2 3DObject]$ cd pypcd/
    (mycondapy39) [010796032@coe-hpc2 pypcd]$ python setup.py install
 
+Install Huggingface
+
+.. code-block:: console
+
+   (mycondapy39) [010796032@coe-hpc2 DeepDataMiningLearning]$ pip install transformers
+   (mycondapy39) [010796032@coe-hpc2 DeepDataMiningLearning]$ pip install datasets
+   (mycondapy39) [010796032@coe-hpc2 DeepDataMiningLearning]$ pip install sentencepiece
+   (mycondapy39) [010796032@coe-hpc2 DeepDataMiningLearning]$ pip install scikit-learn
+   (mycondapy39) [010796032@coe-hpc2 DeepDataMiningLearning]$ pip install accelerate
+   (mycondapy39) [010796032@coe-hpc2 DeepDataMiningLearning]$ pip install evaluate
+   (mycondapy39) [010796032@coe-hpc2 DeepDataMiningLearning]$ pip install xformers #it will change torch2.0.0+cu118 to (2.0.1+cu117), change nvidia-cublas-cu11 and nvidia-cudnn-cu11
+   (mycondapy39) [010796032@coe-hpc2 DeepDataMiningLearning]$ pip install umap-learn
+
 Share Conda Environment
 -------------------------
 
