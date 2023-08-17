@@ -175,3 +175,18 @@ To solve the CUDA mismatch problem, uncomment the CUDA12.1 installation in "~/.b
     Built on Wed_Sep_21_10:33:58_PDT_2022
     Cuda compilation tools, release 11.8, V11.8.89
     Build cuda_11.8.r11.8/compiler.31833905_0
+
+Install langchain
+
+.. code-block:: console
+
+    (mypy310) lkk@Alienware-LKKi7G8:~/Developer$ conda install langchain -c conda-forge
+    (mypy310) lkk@Alienware-LKKi7G8:~/Developer$ pip install langchain[llms]
+    (mypy310) lkk@Alienware-LKKi7G8:~/Developer$ pip install openai
+    pip install pypdf
+    pip install tiktoken
+    conda install -c conda-forge faiss
+    pip install unstructured
+    pip install pdf2image
+    pip install pdfminer
+    pip install pdfminer.six
