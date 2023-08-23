@@ -62,13 +62,13 @@ Install Linux cable Drivers
     
 After Vivado is started, Click on “Create Project” in the Quick Start panel. This will open the New Project dialog. Click Next to continue.
 
-.. image:: imgs\FPGA\zcu102newproject1.png
+.. image:: imgs/FPGA/zcu102newproject1.png
   :width: 600
   :alt: zcu102newproject1
 
 Set Project Name and Location. Select Project Type (RTL). There are no existing sources and constraints to add, so just click Next.
 
-.. image:: imgs\FPGA\zcu102newproject2.png
+.. image:: imgs/FPGA/zcu102newproject2.png
   :width: 600
   :alt: zcu102newproject2
 
@@ -78,19 +78,19 @@ Set Project Name and Location. Select Project Type (RTL). There are no existing 
 
 Select the board of "zcu102"
 
-.. image:: imgs\FPGA\zcu102newproject3.png
+.. image:: imgs/FPGA/zcu102newproject3.png
   :width: 600
   :alt: zcu102newproject3
 
 On the last page of the Create Project Wizard, there is a summary of the project configuration. click Finish to finish creating an empty project.
 
-.. image:: imgs\FPGA\zcu102newproject4.png
+.. image:: imgs/FPGA/zcu102newproject4.png
   :width: 600
   :alt: zcu102newproject4
 
 After you have finished with the Create Project Wizard, the main IDE window will be displayed.
 
-.. image:: imgs\FPGA\zcu102newproject5.png
+.. image:: imgs/FPGA/zcu102newproject5.png
   :width: 600
   :alt: zcu102newproject5
 
@@ -100,20 +100,20 @@ After you have finished with the Create Project Wizard, the main IDE window will
 
 To create a Verilog source file for your project, right-click on “Design Sources” in the Sources panel, and select Add Sources. 
 
-.. image:: imgs\FPGA\zcu102newprojectaddsource1.png
+.. image:: imgs/FPGA/zcu102newprojectaddsource1.png
   :width: 600
   :alt: zcu102newprojectaddsource1
 
 The Add Sources dialog box will appear as shown - select “Add or create design sources” and click next. 
 
-.. image:: imgs\FPGA\zcu102newprojectaddsource2.png
+.. image:: imgs/FPGA/zcu102newprojectaddsource2.png
   :width: 600
   :alt: zcu102newprojectaddsource2
 
 
 In the Add or Create Design Sources dialog, click on Create File, enter project1_demo as filename, and click OK. 
 
-.. image:: imgs\FPGA\zcu102newprojectaddsource3.png
+.. image:: imgs/FPGA/zcu102newprojectaddsource3.png
   :width: 600
   :alt: zcu102newprojectaddsource3
 
@@ -135,43 +135,43 @@ Skip the Define Module dialog by clicking OK to continue.
 
 To create a constraint file, expand the Constraints heading in the Sources panel, right-click on constrs_1, and select Add Sources. An Add Sources dialog will appear. 
 
-.. image:: imgs\FPGA\zcu102addconstraintfile.png
+.. image:: imgs/FPGA/zcu102addconstraintfile.png
   :width: 600
   :alt: zcu102addconstraintfile
 
 Select Add or Create Constraints and click Next to cause the “Add or Create Constraints” dialog box to appear. Click on Create File, enter the filename and click OK.
 
-.. image:: imgs\FPGA\zcu102addconstraintfile2.png
+.. image:: imgs/FPGA/zcu102addconstraintfile2.png
   :width: 600
   :alt: zcu102addconstraintfile2
 
 In the constraint file, we need to add the pin assignment for the clock pins. We can check the zcu102 clock source list and understand that ZCU102 get clock "CLK_74_25" and "CLK_125" from U69 SI5341 clock generator.
 
-.. image:: imgs\FPGA\zcu102clocksource.png
+.. image:: imgs/FPGA/zcu102clocksource.png
   :width: 600
   :alt: zcu102clocksource
 
 In ZCU102 schematic, we can see the schematic of the SI5341 clock generator, it generates a differential pair of clock "CLK_74_25_P" and "CLK_74_25_N":
 
-.. image:: imgs\FPGA\zcu102SI5341schematic.png
+.. image:: imgs/FPGA/zcu102SI5341schematic.png
   :width: 600
   :alt: zcu102SI5341schematic
 
 We can add constraint of the clock and the pin assignment of these clock pins
 
-.. image:: imgs\FPGA\zcu102clockconstraint.png
+.. image:: imgs/FPGA/zcu102clockconstraint.png
   :width: 600
   :alt: zcu102clockconstraint
 
 In the constraint file, we also need to add the FPGA pin assignment for LEDs and Buttons, we can get the schematic information for the LEDs and Buttons:
 
-.. image:: imgs\FPGA\zcu102ledbuttonschematic.png
+.. image:: imgs/FPGA/zcu102ledbuttonschematic.png
   :width: 600
   :alt: zcu102ledbuttonschematic
 
 After your Verilog and constraint files are complete, you can Synthesize the design project. In the synthesis process, Verilog code is translated into a “netlist” that defines all the required circuit components needed by the design (these components are the programmable parts of the targeted logic device - more on that later). You can start the Synthesize process by clicking on Run Synthesis button in the Flow Navigator panel
 
-.. image:: imgs\FPGA\zcu102runsynthesis.png
+.. image:: imgs/FPGA/zcu102runsynthesis.png
   :width: 600
   :alt: zcu102runsynthesis
 
@@ -179,37 +179,37 @@ After the design is synthesized, you must run the Implementation process. The im
 
 After the design is successfully implemented, you can create a .bit file by clicking on the Generate Bitstream process located in the Flow Navigator panel. The process translates the implemented design into a bitstream which can be directly programmed into your board's device.
 
-.. image:: imgs\FPGA\zcu102generatebitstream.png
+.. image:: imgs/FPGA/zcu102generatebitstream.png
   :width: 600
   :alt: zcu102generatebitstream
 
 After the bitstream is successfully generated, you view the implementation. 
 
-.. image:: imgs\FPGA\zcu102viewimplementation.png
+.. image:: imgs/FPGA/zcu102viewimplementation.png
   :width: 600
   :alt: zcu102viewimplementation
 
 In the implementation graph, the FPGA resource allocation is displayed in the device view.
 
-.. image:: imgs\FPGA\zcu102implementation.png
+.. image:: imgs/FPGA/zcu102implementation.png
   :width: 600
   :alt: zcu102implementation
 
 
 You can program your board using the Hardware Manager. Click Open Hardware Manager located at the bottom of Flow Navigator panel. Click on Open target link underneath Hardware Manager. Select Auto Connect to automatically identify your board. If Vivado successfully detects your board, the Hardware panel (located at the top left corner of Hardware Manager) will show the board's logic device part number.
 
-.. image:: imgs\FPGA\zcu102deviceprogramming1.png
+.. image:: imgs/FPGA/zcu102deviceprogramming1.png
   :width: 600
   :alt: zcu102deviceprogramming1
 
 Select the device you want to program, right click and select Program Device. A Program Device pop-up dialog window will appear, with the generated bit file selected in the text box. Click on Program to download the bitstream to your board.
 
 
-.. image:: imgs\FPGA\zcu102deviceprogramming2.png
+.. image:: imgs/FPGA/zcu102deviceprogramming2.png
   :width: 600
   :alt: zcu102deviceprogramming2
 
-.. image:: imgs\FPGA\zcu102deviceprogramming3.png
+.. image:: imgs/FPGA/zcu102deviceprogramming3.png
   :width: 600
   :alt: zcu102deviceprogramming3
 
@@ -294,13 +294,13 @@ In Windows Machine, download and install Silicon Labs CP210x USB-to-UART Bridge 
 
 Turn on the ZCU102 Board using SW1, and wait until Linux loads on the board. At this point, you can see the initial boot sequence messages on your terminal screen. After the Linux is booted, you can check the IP address of the ZCU102 board.
 
-.. image:: imgs\FPGA\zcu102linuxbootwindowsterminal.png
+.. image:: imgs/FPGA/zcu102linuxbootwindowsterminal.png
   :width: 600
   :alt: zcu102linuxbootwindowsterminal
 
 During the bootup, there are adrv9009 spi1.1 Error:
 
-.. image:: imgs\FPGA\zcu102adrv9009booterror.png
+.. image:: imgs/FPGA/zcu102adrv9009booterror.png
   :width: 600
   :alt: zcu102adrv9009booterror
 
@@ -330,7 +330,7 @@ In Linux machine, the tera term can be replaced by minicom:
     # setup Serial port setup
     sudo apt install ckermit
 
-.. image:: imgs\FPGA\zcu102linuxterminal.png
+.. image:: imgs/FPGA/zcu102linuxterminal.png
   :width: 600
   :alt: zcu102linuxterminal
 

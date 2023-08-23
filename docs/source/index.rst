@@ -31,7 +31,7 @@ Contents
    MATLAB
    googlecloud
    NLP
-   nuscenes
+   streamlit
    test
    usage
    api

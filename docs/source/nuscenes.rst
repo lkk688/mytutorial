@@ -80,6 +80,7 @@ Put all folders inside the "v1.0-trainval"
 run **create_nuscenes_infos** in "/home/010796032/3DObject/3DDepth/mydetector3d/datasets/nuscenes/nuscenes_dataset.py" to generate info.pkl files
 
 .. code-block:: console
+
   total scene num: 850
   exist scene num: 850
   v1.0-trainval: train scene(700), val scene(150)
