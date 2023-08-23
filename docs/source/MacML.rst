@@ -53,6 +53,7 @@ Install Mytutorial
 ------------------
 
 Install in mycondapy310 (use system's python3)
+
 .. code-block:: console
 
   (mycondapy310) kaikailiu@kaikais-mbp MyRepo % pwd
@@ -71,6 +72,8 @@ Install in mycondapy310 (use system's python3)
   (mycondapy310) kaikailiu@kaikais-mbp docs % python3 -m pip install urllib3==1.26.6
   % /Users/kaikailiu/Library/Python/3.9/bin/sphinx-build -b html source build
   build succeeded
+
+  (mypy310) kaikailiu@kaikais-mbp docs % sphinx-build -b html source build
 
 Install Additional Python packages
 ----------------------------------
