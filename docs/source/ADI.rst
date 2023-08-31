@@ -85,6 +85,10 @@ ADALM-PLUTO for End Users: https://wiki.analog.com/university/tools/pluto/users
   * Accessing Pluto's FPGA Over JTAG: https://wiki.analog.com/university/tools/pluto/devs/fpga
   * HDL code: https://github.com/analogdevicesinc/hdl/tree/master/projects/pluto
 
+ADI Book Software-Defined Radio for Engineers, 2018: https://www.analog.com/en/education/education-library/software-defined-radio-for-engineers.html
+
+Analog Devices Board Support Packages Toolbox For MATLAB and Simulink: https://wiki.analog.com/resources/eval/user-guides/matlab_bsp
+
 Creating a BPSK Communication Channel between two Pluto based on gnuradio
   * https://docs.google.com/document/d/19lWEblFKMcTQbRMrfMSToYzQ9f2d7HDE/edit
   * https://docs.google.com/document/d/17Wwwt5jgMXtpzFbjH-q1F9EdgPkyu5yl/edit
