@@ -18,7 +18,8 @@ Running the HDL on hardware. HDL build alone will NOT let you do anything useful
 
 HDL Architecture: https://wiki.analog.com/resources/fpga/docs/arch
 
-Using and modifying the HDL designs: https://wiki.analog.com/resources/fpga/docs/tips
+Using and modifying the HDL designs
+  * https://wiki.analog.com/resources/fpga/docs/tips
 
 
 adrv9009
@@ -60,6 +61,46 @@ Wideband RF Transceiver Evaluation Software (TES): https://www.analog.com/en/des
 ADRV9009/ADRV9008 No-OS System Level Design Setup: https://wiki.analog.com/resources/eval/user-guides/adrv9009/no-os-setup
     * Arria 10 GX board supported
     * Demo application ADRV9009-W on ZCU102: DMA_EXAMPLE, TINYIIOD demo
+
+ADALM-PLUTO
+-----------
+ADALM-PLUTO is based on Analog Devices AD9363--Highly Integrated RF Agile Transceiver and Xilinx® Zynq Z-7010 FPGA
+  * Website: https://www.analog.com/en/design-center/evaluation-hardware-and-software/evaluation-boards-kits/adalm-pluto.html#eb-overview
+  * RF coverage from 325 MHz to 3.8 GHz
+  * Up to 20 MHz of instantaneous bandwidth
+  * up to 61.44 Mega Samples per Second (MSPS)
+
+ADALM-PLUTO Overview: https://wiki.analog.com/university/tools/pluto
+
+ADALM-PLUTO for End Users: https://wiki.analog.com/university/tools/pluto/users
+  * libiio USB device for communicating to the RF device
+  * enumerate with the 192.168.2.1 IP address by default.
+  * provides access to the Linux console on the Pluto device via USB Communication Device Class Abstract Control Model (USB CDC ACM) specification
+  * Windows driver: https://wiki.analog.com/university/tools/pluto/drivers/windows
+  * Linux driver: https://wiki.analog.com/university/tools/pluto/drivers/linux
+  * MATLAB: https://www.mathworks.com/hardware-support/adalm-pluto-radio.html
+  * PlutoSDR (using python bindings to libiio): https://github.com/radiosd/PlutoSdr
+  * pyadi-iio: https://wiki.analog.com/resources/tools-software/linux-software/pyadi-iio, https://analogdevicesinc.github.io/pyadi-iio/
+  * GNU Radio and IIO Devices: gr-iio: https://wiki.analog.com/resources/tools-software/linux-software/gnuradio
+  * Accessing Pluto's FPGA Over JTAG: https://wiki.analog.com/university/tools/pluto/devs/fpga
+  * HDL code: https://github.com/analogdevicesinc/hdl/tree/master/projects/pluto
+
+Creating a BPSK Communication Channel between two Pluto based on gnuradio
+  * https://docs.google.com/document/d/19lWEblFKMcTQbRMrfMSToYzQ9f2d7HDE/edit
+  * https://docs.google.com/document/d/17Wwwt5jgMXtpzFbjH-q1F9EdgPkyu5yl/edit
+  * https://docs.google.com/presentation/d/1V2wfHmi0Va52FlOdsDvrftgcxAh94VrR/edit#slide=id.p10
+  * https://wiki.gnuradio.org/index.php/Guided_Tutorial_PSK_Demodulation
+
+LTE Transmitter and Receiver Using Adalm Pluto and MATLAB
+  * https://docs.google.com/document/d/1P9t0r0MB49xCIXEBhF20S-UnlL5Y1dnd/edit
+
+SDR-Radar: https://github.com/TimonPetermann/SDR-Radar
+
+Learn-SDR (based on PlutoSDR and GNURadio): https://gallicchio.github.io/learnSDR/
+  * https://github.com/gallicchio/learnSDR
+  * https://gallicchio.github.io/learnSDR/lesson08b.html
+
+Enable your Pluto SDR to become a stand-alone OFDM transceiver with batman-adv mesh network routing capabilities: https://github.com/tvelliott/charon
 
 iio-oscilloscope
 -----------------
