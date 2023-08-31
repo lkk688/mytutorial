@@ -190,3 +190,6 @@ Install langchain
     pip install pdf2image
     pip install pdfminer
     pip install pdfminer.six
+    pip install pinecone-client
+    pip install openai chromadb
+
