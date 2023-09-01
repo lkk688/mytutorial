@@ -79,6 +79,9 @@ ADALM-PLUTO for End Users: https://wiki.analog.com/university/tools/pluto/users
   * Windows driver: https://wiki.analog.com/university/tools/pluto/drivers/windows
   * Linux driver: https://wiki.analog.com/university/tools/pluto/drivers/linux
   * MATLAB: https://www.mathworks.com/hardware-support/adalm-pluto-radio.html
+    * Install Support Package for Analog Devices ADALM-PLUTO Radio: https://www.mathworks.com/help/supportpkg/plutoradio/ug/install-support-package-for-pluto-radio.html
+    * Setup: https://www.mathworks.com/help/supportpkg/plutoradio/ug/guided-host-radio-hardware-setup.html
+    * Manual Setup: https://www.mathworks.com/help/supportpkg/plutoradio/ug/manual-host-radio-hardware-setup.html
   * PlutoSDR (using python bindings to libiio): https://github.com/radiosd/PlutoSdr
   * pyadi-iio: https://wiki.analog.com/resources/tools-software/linux-software/pyadi-iio, https://analogdevicesinc.github.io/pyadi-iio/
   * GNU Radio and IIO Devices: gr-iio: https://wiki.analog.com/resources/tools-software/linux-software/gnuradio
@@ -97,6 +100,7 @@ Creating a BPSK Communication Channel between two Pluto based on gnuradio
 
 LTE Transmitter and Receiver Using Adalm Pluto and MATLAB
   * https://docs.google.com/document/d/1P9t0r0MB49xCIXEBhF20S-UnlL5Y1dnd/edit
+  * Image Transmission and Reception Using 802.11 Waveform and SDR: https://www.mathworks.com/help/supportpkg/plutoradio/ug/transmission-and-reception-of-an-image-using-wlan-system-toolbox-and-a-single-pluto-radio.html
 
 SDR-Radar: https://github.com/TimonPetermann/SDR-Radar
 
