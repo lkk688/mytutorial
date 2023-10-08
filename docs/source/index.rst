@@ -1,6 +1,10 @@
 Welcome to My Tutorial documentation!
 =====================================
-
+Author:
+   * *Kaikai Liu*, Associate Professor, SJSU
+   * **Email**: kaikai.liu@sjsu.edu
+   * **Web**: http://www.sjsu.edu/cmpe/faculty/tenure-line/kaikai-liu.php
+   
 Check out the :doc:`usage` section for further information, including
 how to :ref:`installation` the project.
 
