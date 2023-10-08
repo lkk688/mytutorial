@@ -39,3 +39,8 @@ https://wiki.analog.com/resources/tools-software/linux-software/kuiper-linux
 https://www.raspberrypi.com/news/raspberry-pi-imager-imaging-utility/
 
 https://wiki.analog.com/_media/resources/eval/user-guides/circuits-from-the-lab/cn0566/phaser_lab_instructions_june14_2022_no_title.pdf
+
+https://github.com/analogdevicesinc/pyadi-iio
+https://github.com/analogdevicesinc/pyadi-iio/blob/master/adi/cn0566.py
+https://github.com/analogdevicesinc/pyadi-iio/blob/master/examples/adrv9009.py
+https://github.com/analogdevicesinc/pyadi-iio/blob/master/examples/phaser/phaser_gui.py
