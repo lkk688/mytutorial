@@ -181,3 +181,19 @@ Reconnect to a previous session:
 
 screen -S session_name -X quit to terminate a detached session (Ctrl+a d to detach a session)
 You can use Control+A, then ESC to enable the scroll up. Move up/down with the arrow keys ( ↑ and ↓ ). When you're done, hit q or Escape to get back to the end of the scroll buffer.
+
+New:1021
+cfg_file: mydetector3d/tools/cfgs/nuscenes_models/bevfusion.yaml
+batch_size: 4
+epochs: 128
+extra_tag: 0522
+ckpt: /data/cmpe249-fa22/Mymodels/nuscenes_models/bevfusion/0522/ckpt/latest_model.pth
+outputfolder: /data/cmpe249-fa22/Mymodels/
+
+(mycondapy310) [010796032@cs001 3DDepth]$ ls /data/cmpe249-fa22/Mymodels/nuscenes_models/
+bevfusion  cbgs_pp_multihead
+/data/cmpe249-fa22/Mymodels/nuscenes_models/cbgs_pp_multihead/0522/ckpt/checkpoint_epoch_128.pth
+
+/data/cmpe249-fa22/Mymodels/nuscenes_models/bevfusion/0522/ckpt/checkpoint_epoch_56.pth  latest_model.pth
+
+023-10-21 17:09:07,965   INFO  Train:   59/128 ( 46%) [4534/30895 ( 15%)]  Loss: 0.4369 (0.437)  LR: 5.738e-05  Time cost: 00:47/346:12:13 [00:47/28342:55:05]  Acc_iter 1796445     Data time: 10.99(10.99)  Forward time: 36.29(36.29)  Batch time: 47.28(47.28)
