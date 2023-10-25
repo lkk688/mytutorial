@@ -181,3 +181,4 @@ Reconnect to a previous session:
 
 screen -S session_name -X quit to terminate a detached session (Ctrl+a d to detach a session)
 You can use Control+A, then ESC to enable the scroll up. Move up/down with the arrow keys ( ↑ and ↓ ). When you're done, hit q or Escape to get back to the end of the scroll buffer.
+

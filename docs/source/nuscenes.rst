@@ -261,47 +261,58 @@ Model2: 'mydetector3d/tools/cfgs/nuscenes_models/cbgs_pp_multihead.yaml'.
   barrier	0.450	0.329	0.286	0.073	nan	nan
   Result is saved to /data/cmpe249-fa22/Mymodels/eval/nuscenes_models_cbgs_pp_multihead_0624/txtresults
 
+New Evaluation 20231021
+------------------------
+.. code-block:: console
+  (mycondapy310) [010796032@cs001 3DDepth]$ python mydetector3d/tools/myevaluatev2_nuscenes.py --cfg_file='mydetector3d/tools/cfgs/nuscenes_models/cbgs_pp_multihead.yaml' --ckpt='/data/cmpe249-fa22/Mymodels/nuscenes_models/cbgs_pp_multihead/0522/ckpt/checkpoint_epoch_128.pth' --tag='1021' --outputpath='/data/cmpe249-fa22/Mymodels/' --gpuid=3
+
+  (mycondapy310) [010796032@cs001 3DDepth]$ python mydetector3d/tools/myevaluatev2_nuscenes.py --cfg_file='mydetector3d/tools/cfgs/nuscenes_models/bevfusion.yaml' --ckpt='/data/cmpe249-fa22/Mymodels/nuscenes_models/bevfusion/0522/ckpt/checkpoint_epoch_56.pth' --tag='1021' --outputpath='/data/cmpe249-fa22/Mymodels/' --gpuid=3
+
 BEVFusion
 ----------
 Add bevfusion code to the mydetector3d folder
 
 Model forward process includes the following major parts
 
-MeanVFE
+MeanVFE(vfe)
   * Input: voxel_features([600911, 10, 5]), voxel_num_points([600911]) = batch_dict['voxels'], batch_dict['voxel_num_points']
   * Output; batch_dict['voxel_features'] = points_mean.contiguous() #[600911, 5]
 
-VoxelResBackBone8x
+VoxelResBackBone8x(backbone_3d)
   * Input: voxel_features([600911, 5]), voxel_coords([600911, 4]) = batch_dict['voxel_features'], batch_dict['voxel_coords']
   * Output: batch_dict: 'encoded_spconv_tensor': out([2, 180, 180]), 'encoded_spconv_tensor_stride': 8, 'multi_scale_3d_features'
 
-HeightCompression
+HeightCompression(map_to_bev_module)
   * Input: encoded_spconv_tensor = batch_dict['encoded_spconv_tensor'] #Sparse [2, 180, 180]
   * Output: batch_dict['spatial_features'] = spatial_features #[6, 256, 180, 180], batch_dict['spatial_features_stride']=8
 
-SwinTransformer
+SwinTransformer(image_backbone)
   * Input: x = batch_dict['camera_imgs'] #[6, 6, 3, 256, 704]
   * Out: batch_dict['image_features'] = outs #3 items: [36, 192, 32, 88], [36, 384, 16, 44], [36, 768, 8, 22] 
 
-GeneralizedLSSFPN
+GeneralizedLSSFPN(neck)
   * inputs = batch_dict['image_features']
   * Output: batch_dict['image_fpn'] = tuple(outs) #2 items: [36, 256, 32, 88], [36, 256, 16, 44]
 
-DepthLSSTransform (lists images into 3D and then splats onto bev features, from https://github.com/mit-han-lab/bevfusion/)
+DepthLSSTransform(vtransform) (lists images into 3D and then splats onto bev features, from https://github.com/mit-han-lab/bevfusion/)
   * x = batch_dict['image_fpn']  #img=[6, 6, 256, 32, 88] 
   * points = batch_dict['points'] # [1456967, 6]
   * Output: batch_dict['spatial_features_img'] = x #[6, 80, 180, 180]
+  (dtransform)
+  (depthnet)
+  (downsample)
 
-ConvFuser
+ConvFuser(fuser)
   * Input: img_bev = batch_dict['spatial_features_img']#[6, 80, 180, 180], lidar_bev = batch_dict['spatial_features']#[6, 256, 180, 180]
   * cat_bev = torch.cat([img_bev,lidar_bev],dim=1)
   * Output: batch_dict['spatial_features'] = mm_bev #[6, 256, 180, 180]
 
-BaseBEVBackbone
+BaseBEVBackbone(backbone_2d)
   * Input: spatial_features = data_dict['spatial_features'] #[6, 256, 180, 180]
   * data_dict['spatial_features_2d'] = x #[6, 512, 180, 180]
 
-TransFusionHead
+TransFusionHead(dense_head)
+  * (loss_cls): SigmoidFocalClassificationLoss(); (loss_bbox): L1Loss(); (loss_heatmap): GaussianFocalLoss()
   * Input: feats = batch_dict['spatial_features_2d'] #[6, 512, 180, 180]
   * res = self.predict(feats) #'center' [6, 2, 200]; 'height' [6, 1, 200]; 'dim' [6, 3, 200]; 'rot' [6, 2, 200]; 'vel' [6, 2, 200]; 'heatmap' [6, 10, 200]; 'query_heatmap_score' [6, 10, 200]; 'dense_heatmap' [6, 10, 180, 180]
   * loss, tb_dict = self.loss(gt_bboxes_3d [6, 51, 9], gt_labels_3d [6, 51], res)
