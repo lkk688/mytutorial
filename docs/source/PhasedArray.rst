@@ -32,8 +32,17 @@ LTC5548 (https://www.analog.com/en/products/ltc5548.html) 2GHz to 14GHz Microwav
 ADRF5019 (https://www.analog.com/en/products/ADRF5019.html) Silicon, SPDT Switch, Nonreflective, 100 MHz to 13 GHz
 
 ADF4159 (https://www.analog.com/en/products/adf4159.html) Direct Modulation/Fast Waveform Generating, 13 GHz, Fractional-N Frequency Synthesizer.
-The ADF4159 phase-locked loop (PLL) and the HMC735 voltage-controlled oscillator (VCO) combine to form a frequency synthesizer with a range of 10.5 GHz to 12.7 GHz. This signal is used to drive the LO port of all the mixers. For communications and other fixed-frequency applications, the LO frequency is typically set to 2.2 GHz above the desired signal at the antenna. Therefore, the LO is generally between 12 GHz and 12.7 GHz. The ADF4159 is also capable of generating FMCW ramps or "chirps" for radar applications. The ADF4159 includes a variety of chirp ramp rates and shapes including sawtooth, triangular, and parabolic.
+  * The ADF4159 phase-locked loop (PLL) and the HMC735 voltage-controlled oscillator (VCO) combine to form a frequency synthesizer with a range of 10.5 GHz to 12.7 GHz. This signal is used to drive the LO port of all the mixers. For communications and other fixed-frequency applications, the LO frequency is typically set to 2.2 GHz above the desired signal at the antenna. Therefore, the LO is generally between 12 GHz and 12.7 GHz. The ADF4159 is also capable of generating FMCW ramps or "chirps" for radar applications. The ADF4159 includes a variety of chirp ramp rates and shapes including sawtooth, triangular, and parabolic.
+  * The ADF4159 is capable of generating five types of waveforms in the frequency domain: single ramp burst, single triangular burst, single sawtooth burst, continuous sawtooth ramp, and continuous triangular ramp. 
+  * phase frequency detector(PFD), with a PFD frequency of 100 MHz, frequency steps of 2.98 Hz are possible = F_PFD/2^25.
 
+EVAL-TINYRAD: https://www.analog.com/en/design-center/evaluation-hardware-and-software/evaluation-boards-kits/EVAL-TinyRad.html#eb-overview
+* 24 GHz to 24.25 GHz MIMO FMCW radar
+* Reverse side ADF5901 24 GHz transmit monolithic microwave integrated circuit (MMIC)
+* Reverse side ADF5904 24 GHz receive MMIC
+* Reverse side ADF4159 13 GHz phase-locked loop (PLL)
+* Reverse side ADAR7251 16-bit, 4-channel ADC
+* Reverse side ADSP-BF706 Blackfin DSP
 
 .. image:: imgs/ADI/CN0566_01.png
   :width: 600

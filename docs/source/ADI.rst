@@ -129,6 +129,8 @@ Install iio_oscilloscope
 -------------------------
 Install ADI iio_oscilloscope based on this link: https://wiki.analog.com/resources/tools-software/linux-software/iio_oscilloscope
 
+You can direct download one exe file in iio-oscilloscope releases and install the exe file on Windows. If you want to install it on Linux, please follow these steps:
+
 .. code-block:: console 
 
   (base) lkk@lkk-intel12:~/intelFPGA_pro/FPGADeveloper$ sudo apt-get -y install libglib2.0-dev libgtk2.0-dev libgtkdatabox-dev libmatio-dev libfftw3-dev libxml2 libxml2-dev bison flex libavahi-common-dev libavahi-client-dev libcurl4-openssl-dev libjansson-dev cmake libaio-dev libserialport-dev
