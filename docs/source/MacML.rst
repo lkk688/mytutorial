@@ -345,3 +345,5 @@ Packages cannot be installed
   #python version problem python[version='>=3.8,<3.9.0a0|>=3.9,<3.10.0a0']
   % conda install -c conda-forge mayavi #works
   (mypy310) kaikailiu@kaikais-mbp scripts % python testmayavi.py #works
+  pip install pyqt6
+  pip install PySide6
