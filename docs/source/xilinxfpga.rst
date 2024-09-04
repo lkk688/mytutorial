@@ -30,7 +30,16 @@ Board setup process in Windows
     * Refer XTP 433 for System Controller GUI
     * Ethernet setup: change adapter setting, right-click Ethernet Adapter and select properties. Click Configure, Set the Link Speed & Duplex to Auto Negotiation then click OK. Set the IPv4 address to "192.168.1.2", subnet "255.255.255.0", default gateway "192.168.1.255"
 
- Xilinx Vivado
+Built-In Self-Test (BIST) Instructions
+    * STEP 1: Set Configuration Switches. Set mode switch SW6 to QSPI32 (0100). Moving the switch toward the label ON is a 0. 0100 is "ON OFF ON ON"
+    * STEP 2: Connect Power. Connect the 6-pin power supply plug to J52. Turn on the board power with the SW1 slide switch. If the three rows of Power Good LEDs glow green, the power system is good. If the DONE LED circled here glows green, the Zynq UltraScale+ device has
+configured successfully.
+    * STEP 3: Initialize Configuration. The built-in self-test (BIST) starts shortly after power on. Pressing the POR_B (SW4) switch causes the DONE LED to go out,
+the FPGA to configure again, and the BIST to restart.
+
+
+
+Xilinx Vivado
 ---------------------
 Vivado installation tutorial: https://www.realdigital.org/doc/1fd3322461ac4bcc1fcd6bcc6c5907ec
 
@@ -49,6 +58,10 @@ Vivado installation tutorial: https://www.realdigital.org/doc/1fd3322461ac4bcc1f
     examples  include   product_rel_lin.log  settings64.csh
     (base) lkk@lkk-intel12:~/Xilinx/Vivado/2023.1$ source settings64.sh
     (base) lkk@lkk-intel12:~/Xilinx/Vivado/2023.1$ vivado &
+    #update version
+    #export PATH=$PATH:/home/lkk/Xilinx/Vivado/2024.1/bin:/home/lkk/Xilinx/Vitis/2024.1/bin
+    lkk@lkk-intel12:~/Xilinx/Vivado/2024.1$ source settings64.sh
+    lkk@lkk-intel12:~/Xilinx/Vivado/2024.1$ vivado &
 
 Install Linux cable Drivers
 
@@ -258,8 +271,7 @@ Build the HDL code: https://wiki.analog.com/resources/fpga/docs/build
     Branch 'hdl_2021_r1' set up to track remote branch 'hdl_2021_r1' from 'origin'.
     Switched to a new branch 'hdl_2021_r1'
 
-    $ source ~/Xilinx/Vivado/2023.1/settings64.sh
-    #export PATH=$PATH:/opt/Xilinx/Vivado/202x.x/bin:/opt/Xilinx/Vitis/202x.x/bin
+    $ source ~/Xilinx/Vivado/2024.1/settings64.sh
     (base) lkk@lkk-intel12:~/Xilinx/FPGADeveloper/adi/hdl/projects/adrv9009/zcu102$ export ADI_IGNORE_VERSION_CHECK=1
     (base) lkk@lkk-intel12:~/Xilinx/FPGADeveloper/adi/hdl/projects/adrv9009/zcu102$ make
     ....
