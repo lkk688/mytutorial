@@ -37,7 +37,12 @@ configured successfully.
     * STEP 3: Initialize Configuration. The built-in self-test (BIST) starts shortly after power on. Pressing the POR_B (SW4) switch causes the DONE LED to go out,
 the FPGA to configure again, and the BIST to restart.
 
+Xilinx Wiki: 
+    * Download prebuilt linux images (SD card, BSP file): https://xilinx-wiki.atlassian.net/wiki/spaces/A/pages/2950595219/2024.1+Release
+    * Prebuilt Firmware: https://github.com/Xilinx/soc-prebuilt-firmware/tree/xilinx_v2024.1/zcu102-zynqmp
+    * Preparing the SD card: use Balena Etcher to write the wic image to the SD card: refer to the [UG1144](https://docs.amd.com/r/en-US/ug1144-petalinux-tools-reference-guide/Installation-Requirements) section Booting PetaLinux Image on Hardware with an SD Card. 
 
+https://docs.amd.com/r/en-US/ug1144-petalinux-tools-reference-guide/Installation-Requirements
 
 Xilinx Vivado
 ---------------------
@@ -60,7 +65,7 @@ Vivado installation tutorial: https://www.realdigital.org/doc/1fd3322461ac4bcc1f
     (base) lkk@lkk-intel12:~/Xilinx/Vivado/2023.1$ vivado &
     #update version
     #export PATH=$PATH:/home/lkk/Xilinx/Vivado/2024.1/bin:/home/lkk/Xilinx/Vitis/2024.1/bin
-    lkk@lkk-intel12:~/Xilinx/Vivado/2024.1$ source settings64.sh
+    lkk@lkk-intel12:~/Xilinx/Vivado/2024.1$ source settings64.sh #source /home/lkk/Xilinx/Vivado/2024.1/settings64.sh
     lkk@lkk-intel12:~/Xilinx/Vivado/2024.1$ vivado &
 
 Install Linux cable Drivers
@@ -271,8 +276,11 @@ Build the HDL code: https://wiki.analog.com/resources/fpga/docs/build
     Branch 'hdl_2021_r1' set up to track remote branch 'hdl_2021_r1' from 'origin'.
     Switched to a new branch 'hdl_2021_r1'
 
-    $ source ~/Xilinx/Vivado/2024.1/settings64.sh
+    $ source ~/Xilinx/Vivado/2023.1/settings64.sh
     (base) lkk@lkk-intel12:~/Xilinx/FPGADeveloper/adi/hdl/projects/adrv9009/zcu102$ export ADI_IGNORE_VERSION_CHECK=1
+    $ git status
+    On branch master
+    Your branch is up to date with 'origin/master'.
     (base) lkk@lkk-intel12:~/Xilinx/FPGADeveloper/adi/hdl/projects/adrv9009/zcu102$ make
     ....
     Building adrv9009_zcu102 project [/home/lkk/Xilinx/FPGADeveloper/adi/hdl/projects/adrv9009/zcu102/adrv9009_zcu102_vivado.log] ... OK
