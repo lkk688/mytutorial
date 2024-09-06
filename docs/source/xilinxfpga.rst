@@ -392,6 +392,17 @@ https://wiki.analog.com/resources/eval/user-guides/adrv9009/quickstart/zynqmp
 Building the ZynqMP / MPSoC Linux kernel and devicetrees from source (https://wiki.analog.com/resources/eval/user-guides/ad-fmcomms2-ebz/software/linux/zynqmp)
 
 https://xilinx-wiki.atlassian.net/wiki/spaces/A/overview
+https://www.analog.com/en/lp/001/transceiver-evaluation-software.html
+
+Installation process:
+  * Connect the ADRV9009-W/PCBZ FMC board to the FPGA carrier HPC1 FMC1 socket.
+  * On the ADRV9009 FMC card, provide a 30.72MHz clock source, at a +5dBm power level to J401 connector. (This signal drives the reference clock into the AD9528 clock generation chip on the board - the REFA/REFA_N pins of AD9528 generates the DEV_CLK for the Talise and REF_CLK for the FPGA on the ZYNQ platform).
+  * Connect USB UART J83 (Micro USB) to your host PC. Insert SD card into socket.
+  * Configure ZCU102 for SD BOOT (mode SW6[4:1] switch in the position OFF,OFF,OFF,ON. Turn on the power switch on the FPGA board.
+  * Login to the device via root and password: analog. Check devices: root@analog:~# iio_info | grep iio:device
+  * Open IIO Oscilloscope Remote to test the device.
+
+
 
 .. code-block:: console 
 
