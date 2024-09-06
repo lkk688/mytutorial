@@ -47,6 +47,7 @@ Xilinx Wiki: https://xilinx-wiki.atlassian.net/wiki/spaces/A/pages/444006775/Zyn
     * Connect 12V Power to the ZCU102 6-Pin Molex connector.
     * Start a terminal session, using Tera Term or Minicom. Verify the COM port in device manager. There are four USB-UART interfaces exposed by the ZCU102 board. Select the COM port associated with the interface with the lowest number. In this case, for UART-0, select the COM port with interface-0.
     * Remember that the R5 BSP has been configured to use UART-1, and so R5 application messages appear on the COM port with the UART-1 terminal. Turn on the ZCU102 Board using SW1, and wait until Linux loads on the board. At this point, you can see the initial boot sequence messages on your terminal screen representing UART-0.
+    * The default user is petalinux and the password should be set on first boot.
 
 https://xilinx.github.io/Embedded-Design-Tutorials/docs/2021.2/build/html/docs/Introduction/ZynqMPSoC-EDT/8-boot-and-configuration.html
 
