@@ -37,12 +37,39 @@ configured successfully.
     * STEP 3: Initialize Configuration. The built-in self-test (BIST) starts shortly after power on. Pressing the POR_B (SW4) switch causes the DONE LED to go out,
 the FPGA to configure again, and the BIST to restart.
 
-Xilinx Wiki: 
-    * Download prebuilt linux images (SD card, BSP file): https://xilinx-wiki.atlassian.net/wiki/spaces/A/pages/2950595219/2024.1+Release
+Xilinx Wiki: https://xilinx-wiki.atlassian.net/wiki/spaces/A/pages/444006775/Zynq+UltraScale+MPSoC 
+    * There is one BSP for each board above. They are called PetaLinux BSPs since the Xilinx PetaLInux tool is used to create these images. Download prebuilt linux images (SD card, BSP file): https://xilinx-wiki.atlassian.net/wiki/spaces/A/pages/2950595219/2024.1+Release
     * Prebuilt Firmware: https://github.com/Xilinx/soc-prebuilt-firmware/tree/xilinx_v2024.1/zcu102-zynqmp
     * Preparing the SD card: use Balena Etcher to write the wic image to the SD card: refer to the [UG1144](https://docs.amd.com/r/en-US/ug1144-petalinux-tools-reference-guide/Installation-Requirements) section Booting PetaLinux Image on Hardware with an SD Card. 
+    * Set the boot mode DIP switches on your board to SD boot. Make sure SW6 configuration in ZCU102 is (On Off Off Off) from 1 to 4.
+    * For ZCU102, you will need to copy the below files on to your SD card boot partition: BOOT.BIN, image.ub, boot.scr (these files are already inside the boot). Linux images image.ub contains: Kernel image: Image, Device tree blob: system.dtb, Root file system: rootfs.cpio.gz.u-boot.
+    * Load the SD card into the ZCU102 board, in the J100 connector. Connect a micro USB cable from the ZCU102 board USB UART port (J83) to the USB port on the host machine.
+    * Connect 12V Power to the ZCU102 6-Pin Molex connector.
+    * Start a terminal session, using Tera Term or Minicom. Verify the COM port in device manager. There are four USB-UART interfaces exposed by the ZCU102 board. Select the COM port associated with the interface with the lowest number. In this case, for UART-0, select the COM port with interface-0.
+    * Remember that the R5 BSP has been configured to use UART-1, and so R5 application messages appear on the COM port with the UART-1 terminal. Turn on the ZCU102 Board using SW1, and wait until Linux loads on the board. At this point, you can see the initial boot sequence messages on your terminal screen representing UART-0.
+
+https://xilinx.github.io/Embedded-Design-Tutorials/docs/2021.2/build/html/docs/Introduction/ZynqMPSoC-EDT/8-boot-and-configuration.html
+
+The Vitis unified software platform is an integrated development environment (IDE) for the development of embedded software applications targeted towards Xilinx embedded processors： https://www.xilinx.com/cgi-bin/docs/rdoc?v=latest;d=ug1400-vitis-embedded.pdf
+
+The Vivado Design Suite offers a broad range of development system tools for FPGA implementation. It can be installed as a standalone tool when software programming is not required.
+
+The PetaLinux toolset is an embedded Linux system development kit. It offers a multi-faceted Linux tool flow, which enables complete configuration, build, and deploy environment for Linux OS for the Xilinx Zynq devices, including Zynq UltraScale+ devices. PetaLinux Tools (https://xilinx-wiki.atlassian.net/wiki/display/A/PetaLinux), available at no-charge, make it easy for developers to configure, build and deploy essential open source and systems software to Xilinx silicon.
+
+
+https://xilinx.github.io/Embedded-Design-Tutorials/docs/2021.2/build/html/docs/Introduction/ZynqMPSoC-EDT/1-introduction.html
+
+
 
 https://docs.amd.com/r/en-US/ug1144-petalinux-tools-reference-guide/Installation-Requirements
+
+ZU＋ Example - PM Hello World (for Vitis 2019.2 onward): https://xilinx-wiki.atlassian.net/wiki/spaces/A/pages/781778983/ZU+Example+-+PM+Hello+World+for+Vitis+2019.2+onward
+
+Zynq UltraScale+ Device Technical Reference Manual: https://docs.amd.com/r/en-US/ug1085-zynq-ultrascale-trm/Zynq-UltraScale-Device-Technical-Reference-Manual
+
+Zynq UltraScale+ MPSoC Software Developer Guide (UG1137): https://docs.amd.com/r/en-US/ug1137-zynq-ultrascale-mpsoc-swdev/About-This-Guide
+
+https://docs.amd.com/v/u/en-US/dh0070-zynq-mpsoc-design-overview-hub
 
 Xilinx Vivado
 ---------------------
