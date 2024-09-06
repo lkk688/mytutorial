@@ -386,9 +386,10 @@ In Linux machine, the tera term can be replaced by minicom:
 
 ADRV9009-W/PCBZ Zynq UltraScale+ MPSoC ZCU102 Quick Start
 ---------------------------------------------------------
-
+https://wiki.analog.com/resources/eval/user-guides/adrv9009/quickstart
 https://wiki.analog.com/resources/eval/user-guides/adrv9009/quickstart/zynqmp
-
+https://ez.analog.com/cfs-file/__key/communityserver-discussions-components-files/703/AD9371-and-ADRV9009-setup-with-ZCU102-or-ZC706-April2019.pdf
+s
 Building the ZynqMP / MPSoC Linux kernel and devicetrees from source (https://wiki.analog.com/resources/eval/user-guides/ad-fmcomms2-ebz/software/linux/zynqmp)
 
 https://xilinx-wiki.atlassian.net/wiki/spaces/A/overview
@@ -396,7 +397,7 @@ https://www.analog.com/en/lp/001/transceiver-evaluation-software.html
 
 Installation process:
   * Connect the ADRV9009-W/PCBZ FMC board to the FPGA carrier HPC1 FMC1 socket.
-  * On the ADRV9009 FMC card, provide a 30.72MHz clock source, at a +5dBm power level to J401 connector. (This signal drives the reference clock into the AD9528 clock generation chip on the board - the REFA/REFA_N pins of AD9528 generates the DEV_CLK for the Talise and REF_CLK for the FPGA on the ZYNQ platform).
+  * On the ADRV9009 FMC card, provide a 30.72MHz clock source, at a +5dBm power level to J401 connector. (This signal drives the reference clock into the AD9528 clock generation chip on the board - the REFA/REFA_N pins of AD9528 generates the DEV_CLK for the Talise and REF_CLK for the FPGA on the ZYNQ platform). We purchased  Crystek CPRO33-30.72 SMA oscillator (https://www.digikey.com/en/products/detail/crystek-corporation/CPRO33-30-720/9169401?s=N4IgTCBcDaIMIAUBKB5AzGgtGgDAOgHYIBdAXyA), SMA Male to 2.1mm Plug (https://www.digikey.com/en/products/detail/crystek-corporation/CCADP-MM-6/1867564?s=N4IgTCBcDaIMJwIIBEAKBaAsp9A2EAugL5A), and 3.3V 5W dapter (https://www.digikey.com/en/products/detail/kaga-electronics-usa/KTPS05-03315U-VI-P1/5820199).
   * Connect USB UART J83 (Micro USB) to your host PC. Insert SD card into socket.
   * Configure ZCU102 for SD BOOT (mode SW6[4:1] switch in the position OFF,OFF,OFF,ON. Turn on the power switch on the FPGA board.
   * Login to the device via root and password: analog. Check devices: root@analog:~# iio_info | grep iio:device
