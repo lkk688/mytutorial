@@ -329,6 +329,8 @@ ADI Linux Image Boot
 ---------------------
 https://wiki.analog.com/resources/tools-software/linux-software/kuiper-linux
 https://wiki.analog.com/resources/tools-software/linux-software/zynq_images/windows_hosts
+Download ADI Linux Image from: https://wiki.analog.com/resources/tools-software/linux-software/adi-kuiper_images/release_notes
+Configuring the SD Card for FPGA Projects: https://wiki.analog.com/resources/tools-software/linux-software/kuiper-linux
 
 In Windows host, download SD Card Formatter from https://www.sdcardformatter.com/. Insert the SD card and launch SD Card Formatter, type "boot" in Volume label, then click "Format"
 
